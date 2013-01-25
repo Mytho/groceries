@@ -9,8 +9,17 @@
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
 from application import app
+from decorators import content_type
 
-from flask import make_response
+from flask import make_response, send_from_directory
+from os import path
+
+
+@app.route('/favicon.ico', methods=['GET'])
+@content_type('image/vnd.microsoft.icon')
+def favicon():
+    return make_response(send_from_directory(path.join(app.root_path, 'static'),
+                                             'favicon.ico'))
 
 @app.route('/')
 def home():
