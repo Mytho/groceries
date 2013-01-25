@@ -3,6 +3,20 @@
 
 CREATE DATABASE IF NOT EXISTS `groceries`;
 
+# CREATE DATABASE_MODIFICATIONS
+# -----------------------------
+
+CREATE TABLE IF NOT EXISTS `groceries`.`database_modifications` (
+	`id`          VARCHAR(255) NOT NULL,
+	`applied_at`  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`script_name` VARCHAR(255) NOT NULL,
+	`comments`    VARCHAR(255) DEFAULT '',
+
+	PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8;
+
 # CREATE USERS
 # ------------
 
