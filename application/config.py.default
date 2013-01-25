@@ -9,8 +9,6 @@
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
 ADMINS = ['t.zengerink@gmail.com']
-CACHE = {
-    "directory" : "cache",
-    "timeout"   : 86400
-}
 DEBUG = True
+
+SQLALCHEMY_DATABASE_URI = mysql://username:password@server/db

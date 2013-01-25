@@ -3,10 +3,10 @@
 
 CREATE DATABASE IF NOT EXISTS `groceries`;
 
-# CREATE DATABASE_MODIFICATIONS
-# -----------------------------
+# CREATE DATABASE_MODIFICATION
+# ----------------------------
 
-CREATE TABLE IF NOT EXISTS `groceries`.`database_modifications` (
+CREATE TABLE IF NOT EXISTS `groceries`.`database_modification` (
 	`id`          VARCHAR(255) NOT NULL,
 	`applied_at`  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`script_name` VARCHAR(255) NOT NULL,
@@ -17,12 +17,12 @@ CREATE TABLE IF NOT EXISTS `groceries`.`database_modifications` (
 ENGINE = InnoDB
 DEFAULT CHARSET = utf8;
 
-# CREATE USERS
-# ------------
+# CREATE USER
+# -----------
 
-CREATE TABLE IF NOT EXISTS `groceries`.`users` (
+CREATE TABLE IF NOT EXISTS `groceries`.`user` (
 	`id`       INT(11)     UNSIGNED NOT NULL AUTO_INCREMENT,
-	`username` VARCHAR(64) NOT NULL,
+	`username` VARCHAR(64) NOT NULL UNIQUE,
 	`password` VARCHAR(64) NOT NULL,
 
 	PRIMARY KEY (`id`)
@@ -30,10 +30,10 @@ CREATE TABLE IF NOT EXISTS `groceries`.`users` (
 ENGINE = InnoDB
 DEFAULT CHARSET = utf8;
 
-# CREATE ITEMS
-# ------------
+# CREATE ITEM
+# -----------
 
-CREATE TABLE IF NOT EXISTS `groceries`.`items` (
+CREATE TABLE IF NOT EXISTS `groceries`.`item` (
 	`id`         INT(11)      UNSIGNED NOT NULL AUTO_INCREMENT,
 	`name`       VARCHAR(255) NOT NULL,
 	`created`    INT(10)      NOT NULL,
@@ -47,12 +47,12 @@ CREATE TABLE IF NOT EXISTS `groceries`.`items` (
 
 	CONSTRAINT `ibfk_items_1`
 	FOREIGN KEY (`created_by`)
-	REFERENCES `groceries`.`users` (`id`)
+	REFERENCES `groceries`.`user` (`id`)
 	ON DELETE CASCADE,
 
 	CONSTRAINT `ibfk_items_2`
 	FOREIGN KEY (`bought_by`)
-	REFERENCES `groceries`.`users` (`id`)
+	REFERENCES `groceries`.`user` (`id`)
 	ON DELETE CASCADE
 )
 ENGINE = InnoDB
