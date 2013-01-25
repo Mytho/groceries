@@ -1,0 +1,16 @@
+# -*- coding: utf-8 -*-
+"""
+    APPLICATION.CONFIG
+    ------------------
+    Configuration of the application
+
+    Copyright (c) 2013 T. Zengerink
+    Licensed under MIT License.
+    See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
+"""
+ADMINS = ['t.zengerink@gmail.com']
+CACHE = {
+    "directory" : "cache",
+    "timeout"   : 86400
+}
+DEBUG = True
