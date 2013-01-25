@@ -8,7 +8,7 @@
     Licensed under MIT License.
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
-from flask import Flask
+from flask import Flask, render_template
 
 
 app = Flask(__name__)
