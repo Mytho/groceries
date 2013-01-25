@@ -9,10 +9,11 @@
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
 from application import app
-from models import User
 from decorators import content_type
 
 from flask import make_response, send_from_directory
+from flask.ext.login import login_required
+
 from os import path
 
 
@@ -23,5 +24,6 @@ def favicon():
                                              'favicon.ico'))
 
 @app.route('/')
+@login_required
 def home():
     return make_response('Hello, World!')

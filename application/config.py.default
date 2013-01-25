@@ -10,5 +10,6 @@
 """
 ADMINS = ['t.zengerink@gmail.com']
 DEBUG = True
+SECRET_KEY = 'VerySecretKey'
 
 SQLALCHEMY_DATABASE_URI = mysql://username:password@server/db

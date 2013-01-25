@@ -28,6 +28,7 @@ def internal_error(e):
     return render_template('error/500.html'), 500
 
 
+import application.auth
 import application.views
 
 
