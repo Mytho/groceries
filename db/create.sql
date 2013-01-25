@@ -45,12 +45,12 @@ CREATE TABLE IF NOT EXISTS `groceries`.`items` (
 	KEY `fk_created_by` (`created_by`),
 	KEY `fk_bought_by` (`bought_by`),
 
-	CONSTRAINT `ibfk_item_1`
+	CONSTRAINT `ibfk_items_1`
 	FOREIGN KEY (`created_by`)
 	REFERENCES `groceries`.`users` (`id`)
 	ON DELETE CASCADE,
 
-	CONSTRAINT `ibfk_item_2`
+	CONSTRAINT `ibfk_items_2`
 	FOREIGN KEY (`bought_by`)
 	REFERENCES `groceries`.`users` (`id`)
 	ON DELETE CASCADE
