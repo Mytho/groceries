@@ -1,6 +1,4 @@
 module.exports = function(grunt) {
-    'use strict';
-
     // Configuration
     grunt.initConfig({
         pkg: {
@@ -31,15 +29,12 @@ module.exports = function(grunt) {
         },
         concat: {
             app: {
-                src: ['coffee/*.coffee'],
+                src: [
+                    'coffee/core.coffee',
+                    'coffee/views.coffee'
+                ],
                 dest: 'build/app.coffee'
             }
-        },
-        lint: {
-            app: [
-                'grunt.js',
-                'build/app.js'
-            ]
         },
         min: {
             app: {
@@ -47,45 +42,9 @@ module.exports = function(grunt) {
                 dest: 'application/static/js/app.min.js'
             }
         },
-        jshint: {
-            options: {
-                'bitwise'   : true,
-                'browser'   : true,
-                'camelcase' : true,
-                'curly'     : true,
-                'eqeqeq'    : true,
-                'forin'     : true,
-                'immed'     : true,
-                'indent'    : 4,
-                'latedef'   : true,
-                'maxerr'    : 50,
-                'newcap'    : true,
-                'noarg'     : true,
-                'noempty'   : true,
-                'nonew'     : true,
-                'onevar'    : true,
-                'plusplus'  : false,
-                'quotmark'  : 'single',
-                'regexp'    : true,
-                'strict'    : true,
-                'trailing'  : true,
-                'undef'     : true,
-                'unused'    : true,
-                'white'     : false,
-                'predef'    : [
-                    'APP',
-                    'deepEqual',
-                    'equal',
-                    'expect',
-                    'module',
-                    'ok',
-                    'test'
-                ]
-            }
-        },
         watch: {
             app: {
-                files: ['<config:coffee.app.coffee>'],
+                files: ['<config:coffee.app.src>'],
                 tasks: 'concat:app coffee:app'
             }
         }
@@ -95,5 +54,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-coffee');
 
     // Default Task
-    grunt.registerTask('default', 'concat coffee lint min');
+    grunt.registerTask('default', 'concat coffee min');
 };
