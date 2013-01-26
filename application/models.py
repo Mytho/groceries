@@ -27,3 +27,19 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+    def is_authenticated(self):
+        # TODO: Add proper check
+        # http://packages.python.org/Flask-Login/
+        return True
+
+    def is_active(self):
+        # TODO: Add property to the database
+        # http://packages.python.org/Flask-Login/
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id

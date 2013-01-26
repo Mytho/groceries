@@ -21,17 +21,17 @@ login_manager.setup_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    # TODO: Proper user loading
-    User.get(user_id)
+    return User.query.filter_by(id=user_id).first()
 
 
 @app.route('/login')
 def login():
-    # TODO: Implement the User Class Methods as mentioned in: http://packages.python.org/Flask-Login/
-    login_user(User.query.filter_by(username='teun').first())
+    # TODO: Create proper login functionality
+    login_user(User.query.filter_by(id=1).first())
     return make_response('Logged In')
 
 @app.route('/logout')
 def logout():
+    # TODO: Create proper logout functionality
     logout_user()
     return make_response('Logged out')
