@@ -4,7 +4,7 @@ module.exports = function(grunt) {
     // Configuration
     grunt.initConfig({
         pkg: {
-            'name': 'APP',
+            'name': 'GROCERIES',
             'author': {
                 'name': 'T. Zengerink',
                 'email': 't.zengerink@gmail.com'
@@ -17,6 +17,7 @@ module.exports = function(grunt) {
         meta: {
             banner: '/*!\n' +
                 ' * <%= pkg.name %>\n' +
+                ' * - - -\n' +
                 ' * Author: <%= pkg.author.name %> (<%= pkg.author.email %>)\n' +
                 ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
                 ' * <%= pkg.lisence.type %> lisenced, <%= pkg.lisence.url %>\n' +
