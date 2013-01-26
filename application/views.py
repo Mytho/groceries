@@ -27,3 +27,10 @@ def favicon():
 @login_required
 def home():
     return make_response(render_template('home.html'))
+
+@app.route('/items')
+@login_required
+@content_type('application/json')
+def items():
+    # TODO: Fetch models from database
+    return make_response('[{"name":"apples"},{"name":"milk"},{"name":"bread"}]')
