@@ -17,9 +17,13 @@ db = SQLAlchemy(app)
 
 
 class User(db.Model):
+    __tablename__ = 'users'
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True)
     password = db.Column(db.String(64))
+
+    # TODO: Add relationships
 
     def __init__(self, username, password):
         self.username = username
@@ -43,3 +47,22 @@ class User(db.Model):
 
     def get_id(self):
         return self.id
+
+
+class Item(db.Model):
+    __tablename__ = 'items'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+    create_date = db.Column(db.Integer)
+    created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+    bought_date = db.Column(db.Integer)
+    bought_by = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    # TODO: Add relationships
+
+    def __init(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return '<Item %r>' % self.name
