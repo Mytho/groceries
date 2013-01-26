@@ -11,7 +11,7 @@
 from application import app
 from decorators import content_type
 
-from flask import make_response, send_from_directory
+from flask import make_response, render_template, send_from_directory
 from flask.ext.login import login_required
 
 from os import path
@@ -26,4 +26,4 @@ def favicon():
 @app.route('/')
 @login_required
 def home():
-    return make_response('Hello, World!')
+    return make_response(render_template('home.html'))

@@ -1,0 +1,4 @@
+APP = (->
+  'use strict'
+  return {}
+)()
