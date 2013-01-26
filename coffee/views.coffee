@@ -1,4 +1,4 @@
-class APP.GroceryList extends Backbone.View
+class APP.GroceryView extends Backbone.View
   el: $('ul#grocery-list')
   initialize: ->
     @render()

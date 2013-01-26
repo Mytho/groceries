@@ -31,6 +31,7 @@ module.exports = function(grunt) {
             app: {
                 src: [
                     'coffee/core.coffee',
+                    'coffee/collections.coffee',
                     'coffee/views.coffee'
                 ],
                 dest: 'build/app.coffee'
@@ -44,7 +45,7 @@ module.exports = function(grunt) {
         },
         watch: {
             app: {
-                files: ['<config:coffee.app.src>'],
+                files: ['coffee/*.coffee'],
                 tasks: 'concat:app coffee:app'
             }
         }

@@ -4,4 +4,4 @@ win = window
 APP = {}
 
 APP.init = ->
-  groceryList = new APP.GroceryList()
+  groceryView = new APP.GroceriesView()
