@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS `groceries`.`items` (
 	`name`        VARCHAR(255) NOT NULL,
 	`create_date` INT(10)      NOT NULL,
 	`created_by`  INT(11)      UNSIGNED NOT NULL,
-	`bought_date` INT(10)      NOT NULL,
-	`bought_by`   INT(11)      UNSIGNED NOT NULL,
+	`bought_date` INT(10)      DEFAULT NULL,
+	`bought_by`   INT(11)      UNSIGNED DEFAULT NULL,
 
 	PRIMARY KEY (`id`),
 	KEY `fk_created_by` (`created_by`),
@@ -67,3 +67,23 @@ INSERT INTO `groceries`.`users` (
 	)
 VALUES
 	('admin', 'admin');
+
+# INSERT ITEM
+# -----------
+
+INSERT INTO `groceries`.`items` (
+    `name`,
+    `create_date`,
+    `created_by`
+  )
+VALUES
+  ('Yoghurt', 1300000000, 1),
+  ('Bread', 1300000000, 1),
+  ('Eggs', 1300000000, 1),
+  ('Milk', 1300000000, 1),
+  ('Steak', 1300000000, 1),
+  ('Chocolate', 1300000000, 1),
+  ('Cola', 1300000000, 1),
+  ('Beer', 1300000000, 1),
+  ('Wine', 1300000000, 1),
+  ('Water', 1300000000, 1);

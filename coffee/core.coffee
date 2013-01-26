@@ -3,5 +3,5 @@ doc = document
 win = window
 APP = {}
 
-APP.init = ->
-  groceryView = new APP.GroceriesView()
+
+APP.init = -> APP.Core = new APP.GroceryView()

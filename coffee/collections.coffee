@@ -1,2 +1,2 @@
 class APP.GroceryCollection extends Backbone.Collection
-  model: Item
+  model: APP.ItemModel
