@@ -12,6 +12,7 @@ from application import app
 
 from flask.ext.sqlalchemy import SQLAlchemy
 
+from time import time
 
 db = SQLAlchemy(app)
 
@@ -61,11 +62,23 @@ class Item(db.Model):
 
     # TODO: Add relationships
 
-    def __init(self, name):
+    def __init__(self, name):
         self.name = name
+        self.create_date = time()
+        # TODO: Get created_by from currently logged in user.
+        self.created_by = 1
+        self.bought_date = None
+        self.bought_by = None
 
     def __repr__(self):
         return '<Item %r>' % self.name
+
+    @staticmethod
+    def create(name):
+        item = Item(name)
+        db.session.add(item)
+        db.session.commit()
+        return item
 
     def serialize(self):
         return {'id': self.id,

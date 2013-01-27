@@ -9,13 +9,13 @@
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
 from application import app
-from models import Item
+from models import Item, User
 from decorators import content_type
 
-from flask import make_response, render_template, send_from_directory
+from flask import make_response, render_template, request, send_from_directory
 from flask.ext.login import login_required
 
-from json import dumps
+from json import dumps, loads
 from os import path
 
 
@@ -30,8 +30,16 @@ def favicon():
 def home():
     return make_response(render_template('home.html'))
 
-@app.route('/items')
+@app.route('/items', methods=['GET'])
 @login_required
 @content_type('application/json')
-def items():
+def get():
     return make_response(dumps([item.serialize() for item in Item.query.all()]))
+
+@app.route('/items', methods=['POST'])
+@login_required
+@content_type('application/json')
+def post():
+    data = loads(request.data)
+    item = Item.create(data['name'])
+    return make_response(dumps(item.serialize()))
