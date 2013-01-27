@@ -9,7 +9,7 @@
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
 from application import app
-from models import Item, User
+from models import Item
 from decorators import content_type
 
 from flask import make_response, render_template, request, send_from_directory
@@ -42,4 +42,13 @@ def get():
 def post():
     data = loads(request.data)
     item = Item.create(data['name'])
+    return make_response(dumps(item.serialize()))
+
+@app.route('/items/<item_id>', methods=['PUT'])
+@login_required
+@content_type('application/json')
+def put(item_id):
+    data = loads(request.data)
+    item = Item.by_id(item_id)
+    item = item.bought(data['bought'])
     return make_response(dumps(item.serialize()))

@@ -74,6 +74,10 @@ class Item(db.Model):
         return '<Item %r>' % self.name
 
     @staticmethod
+    def by_id(item_id):
+        return Item.query.filter_by(id=item_id).first()
+
+    @staticmethod
     def create(name):
         item = Item(name)
         db.session.add(item)
@@ -87,3 +91,15 @@ class Item(db.Model):
                 'created_by': self.created_by,
                 'bought_date': self.bought_date,
                 'bought_by': self.bought_by}
+
+    def bought(self, bought):
+        if bought:
+            # TODO: Use id of logged in user.
+            self.bought_by = 1
+            self.bought_date = time()
+        else:
+            self.bought_by = None
+            self.bought_date = None
+        db.session.add(self)
+        db.session.commit()
+        return self

@@ -3,7 +3,8 @@ class APP.View.Grocery extends Backbone.View
   events:
     'keypress input': 'createOnEnter'
   input: $('input#new-item')
-  addAll: -> APP.groceryList.each @addOne, @
+  addAll: ->
+    APP.groceryList.each @addOne, @
   addOne: (item) ->
     view = new APP.View.Item model: item
     $(@el).find('ul').append view.render().el
@@ -22,6 +23,11 @@ class APP.View.Grocery extends Backbone.View
 
 class APP.View.Item extends Backbone.View
   tagName: 'li'
+  events:
+    'change .bought': 'toggleBought'
+  initialize: ->
+    @template = _.template($("#item-template").html())
   render: ->
-    $(@el).html @model.get('name')
+    $(@el).html @template(@model.toJSON())
     @
+  toggleBought: -> @model.toggle()

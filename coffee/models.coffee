@@ -1,8 +1,5 @@
-class APP.Model.User extends Backbone.Model
-  defaults:
-    username: ''
-
-
 class APP.Model.Item extends Backbone.Model
-  defaults:
-    name: 'New item'
+  initialize: ->
+    @set('bought', @get('bought_by') or @get('bought_date'))
+  toggle: ->
+    @save bought: not @get('bought')

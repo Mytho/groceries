@@ -15,4 +15,10 @@
 			APP.init();
 		});
 	</script>
+	{# -- Templates -- #}
+	<script type="text/template" id="item-template">
+		<input type="checkbox" class="bought" <%= bought ? 'checked="checked"' : '' %> />
+		<span><%= name %></span>
+		<button class="delete">delete</button>
+	</script>
 {% endblock %}
