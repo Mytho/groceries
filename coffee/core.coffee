@@ -1,7 +1,12 @@
 $ = jQuery
 doc = document
 win = window
-APP = {}
+APP =
+  Model: {}
+  View: {}
+  Collection: {}
 
 
-APP.init = -> APP.Core = new APP.GroceryView()
+APP.init = ->
+  APP.groceryList = new APP.Collection.Grocery
+  APP.groceryView = new APP.View.Grocery

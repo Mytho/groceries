@@ -1,17 +1,19 @@
-class APP.GroceryView extends Backbone.View
+class APP.View.Grocery extends Backbone.View
   el: $('ul#grocery-list')
-  addItem: (item) ->
-    view = new APP.ItemView model: item
+  addAll: -> APP.groceryList.each @addOne, @
+  addOne: (item) ->
+    view = new APP.View.Item model: item
     $('ul#grocery-list').append view.render().el
   initialize: ->
-    @groceryCollection = new APP.GroceryCollection()
-    @groceryCollection.bind 'add', @addItem
-    @render()
+    @listenTo(APP.groceryList, 'add', @addOne)
+    @listenTo(APP.groceryList, 'reset', @addAll)
+    @listenTo(APP.groceryList, 'all', @render)
+    APP.groceryList.fetch()
   render: ->
-    $(@el).append('<li>Sample item</li>')
+    @
 
 
-class APP.ItemView extends Backbone.View
+class APP.View.Item extends Backbone.View
   tagName: 'li'
   render: ->
     $(@el).html @model.get('name')

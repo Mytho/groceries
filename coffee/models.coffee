@@ -1,8 +1,8 @@
-class APP.UserModel extends Backbone.Model
+class APP.Model.User extends Backbone.Model
   defaults:
     username: ''
 
 
-class APP.ItemModel extends Backbone.Model
+class APP.Model.Item extends Backbone.Model
   defaults:
     name: 'New item'

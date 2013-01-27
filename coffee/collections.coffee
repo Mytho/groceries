@@ -1,4 +1,3 @@
-class APP.GroceryCollection extends Backbone.Collection
-  initialize: -> @fetch()
-  model: APP.ItemModel
+class APP.Collection.Grocery extends Backbone.Collection
+  model: APP.Model.Item
   url: '/items'
