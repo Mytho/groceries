@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
-{% block content %}<ul id="grocery-list"></ul>{% endblock %}
+{% block content %}
+	<div id="grocery-list">
+		<input type="text" id="new-item" />
+		<ul></ul>
+	</div>
+{% endblock %}
 {% block script %}
 	<script charset=utf-8" src="{{ url_for('static', filename='js/vendor/jquery.min.js') }}" type="text/javascript"></script>
 	<script charset=utf-8" src="{{ url_for('static', filename='js/vendor/underscore-min.js') }}" type="text/javascript"></script>

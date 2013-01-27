@@ -1,9 +1,16 @@
 class APP.View.Grocery extends Backbone.View
-  el: $('ul#grocery-list')
+  el: $('div#grocery-list')
+  events:
+    'keypress input': 'createOnEnter'
+  input: $('input#new-item')
   addAll: -> APP.groceryList.each @addOne, @
   addOne: (item) ->
     view = new APP.View.Item model: item
-    $('ul#grocery-list').append view.render().el
+    $(@el).find('ul').append view.render().el
+  createOnEnter: (e) ->
+    return if e.keyCode != 13 or @input.val() == ''
+    APP.groceryList.create name: @input.val()
+    @input.val('')
   initialize: ->
     @listenTo(APP.groceryList, 'add', @addOne)
     @listenTo(APP.groceryList, 'reset', @addAll)
