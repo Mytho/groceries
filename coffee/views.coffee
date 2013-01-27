@@ -14,9 +14,7 @@ class APP.View.Grocery extends Backbone.View
   initialize: ->
     @listenTo(APP.groceryList, 'add', @addOne)
     @listenTo(APP.groceryList, 'reset', @addAll)
-    @listenTo(APP.groceryList, 'all', @render)
     APP.groceryList.fetch()
-  render: -> @
 
 
 class APP.View.Item extends Backbone.View

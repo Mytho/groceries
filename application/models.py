@@ -11,6 +11,7 @@
 from application import app
 
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import current_user
 
 from time import time
 
@@ -65,8 +66,7 @@ class Item(db.Model):
     def __init__(self, name):
         self.name = name
         self.create_date = time()
-        # TODO: Get created_by from currently logged in user.
-        self.created_by = 1
+        self.created_by = current_user.id
         self.bought_date = None
         self.bought_by = None
 
@@ -74,8 +74,17 @@ class Item(db.Model):
         return '<Item %r>' % self.name
 
     @staticmethod
-    def by_id(item_id):
-        return Item.query.filter_by(id=item_id).first()
+    def bought(item_id, bought):
+        item = Item.query.get(item_id)
+        if bought:
+            item.bought_by = current_user.id
+            item.bought_date = time()
+        else:
+            item.bought_by = None
+            item.bought_date = None
+        db.session.add(item)
+        db.session.commit()
+        return item
 
     @staticmethod
     def create(name):
@@ -86,7 +95,7 @@ class Item(db.Model):
 
     @staticmethod
     def delete(item_id):
-        db.session.delete(Item.by_id(item_id))
+        db.session.delete(Item.query.get(item_id))
         db.session.commit()
 
     def serialize(self):
@@ -96,15 +105,3 @@ class Item(db.Model):
                 'created_by': self.created_by,
                 'bought_date': self.bought_date,
                 'bought_by': self.bought_by}
-
-    def bought(self, bought):
-        if bought:
-            # TODO: Use id of logged in user.
-            self.bought_by = 1
-            self.bought_date = time()
-        else:
-            self.bought_by = None
-            self.bought_date = None
-        db.session.add(self)
-        db.session.commit()
-        return self

@@ -25,36 +25,36 @@ def favicon():
     return make_response(send_from_directory(path.join(app.root_path, 'static'),
                                              'favicon.ico'))
 
-@app.route('/')
 @login_required
+@app.route('/')
 def home():
     return make_response(render_template('home.html'))
 
-@app.route('/items', methods=['GET'])
 @login_required
+@app.route('/items', methods=['GET'])
 @content_type('application/json')
 def get():
-    return make_response(dumps([item.serialize() for item in Item.query.all()]))
+    items = Item.query.filter_by(bought_by=None)
+    return make_response(dumps([item.serialize() for item in items]))
 
-@app.route('/items', methods=['POST'])
 @login_required
+@app.route('/items', methods=['POST'])
 @content_type('application/json')
 def post():
     data = loads(request.data)
     item = Item.create(data['name'])
     return make_response(dumps(item.serialize()))
 
-@app.route('/items/<item_id>', methods=['PUT'])
 @login_required
+@app.route('/items/<item_id>', methods=['PUT'])
 @content_type('application/json')
 def put(item_id):
     data = loads(request.data)
-    item = Item.by_id(item_id)
-    item = item.bought(data['bought'])
-    return make_response(dumps(item.serialize()))
+    Item.bought(item_id, data['bought'])
+    return make_response(dumps(''))
 
-@app.route('/items/<item_id>', methods=['DELETE'])
 @login_required
+@app.route('/items/<item_id>', methods=['DELETE'])
 @content_type('application/json')
 def delete(item_id):
     Item.delete(item_id)

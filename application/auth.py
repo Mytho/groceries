@@ -21,13 +21,12 @@ login_manager.setup_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.filter_by(id=user_id).first()
-
+    return User.query.get(user_id)
 
 @app.route('/login')
 def login():
     # TODO: Create proper login functionality
-    login_user(User.query.filter_by(id=1).first())
+    login_user(User.query.get(2))
     return make_response('Logged In')
 
 @app.route('/logout')
