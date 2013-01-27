@@ -84,6 +84,11 @@ class Item(db.Model):
         db.session.commit()
         return item
 
+    @staticmethod
+    def delete(item_id):
+        db.session.delete(Item.by_id(item_id))
+        db.session.commit()
+
     def serialize(self):
         return {'id': self.id,
                 'name': self.name,

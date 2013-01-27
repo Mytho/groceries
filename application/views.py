@@ -52,3 +52,10 @@ def put(item_id):
     item = Item.by_id(item_id)
     item = item.bought(data['bought'])
     return make_response(dumps(item.serialize()))
+
+@app.route('/items/<item_id>', methods=['DELETE'])
+@login_required
+@content_type('application/json')
+def delete(item_id):
+    Item.delete(item_id)
+    return make_response('')
