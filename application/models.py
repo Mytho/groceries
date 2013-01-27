@@ -66,3 +66,11 @@ class Item(db.Model):
 
     def __repr__(self):
         return '<Item %r>' % self.name
+
+    def serialize(self):
+        return {'id': self.id,
+                'name': self.name,
+                'create_date': self.create_date,
+                'created_by': self.created_by,
+                'bought_date': self.bought_date,
+                'bought_by': self.bought_by}

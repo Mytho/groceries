@@ -9,11 +9,13 @@
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
 from application import app
+from models import Item
 from decorators import content_type
 
 from flask import make_response, render_template, send_from_directory
 from flask.ext.login import login_required
 
+from json import dumps
 from os import path
 
 
@@ -32,5 +34,4 @@ def home():
 @login_required
 @content_type('application/json')
 def items():
-    # TODO: Fetch models from database
-    return make_response('[{"name":"apples"},{"name":"milk"},{"name":"bread"}]')
+    return make_response(dumps([item.serialize() for item in Item.query.all()]))
