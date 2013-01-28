@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `groceries`.`users` (
 	`id`       INT(11)     UNSIGNED NOT NULL AUTO_INCREMENT,
 	`username` VARCHAR(64) NOT NULL UNIQUE,
 	`password` VARCHAR(64) NOT NULL,
+  `active`   BIT(1)      DEFAULT 1,
 
 	PRIMARY KEY (`id`)
 )
@@ -66,7 +67,8 @@ INSERT INTO `groceries`.`users` (
 		`password`
 	)
 VALUES
-	('admin', 'admin');
+	('user1', 'user1'),
+	('user2', 'user2');
 
 # INSERT ITEM
 # -----------

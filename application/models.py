@@ -15,6 +15,7 @@ from flask.ext.login import current_user
 
 from time import time
 
+
 db = SQLAlchemy(app)
 
 
@@ -24,8 +25,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True)
     password = db.Column(db.String(64))
-
-    # TODO: Add relationships
+    active = db.Column(db.Integer(1))
 
     def __init__(self, username, password):
         self.username = username
@@ -35,14 +35,10 @@ class User(db.Model):
         return '<User %r>' % self.username
 
     def is_authenticated(self):
-        # TODO: Add proper check
-        # http://packages.python.org/Flask-Login/
         return True
 
     def is_active(self):
-        # TODO: Add property to the database
-        # http://packages.python.org/Flask-Login/
-        return True
+        return True if self.active else False
 
     def is_anonymous(self):
         return False
@@ -60,8 +56,6 @@ class Item(db.Model):
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     bought_date = db.Column(db.Integer)
     bought_by = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-    # TODO: Add relationships
 
     def __init__(self, name):
         self.name = name
