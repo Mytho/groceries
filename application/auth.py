@@ -12,7 +12,8 @@ from application import app
 from models import User
 
 from flask import make_response, redirect, url_for
-from flask.ext.login import LoginManager, login_user, logout_user
+from flask.ext.login import LoginManager, login_user, logout_user, \
+                            login_required
 
 
 login_manager = LoginManager()
