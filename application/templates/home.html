@@ -1,4 +1,7 @@
 {% extends "layout.html" %}
+{% block head_style %}
+	<link charset="utf-8" href="{{ url_for('static', filename='css/screen.min.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block content %}
 	<div id="grocery-list">
 		<input type="text" id="new-item" />
