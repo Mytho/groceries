@@ -20,7 +20,7 @@ class APP.View.Grocery extends Backbone.View
 class APP.View.Item extends Backbone.View
   tagName: 'li'
   events:
-    'dblclick': 'showDelete'
+    #TODO: 'dblClick': 'showDelete'
     'change .bought': 'toggleBought'
     'click .delete': 'delete'
   delete: -> @model.destroy()

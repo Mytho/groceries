@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
 	<div id="grocery-list">
-		<input type="text" id="new-item" />
+		<input id="new-item" placeholder="What needs to be bought?" type="text" />
 		<ul></ul>
 	</div>
 {% endblock %}
@@ -20,8 +20,8 @@
 	</script>
 	{# -- Templates -- #}
 	<script type="text/template" id="item-template">
-		<input type="checkbox" class="bought" <%= bought ? 'checked="checked"' : '' %> />
-		<span><%= name %></span>
+		<input id="checkbox-<%= id %>" type="checkbox" class="bought" <%= bought ? 'checked="checked"' : '' %> />
+		<label for="checkbox-<%= id %>"><%= name %></label>
 		<button class="delete">delete</button>
 	</script>
 {% endblock %}

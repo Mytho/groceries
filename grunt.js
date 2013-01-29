@@ -67,6 +67,10 @@ module.exports = function(grunt) {
             app: {
                 files: ['coffee/*.coffee'],
                 tasks: 'concat:app coffee:app'
+            },
+            less: {
+                files: ['less/*.less'],
+                tasks: 'concat:less less:less cssmin:less'
             }
         }
     });
