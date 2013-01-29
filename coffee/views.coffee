@@ -30,7 +30,7 @@ class APP.View.Item extends Backbone.View
     @listenTo(@model, 'destroy', @remove)
   render: ->
     $(@el).html @template(@model.toJSON())
-    $(@el).find('.delete').hide()
+    #TODO: $(@el).find('.delete').hide()
     @
   showDelete: -> $(@el).find('.delete').toggle()
   toggleBought: -> @model.toggle()
