@@ -17,7 +17,7 @@ from flask.ext.login import LoginManager, login_user, logout_user, \
 
 
 login_manager = LoginManager()
-login_manager.setup_app(app)
+login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):

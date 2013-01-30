@@ -16,4 +16,4 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_NAME = 'session'
 SESSION_COOKIE_PATH = '/'
 SESSION_COOKIE_SECURE = False
-SQLALCHEMY_DATABASE_URI = mysql://username:password@server/db
+SQLALCHEMY_DATABASE_URI = 'mysql://username:password@host/database'
