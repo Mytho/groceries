@@ -20,8 +20,9 @@ class APP.View.Grocery extends Backbone.View
 class APP.View.Item extends Backbone.View
   tagName: 'li'
   events:
-    #TODO: 'dblClick': 'showDelete'
-    'change .bought': 'toggleBought'
+    'click': 'toggleDeleteButton'
+    'click label': 'toggleBought'
+    'click .bought': 'toggleBought'
     'click .delete': 'delete'
   delete: -> @model.destroy()
   initialize: ->
@@ -30,10 +31,9 @@ class APP.View.Item extends Backbone.View
     @listenTo(@model, 'destroy', @remove)
   render: ->
     $(@el).html @template(@model.toJSON())
-    if @model.id
-      $(@el).find('input').attr('id', 'checkbox-' + @model.id)
-      $(@el).find('label').attr('for', 'checkbox-' + @model.id)
-    #TODO: $(@el).find('.delete').hide()
+    $(@el).find('.delete').hide()
     @
-  showDelete: -> $(@el).find('.delete').toggle()
-  toggleBought: -> @model.toggle()
+  toggleDeleteButton: -> $(@el).find('.delete').toggle()
+  toggleBought: (e) ->
+    @model.toggle()
+    e.preventPropagation()
