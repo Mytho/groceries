@@ -1,5 +1,5 @@
 class APP.View.Grocery extends Backbone.View
-  el: $('div#grocery-list')
+  el: $('div#content')
   events:
     'keypress input#new-item': 'createOnEnter'
   input: $('input#new-item')

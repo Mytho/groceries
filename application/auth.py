@@ -11,9 +11,10 @@
 from application import app
 from models import User
 
-from flask import make_response, redirect, url_for
+from flask import make_response, redirect, render_template, request, url_for
 from flask.ext.login import LoginManager, login_user, logout_user, \
                             login_required
+from werkzeug.security import check_password_hash
 
 
 login_manager = LoginManager()
@@ -26,9 +27,12 @@ def load_user(user_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # TODO: Create proper login functionality
-    login_user(User.query.get(2))
-    return make_response('Login view')
+    if request.method == 'POST':
+        user = User.query.filter_by(username=request.form['username']).first()
+        if check_password_hash(user.password, request.form['password']):
+            login_user(user)
+            return redirect(url_for('home'))
+    return make_response(render_template('login.html'))
 
 @app.route('/logout', methods=['GET'])
 @login_required

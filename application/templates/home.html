@@ -3,10 +3,8 @@
 	<link charset="utf-8" href="{{ url_for('static', filename='css/screen.min.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
-	<div id="grocery-list">
-		<input id="new-item" placeholder="What needs to be bought?" type="text" />
-		<ul></ul>
-	</div>
+	<input id="new-item" placeholder="What needs to be bought?" type="text" />
+	<ul></ul>
 {% endblock %}
 {% block script %}
 	<script charset=utf-8" src="{{ url_for('static', filename='js/vendor/jquery.min.js') }}" type="text/javascript"></script>

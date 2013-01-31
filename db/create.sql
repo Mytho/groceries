@@ -67,8 +67,8 @@ INSERT INTO `groceries`.`users` (
 		`password`
 	)
 VALUES
-	('user1', 'user1'),
-	('user2', 'user2');
+	('teun', 'sha1$lgkA6dTN$756ee8285201102a53d72875f6a628db1f9dfde6'),
+	('britt', 'sha1$D3djKAfD$0bafbfc63ceb98602bf0b993235ddac81171db0f');
 
 # INSERT ITEM
 # -----------
