@@ -30,6 +30,9 @@ class APP.View.Item extends Backbone.View
     @listenTo(@model, 'destroy', @remove)
   render: ->
     $(@el).html @template(@model.toJSON())
+    if @model.id
+      $(@el).find('input').attr('id', 'checkbox-' + @model.id)
+      $(@el).find('label').attr('for', 'checkbox-' + @model.id)
     #TODO: $(@el).find('.delete').hide()
     @
   showDelete: -> $(@el).find('.delete').toggle()
