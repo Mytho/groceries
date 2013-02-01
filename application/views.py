@@ -9,13 +9,12 @@
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
 from application import app
-from models import Item
+from auth import logged_in_or_redirect
 from decorators import content_type
-
 from flask import make_response, render_template, request, send_from_directory
 from flask.ext.login import login_required
-
 from json import dumps, loads
+from models import Item
 from os import path
 
 
@@ -26,7 +25,7 @@ def favicon():
                                              'favicon.ico'))
 
 @app.route('/')
-@login_required
+@logged_in_or_redirect
 def home():
     return make_response(render_template('home.html'))
 

@@ -9,10 +9,8 @@
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
 from application import app
-
-from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import current_user
-
+from flask.ext.sqlalchemy import SQLAlchemy
 from time import time
 
 

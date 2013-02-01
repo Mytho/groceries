@@ -9,7 +9,6 @@
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
 from application import app
-
 from flask import render_template
 
 
