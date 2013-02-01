@@ -54,3 +54,7 @@ class APP.View.Suggestion extends Backbone.View
     $(at.el).html('')
     _.each APP.suggestions.filtered, (suggestion) ->
       $("ul#suggestions").append at.template suggestion.toJSON()
+    if APP.suggestions.filtered.length
+      $("ul#groceries").hide()
+    if $("#new-item").val() is ''
+      $("ul#groceries").show()
