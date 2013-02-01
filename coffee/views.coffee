@@ -36,4 +36,4 @@ class APP.View.Item extends Backbone.View
   toggleDeleteButton: -> $(@el).find('.delete').toggle()
   toggleBought: (e) ->
     @model.toggle()
-    e.preventPropagation()
+    e.stopPropagation()

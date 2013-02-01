@@ -66,7 +66,7 @@ module.exports = function(grunt) {
         watch: {
             app: {
                 files: ['coffee/*.coffee'],
-                tasks: 'concat:app coffee:app'
+                tasks: 'concat:app coffee:app min:app'
             },
             less: {
                 files: ['less/*.less'],
