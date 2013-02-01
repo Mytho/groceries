@@ -9,7 +9,8 @@
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
 from application import app
-from flask import make_response, redirect, render_template, request, url_for
+from flask import (flash, make_response, redirect, render_template, request,
+                  url_for)
 from flask.ext.login import current_user, LoginManager, login_user, logout_user
 from functools import wraps
 from models import User
@@ -36,10 +37,14 @@ def load_user(user_id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        user = User.query.filter_by(username=request.form['username']).first()
-        if check_password_hash(user.password, request.form['password']):
-            login_user(user)
-            return redirect(url_for('home'))
+        username = request.form['username']
+        password = request.form['password']
+        if username and password:
+            user = User.query.filter_by(username=username).first()
+            if check_password_hash(user.password, password):
+                login_user(user)
+                return redirect(url_for('home'))
+        flash('Incorrect login supplied')
     return make_response(render_template('login.html'))
 
 @app.route('/logout', methods=['GET'])
