@@ -1,8 +1,10 @@
 class APP.View.Grocery extends Backbone.View
   el: $('div#content')
+  groceries: $("ul#groceries")
+  input: $('input#new-item')
+  suggestions: $('ul#suggestions')
   events:
     'keyup input#new-item': 'createOnEnter'
-  input: $('input#new-item')
   addAll: -> APP.groceryList.each @addOne, @
   addOne: (item) ->
     view = new APP.View.Item model: item
@@ -18,10 +20,15 @@ class APP.View.Grocery extends Backbone.View
     APP.groceryList.fetch()
     APP.suggestions.fetch()
   renderSuggestions: ->
+    at = @
+    @suggestions.html('')
     APP.suggestions.like @input.val() if @input.val() isnt ''
     APP.suggestions.clear() if @input.val() is ''
-    view = new APP.View.Suggestion
-    view.render()
+    _.each APP.suggestions.filtered, (suggestion) ->
+      view = new APP.View.Suggestion model: suggestion
+      $(at.suggestions).append view.render().el
+    @groceries.hide() if APP.suggestions.filtered.length
+    @groceries.show() if @input.val() is ''
 
 
 class APP.View.Item extends Backbone.View
@@ -37,7 +44,7 @@ class APP.View.Item extends Backbone.View
     @listenTo(@model, 'change', @render)
     @listenTo(@model, 'destroy', @remove)
   render: ->
-    $(@el).html @template(@model.toJSON())
+    $(@el).html @template @model.toJSON()
     $(@el).find('.delete').hide()
     @
   toggleDeleteButton: -> $(@el).find('.delete').toggle()
@@ -47,14 +54,14 @@ class APP.View.Item extends Backbone.View
 
 
 class APP.View.Suggestion extends Backbone.View
-  el: $('ul#suggestions')
+  tagName: 'li'
+  events:
+    'click': 'addItem'
+  addItem: ->
+    APP.groceryList.create name: @model.get('name')
+    $("ul#suggestions").hide()
+    $("ul#groceries").show()
   initialize: -> @template = _.template $('#suggestion-template').html()
   render: ->
-    at = @
-    $(at.el).html('')
-    _.each APP.suggestions.filtered, (suggestion) ->
-      $("ul#suggestions").append at.template suggestion.toJSON()
-    if APP.suggestions.filtered.length
-      $("ul#groceries").hide()
-    if $("#new-item").val() is ''
-      $("ul#groceries").show()
+    $(@el).html @template @model.toJSON()
+    @
