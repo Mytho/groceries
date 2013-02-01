@@ -1,7 +1,7 @@
 {
 	"version": "0.1.0",
 	"name": "Groceries",
-	"description": "Manage your groceries",
+	"description": "Manage your grocery list",
 	"author": {
 		"name": "T.Zengerink",
 		"email": "t.zengerink@gmail.com"

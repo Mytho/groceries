@@ -1,3 +1,3 @@
-# GROCERIES
+# Groceries
 
-Manage your grocery list
+Manage your grocery list.
