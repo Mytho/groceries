@@ -3,8 +3,10 @@
 	"name": "groceries",
 	"description": "Manage your groceries",
 	"author": "T.Zengerink <t.zengerink@gmail.com>",
+	"scripts": {
+		"preinstall": "npm install -g grunt"
+	},
 	"dependencies": {
-		"grunt": "0.3.17",
 		"grunt-coffee": "0.0.6",
 		"grunt-css": "0.3.2",
 		"grunt-contrib-less": "0.3.2"
