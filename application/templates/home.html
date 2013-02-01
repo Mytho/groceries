@@ -4,7 +4,8 @@
 {% endblock %}
 {% block content %}
 	<input id="new-item" placeholder="What needs to be bought?" type="text" />
-	<ul></ul>
+	<ul id="groceries"></ul>
+	<ul id="suggestions"></ul>
 {% endblock %}
 {% block script %}
 	<script charset=utf-8" src="{{ url_for('static', filename='js/vendor/jquery.min.js') }}" type="text/javascript"></script>
@@ -21,5 +22,8 @@
 		<input type="checkbox" class="bought" <%= bought ? 'checked="checked"' : '' %> />
 		<label><%= name %></label>
 		<button class="delete">delete</button>
+	</script>
+	<script type="text/template" id="suggestion-template">
+		<li><%= name %></li>
 	</script>
 {% endblock %}

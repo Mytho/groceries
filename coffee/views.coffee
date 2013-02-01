@@ -1,20 +1,27 @@
 class APP.View.Grocery extends Backbone.View
   el: $('div#content')
   events:
-    'keypress input#new-item': 'createOnEnter'
+    'keyup input#new-item': 'createOnEnter'
   input: $('input#new-item')
   addAll: -> APP.groceryList.each @addOne, @
   addOne: (item) ->
     view = new APP.View.Item model: item
-    $(@el).find('ul').append view.render().el
+    $(@el).find('ul#groceries').append view.render().el
   createOnEnter: (e) ->
-    return if e.keyCode != 13 or @input.val() == ''
+    @renderSuggestions()
+    return if e.keyCode isnt 13 or @input.val() is ''
     APP.groceryList.create name: @input.val()
     @input.val('')
   initialize: ->
     @listenTo(APP.groceryList, 'add', @addOne)
     @listenTo(APP.groceryList, 'reset', @addAll)
     APP.groceryList.fetch()
+    APP.suggestions.fetch()
+  renderSuggestions: ->
+    APP.suggestions.like @input.val() if @input.val() isnt ''
+    APP.suggestions.clear() if @input.val() is ''
+    view = new APP.View.Suggestion
+    view.render()
 
 
 class APP.View.Item extends Backbone.View
@@ -26,7 +33,7 @@ class APP.View.Item extends Backbone.View
     'click .delete': 'delete'
   delete: -> @model.destroy()
   initialize: ->
-    @template = _.template($("#item-template").html())
+    @template = _.template $('#item-template').html()
     @listenTo(@model, 'change', @render)
     @listenTo(@model, 'destroy', @remove)
   render: ->
@@ -37,3 +44,13 @@ class APP.View.Item extends Backbone.View
   toggleBought: (e) ->
     @model.toggle()
     e.stopPropagation()
+
+
+class APP.View.Suggestion extends Backbone.View
+  el: $('ul#suggestions')
+  initialize: -> @template = _.template $('#suggestion-template').html()
+  render: ->
+    at = @
+    $(at.el).html('')
+    _.each APP.suggestions.filtered, (suggestion) ->
+      $("ul#suggestions").append at.template suggestion.toJSON()

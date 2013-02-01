@@ -13,4 +13,5 @@ APP.ajaxErrorHandler = (e, xhr) ->
 APP.init = ->
   $(doc).ajaxError(APP.ajaxErrorHandler)
   APP.groceryList = new APP.Collection.Grocery
+  APP.suggestions = new APP.Collection.Suggestion
   APP.groceryView = new APP.View.Grocery
