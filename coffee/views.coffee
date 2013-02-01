@@ -21,7 +21,7 @@ class APP.View.Grocery extends Backbone.View
     APP.suggestions.fetch()
   renderSuggestions: ->
     at = @
-    @suggestions.html('')
+    @suggestions.html('').show()
     APP.suggestions.like @input.val() if @input.val() isnt ''
     APP.suggestions.clear() if @input.val() is ''
     _.each APP.suggestions.filtered, (suggestion) ->
