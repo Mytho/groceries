@@ -1,8 +1,15 @@
 {
 	"version": "0.1.0",
-	"name": "groceries",
+	"name": "Groceries",
 	"description": "Manage your groceries",
-	"author": "T.Zengerink <t.zengerink@gmail.com>",
+	"author": {
+		"name": "T.Zengerink",
+		"email": "t.zengerink@gmail.com"
+	},
+	"lisence": {
+		"type": "MIT",
+		"url": "https://raw.github.com/Mytho/groceries/master/LISENCE.md"
+	},
 	"scripts": {
 		"preinstall": "npm install -g grunt"
 	},

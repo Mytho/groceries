@@ -39,11 +39,11 @@ module.exports = function(grunt) {
         },
         meta: {
             banner: '/*!\n' +
-                ' * <%= pkg.name %>\n' +
+                ' * <%= pkg.name %> v<%= pkg.version %>\n' +
                 ' * - - -\n' +
-                ' * Author: <%= pkg.author.name %> (<%= pkg.author.email %>)\n' +
                 ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
-                ' * <%= pkg.lisence.type %> lisenced, <%= pkg.lisence.url %>\n' +
+                ' * Released under <%= pkg.lisence.type %> lisenced\n' +
+                ' * <%= pkg.lisence.url %>\n' +
                 ' */'
         },
         min: {
@@ -52,17 +52,7 @@ module.exports = function(grunt) {
                 dest: 'application/static/js/app.min.js'
             }
         },
-        pkg: {
-            'name': 'GROCERIES',
-            'author': {
-                'name': 'T. Zengerink',
-                'email': 't.zengerink@gmail.com'
-            },
-            'lisence': {
-                'type': 'MIT',
-                'url': 'https://raw.github.com/Mytho/groceries/master/LISENCE.md'
-            }
-        },
+        pkg: '<json:package.json>',
         watch: {
             app: {
                 files: ['coffee/*.coffee'],
