@@ -13,6 +13,7 @@ class APP.View.Grocery extends Backbone.View
     @renderSuggestions()
     return if e.keyCode isnt 13 or @input.val() is ''
     APP.groceryList.create name: @input.val()
+    @groceries.show()
     @input.val('')
   initialize: ->
     @listenTo(APP.groceryList, 'add', @addOne)
