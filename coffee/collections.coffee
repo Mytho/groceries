@@ -8,6 +8,7 @@ class APP.Collection.Suggestion extends Backbone.Collection
   filtered: []
   model: APP.Model.Suggestion
   url: '/suggestions'
+  comparator: (suggestion) -> return -suggestion.get('count')
   clear: -> @filtered = []
   like: (input) ->
     @filtered = @.filter (item) ->
