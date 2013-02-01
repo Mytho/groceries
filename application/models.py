@@ -11,6 +11,7 @@
 from application import app
 from flask.ext.login import current_user
 from flask.ext.sqlalchemy import SQLAlchemy
+from sqlalchemy import desc, func
 from time import time
 
 
@@ -89,6 +90,13 @@ class Item(db.Model):
     def delete(item_id):
         db.session.delete(Item.query.get(item_id))
         db.session.commit()
+
+    @staticmethod
+    def suggestions():
+        return db.session \
+            .query(Item.name, func.count(Item.name).label('count')) \
+            .group_by(Item.name) \
+            .order_by(desc('count')).all()
 
     def serialize(self):
         return {'id': self.id,

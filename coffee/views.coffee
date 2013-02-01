@@ -61,6 +61,7 @@ class APP.View.Suggestion extends Backbone.View
     APP.groceryList.create name: @model.get('name')
     $("ul#suggestions").hide()
     $("ul#groceries").show()
+    $("input#new-item").val('')
   initialize: -> @template = _.template $('#suggestion-template').html()
   render: ->
     $(@el).html @template @model.toJSON()

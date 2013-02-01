@@ -63,5 +63,6 @@ def delete_items(item_id):
 @login_required
 @content_type('application/json')
 def get_suggests():
-    items = Item.query.filter_by(bought_by=None)
-    return make_response(dumps([item.serialize() for item in items]))
+    suggestions = [dict([['name', k], ['count', v]]) \
+        for (k, v) in Item.suggestions()]
+    return make_response(dumps(suggestions))
