@@ -1,12 +1,7 @@
-# CREATE DB
-# ---------
-
-CREATE DATABASE IF NOT EXISTS `groceries`;
-
 # CREATE DATABASE_MODIFICATION
 # ----------------------------
 
-CREATE TABLE IF NOT EXISTS `groceries`.`database_modifications` (
+CREATE TABLE IF NOT EXISTS `database_modifications` (
 	`id`          VARCHAR(255) NOT NULL,
 	`applied_at`  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`script_name` VARCHAR(255) NOT NULL,
@@ -20,7 +15,7 @@ DEFAULT CHARSET = utf8;
 # CREATE USER
 # -----------
 
-CREATE TABLE IF NOT EXISTS `groceries`.`users` (
+CREATE TABLE IF NOT EXISTS `users` (
 	`id`       INT(11)     UNSIGNED NOT NULL AUTO_INCREMENT,
 	`username` VARCHAR(64) NOT NULL UNIQUE,
 	`password` VARCHAR(64) NOT NULL,
@@ -34,7 +29,7 @@ DEFAULT CHARSET = utf8;
 # CREATE ITEM
 # -----------
 
-CREATE TABLE IF NOT EXISTS `groceries`.`items` (
+CREATE TABLE IF NOT EXISTS `items` (
 	`id`          INT(11)      UNSIGNED NOT NULL AUTO_INCREMENT,
 	`name`        VARCHAR(255) NOT NULL,
 	`create_date` INT(10)      NOT NULL,
@@ -48,12 +43,12 @@ CREATE TABLE IF NOT EXISTS `groceries`.`items` (
 
 	CONSTRAINT `ibfk_items_1`
 	FOREIGN KEY (`created_by`)
-	REFERENCES `groceries`.`users` (`id`)
+	REFERENCES `users` (`id`)
 	ON DELETE CASCADE,
 
 	CONSTRAINT `ibfk_items_2`
 	FOREIGN KEY (`bought_by`)
-	REFERENCES `groceries`.`users` (`id`)
+	REFERENCES `users` (`id`)
 	ON DELETE CASCADE
 )
 ENGINE = InnoDB
@@ -62,7 +57,7 @@ DEFAULT CHARSET = utf8;
 # INSERT USER
 # -----------
 
-INSERT INTO `groceries`.`users` (
+INSERT INTO `users` (
 		`username`,
 		`password`
 	)
@@ -73,7 +68,7 @@ VALUES
 # INSERT ITEM
 # -----------
 
-INSERT INTO `groceries`.`items` (
+INSERT INTO `items` (
     `name`,
     `create_date`,
     `created_by`
