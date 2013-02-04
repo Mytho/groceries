@@ -22,7 +22,7 @@ from os import path
 @content_type('image/vnd.microsoft.icon')
 def favicon():
     return make_response(send_from_directory(path.join(app.root_path, 'static'),
-                                             'favicon.ico'))
+                                             'icons/shopping-cart-32x32.png'))
 
 @app.route('/')
 @logged_in_or_redirect
