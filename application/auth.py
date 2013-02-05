@@ -42,7 +42,7 @@ def login():
         if username and password:
             user = User.query.filter_by(username=username).first()
             if check_password_hash(user.password, password):
-                login_user(user)
+                login_user(user, remember=True)
                 return redirect(url_for('home'))
         flash('Incorrect login supplied')
     return make_response(render_template('login.html'))
