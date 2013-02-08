@@ -1,17 +1,14 @@
 $ = jQuery
 doc = document
 win = window
+
 APP =
   Model: {}
   View: {}
   Collection: {}
-
-
-APP.ajaxErrorHandler = (e, xhr) ->
+  ajaxErrorHandler: (e, xhr) ->
     win.location = "login" if xhr.status is 401
-
-APP.init = ->
-  $(doc).ajaxError APP.ajaxErrorHandler
-  APP.groceryList = new APP.Collection.Grocery
-  APP.suggestions = new APP.Collection.Suggestion
-  APP.groceryView = new APP.View.Grocery
+  init: ->
+    $(doc).ajaxError APP.ajaxErrorHandler
+    APP.router = new APP.Router
+    Backbone.history.start pushState: true
