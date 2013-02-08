@@ -1,4 +1,4 @@
-class APP.Router extends Backbone.Router.extend
+class APP.Router extends Backbone.Router
   routes:
     "": "home"
   home: ->

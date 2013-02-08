@@ -11,6 +11,7 @@ module.exports = function(grunt) {
             app: {
                 src: [
                     'coffee/core.coffee',
+                    'coffee/router.coffee',
                     'coffee/models.coffee',
                     'coffee/collections.coffee',
                     'coffee/views.coffee'
