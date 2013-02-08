@@ -15,7 +15,7 @@
   </head>
   <body>
     <div id="content">{% block content %}{% endblock %}</div>
-		<div id="footer"><a href="https://raw.github.com/Mytho/groceries/master/LISENCE.md">Copyright &copy; T. Zengerink</a></a></div>
+		<div id="footer">{% block footer %}{% endblock %}</div>
 		{% block script %}{% endblock %}
   </body>
 </html>
