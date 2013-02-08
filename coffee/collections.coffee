@@ -8,8 +8,10 @@ class APP.Collection.Suggestion extends Backbone.Collection
   filtered: []
   model: APP.Model.Suggestion
   url: '/suggestions'
-  comparator: (suggestion) -> return -suggestion.get('count')
-  clear: -> @filtered = []
+  comparator: (suggestion) ->
+    -suggestion.get('count')
+  clear: ->
+    @filtered = []
   like: (input) ->
     @filtered = @.filter (item) ->
       item.get('name').toLowerCase().indexOf(input.toLowerCase()) isnt -1

@@ -5,7 +5,8 @@ class APP.View.Grocery extends Backbone.View
   suggestions: $('ul#suggestions')
   events:
     'keyup input#new-item': 'createOnEnter'
-  addAll: -> APP.groceryList.each @addOne, @
+  addAll: ->
+    APP.groceryList.each @addOne, @
   addOne: (item) ->
     view = new APP.View.Item model: item
     $(@el).find('ul#groceries').append view.render().el
@@ -39,7 +40,8 @@ class APP.View.Item extends Backbone.View
     'click label': 'toggleBought'
     'click .bought': 'toggleBought'
     'click .delete': 'delete'
-  delete: -> @model.destroy()
+  delete: ->
+    @model.destroy()
   initialize: ->
     @template = _.template $('#item-template').html()
     @listenTo(@model, 'change', @render)
@@ -48,7 +50,8 @@ class APP.View.Item extends Backbone.View
     $(@el).html @template @model.toJSON()
     $(@el).find('.delete').hide()
     @
-  toggleDeleteButton: -> $(@el).find('.delete').toggle()
+  toggleDeleteButton: ->
+    $(@el).find('.delete').toggle()
   toggleBought: (e) ->
     @model.toggle()
     e.stopPropagation()
@@ -63,7 +66,8 @@ class APP.View.Suggestion extends Backbone.View
     $("ul#suggestions").hide()
     $("ul#groceries").show()
     $("input#new-item").val('')
-  initialize: -> @template = _.template $('#suggestion-template').html()
+  initialize: ->
+    @template = _.template $('#suggestion-template').html()
   render: ->
     $(@el).html @template @model.toJSON()
     @
