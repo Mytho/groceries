@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 	`id`       INT(11)     UNSIGNED NOT NULL AUTO_INCREMENT,
 	`username` VARCHAR(64) NOT NULL UNIQUE,
 	`password` VARCHAR(64) NOT NULL,
-  `active`   BIT(1)      DEFAULT 1,
+	`active`   BIT(1)      DEFAULT 1,
 
 	PRIMARY KEY (`id`)
 )
@@ -69,10 +69,10 @@ VALUES
 # -----------
 
 INSERT INTO `items` (
-    `name`,
-    `create_date`,
-    `created_by`
-  )
+		`name`,
+		`create_date`,
+		`created_by`
+	)
 VALUES
   ('Yoghurt', 1300000000, 1),
   ('Bread', 1300000000, 1),
