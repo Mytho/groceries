@@ -6,22 +6,22 @@ class APP.View.Grocery extends Backbone.View
   events:
     'keyup input#new-item': 'createOnEnter'
   addAll: ->
-    APP.groceryList.each @addOne, @
+    APP.groceries.each @addOne, @
   addOne: (item) ->
     view = new APP.View.Item model: item
     $(@el).find('ul#groceries').append view.render().el
   createOnEnter: (e) ->
     @renderSuggestions()
     return if e.keyCode isnt 13 or @input.val() is ''
-    APP.groceryList.create name: @input.val()
+    APP.groceries.create name: @input.val()
     @groceries.show()
     @input.val('')
   initialize: ->
-    APP.groceryList = new APP.Collection.Grocery
+    APP.groceries = new APP.Collection.Grocery
     APP.suggestions = new APP.Collection.Suggestion
-    @listenTo(APP.groceryList, 'add', @addOne)
-    @listenTo(APP.groceryList, 'reset', @addAll)
-    APP.groceryList.fetch()
+    @listenTo(APP.groceries, 'add', @addOne)
+    @listenTo(APP.groceries, 'reset', @addAll)
+    APP.groceries.fetch()
     APP.suggestions.fetch()
   renderSuggestions: ->
     at = @
@@ -64,7 +64,7 @@ class APP.View.Suggestion extends Backbone.View
   events:
     'click': 'addItem'
   addItem: ->
-    APP.groceryList.create name: @model.get('name')
+    APP.groceries.create name: @model.get('name')
     $("ul#suggestions").hide()
     $("ul#groceries").show()
     $("input#new-item").val('')
