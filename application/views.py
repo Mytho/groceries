@@ -10,7 +10,7 @@
 """
 from application import app
 from auth import logged_in_or_redirect
-from decorators import content_type
+from decorators import cache_control, content_type
 from flask import make_response, render_template, request, send_from_directory
 from flask.ext.login import login_required
 from json import dumps, loads
@@ -26,6 +26,7 @@ def favicon():
 
 @app.route('/')
 @logged_in_or_redirect
+@cache_control()
 def home():
     return make_response(render_template('home.html'))
 
