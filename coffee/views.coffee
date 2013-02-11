@@ -17,6 +17,8 @@ class APP.View.Grocery extends Backbone.View
     @groceries.show()
     @input.val('')
   initialize: ->
+    APP.groceryList = new APP.Collection.Grocery
+    APP.suggestions = new APP.Collection.Suggestion
     @listenTo(APP.groceryList, 'add', @addOne)
     @listenTo(APP.groceryList, 'reset', @addAll)
     APP.groceryList.fetch()
