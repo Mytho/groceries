@@ -56,6 +56,14 @@ class Item(db.Model):
     bought_date = db.Column(db.Integer)
     bought_by = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    created_user = db.relationship('User',
+        backref=db.backref('created_items', lazy='dynamic'),
+        foreign_keys=[created_by])
+
+    bought_user = db.relationship('User',
+        backref=db.backref('bought_items', lazy='dynamic'),
+        foreign_keys=[bought_by])
+
     def __init__(self, name):
         self.name = name
         self.create_date = time()
