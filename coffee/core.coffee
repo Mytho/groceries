@@ -12,3 +12,6 @@ APP =
     $(doc).ajaxError APP.ajaxErrorHandler
     APP.router = new APP.Router
     Backbone.history.start pushState: true
+    setTimeout(->
+      win.scrollTo 0, 1
+    , 100)

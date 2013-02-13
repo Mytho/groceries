@@ -40,7 +40,7 @@ class APP.View.Item extends Backbone.View
   events:
     'click': 'toggleDeleteButton'
     'click label': 'toggleBought'
-    'click .bought': 'toggleBought'
+    'click .buy': 'toggleBought'
     'click .delete': 'delete'
   delete: ->
     @model.destroy()
@@ -55,6 +55,7 @@ class APP.View.Item extends Backbone.View
   toggleDeleteButton: ->
     $(@el).find('.delete').toggle()
   toggleBought: (e) ->
+    $(@el).toggleClass 'bought'
     @model.toggle()
     e.stopPropagation()
 
