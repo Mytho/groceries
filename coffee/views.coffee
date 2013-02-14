@@ -24,7 +24,7 @@ class APP.View.Grocery extends Backbone.View
     APP.suggestions.fetch()
   onKeyUp: (e) ->
     @create() if e.keyCode is 13 and @input.val() isnt ''
-    @suggest() if e.keyCode isnt 13 and @input.val() isnt ''
+    @suggest() if e.keyCode isnt 13
   suggest: ->
     at = @
     @suggestions.html('').show()
