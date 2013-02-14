@@ -4,18 +4,17 @@ class APP.View.Grocery extends Backbone.View
   input: $('input#new-item')
   suggestions: $('ul#suggestions')
   events:
-    'keyup input#new-item': 'createOnEnter'
+    'keyup input#new-item': 'onKeyUp'
   addAll: ->
     APP.groceries.each @addOne, @
   addOne: (item) ->
     view = new APP.View.Item model: item
     $(@el).find('ul#groceries').append view.render().el
-  createOnEnter: (e) ->
-    @renderSuggestions()
-    return if e.keyCode isnt 13 or @input.val() is ''
+  create: ->
     APP.groceries.create name: @input.val()
-    @groceries.show()
     @input.val('')
+    @groceries.show()
+    @suggestions.hide()
   initialize: ->
     APP.groceries = new APP.Collection.Grocery
     APP.suggestions = new APP.Collection.Suggestion
@@ -23,7 +22,10 @@ class APP.View.Grocery extends Backbone.View
     @listenTo(APP.groceries, 'reset', @addAll)
     APP.groceries.fetch()
     APP.suggestions.fetch()
-  renderSuggestions: ->
+  onKeyUp: (e) ->
+    @create() if e.keyCode is 13 and @input.val() isnt ''
+    @suggest() if e.keyCode isnt 13 and @input.val() isnt ''
+  suggest: ->
     at = @
     @suggestions.html('').show()
     APP.suggestions.like @input.val() if @input.val() isnt ''
