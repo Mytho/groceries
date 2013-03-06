@@ -28,37 +28,6 @@ module.exports = function(grunt) {
                 dest: "application/static/css/screen.min.css"
             }
         },
-        jshint: {
-            files: [
-                'Gruntfile.js',
-                'build/app.js'
-            ],
-            options: {
-                'bitwise'   : true,
-                'browser'   : true,
-                'camelcase' : true,
-                'curly'     : true,
-                'eqeqeq'    : true,
-                'forin'     : true,
-                'immed'     : true,
-                'indent'    : 4,
-                'latedef'   : true,
-                'maxerr'    : 50,
-                'newcap'    : true,
-                'noarg'     : true,
-                'noempty'   : true,
-                'nonew'     : true,
-                'onevar'    : true,
-                'plusplus'  : false,
-                'quotmark'  : 'single',
-                'regexp'    : true,
-                'strict'    : false,
-                'trailing'  : true,
-                'undef'     : true,
-                'unused'    : true,
-                'white'     : false
-            }
-        },
         less: {
             less: {
                 files: {
@@ -78,7 +47,7 @@ module.exports = function(grunt) {
             },
             app: {
                 files: {
-                    'application/statis/js/app.min.js': ['<banner>', 'build/app.js']
+                    'application/static/js/app.min.js': ['<banner>', 'build/app.js']
                 }
             }
         },
@@ -94,11 +63,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Default Task
-    grunt.registerTask('default', ['concat', 'coffee', 'jshint', 'uglify'']);
+    grunt.registerTask('default', ['concat', 'coffee', 'uglify']);
 
 };
