@@ -2,7 +2,7 @@ $ = jQuery
 doc = document
 win = window
 
-APP =
+win.APP =
   Model: {}
   View: {}
   Collection: {}

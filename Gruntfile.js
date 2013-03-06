@@ -4,14 +4,14 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         coffee: {
-            compile: {
+            coffee: {
                 files: {
                     'build/app.js': 'build/app.coffee'
                 }
             }
         },
         concat: {
-            app: {
+            coffee: {
                 src: [
                     'coffee/core.coffee',
                     'coffee/router.coffee',
@@ -20,6 +20,10 @@ module.exports = function(grunt) {
                     'coffee/views.coffee'
                 ],
                 dest: 'build/app.coffee'
+            },
+            less: {
+                src: ['less/core.less'],
+                dest: 'build/screen.less'
             }
         },
         cssmin: {
@@ -45,16 +49,20 @@ module.exports = function(grunt) {
                     ' * <%= pkg.lisence.url %>\n' +
                     ' */\n'
             },
-            app: {
+            coffee: {
                 files: {
                     'application/static/js/app.min.js': ['<banner>', 'build/app.js']
                 }
             }
         },
         watch: {
-            app: {
-                files: ['<config:coffee.app.src>'],
-                tasks: 'concat:app coffee:app uglify:app'
+            coffee: {
+                files: ['coffee/*.coffee'],
+                tasks: ['concat:coffee', 'coffee:coffee', 'uglify:coffee']
+            },
+            less: {
+                files: ['less/*.less'],
+                tasks: ['concat:less', 'less:less', 'cssmin:less']
             }
         }
     });
@@ -63,10 +71,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Default Task
-    grunt.registerTask('default', ['concat', 'coffee', 'uglify']);
+    grunt.registerTask('default', ['concat', 'coffee', 'uglify', 'less', 'cssmin']);
 
 };
