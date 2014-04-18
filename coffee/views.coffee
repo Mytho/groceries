@@ -4,7 +4,7 @@ class APP.View.Grocery extends Backbone.View
   input: $('input#new-item')
   suggestions: $('ul#suggestions')
   events:
-    'focusin input#new-item': 'onFocusIn'
+    'click input#new-item': 'onClick'
     'focusout input#new-item': 'onFocusOut'
     'keyup input#new-item': 'onKeyUp'
   addAll: ->
@@ -24,8 +24,13 @@ class APP.View.Grocery extends Backbone.View
     @listenTo(APP.groceries, 'reset', @addAll)
     APP.groceries.fetch()
     APP.suggestions.fetch()
-  onFocusIn: ->
-    @suggest()
+  onClick: ->
+    if APP.focused and APP.focused.attr('id') is 'new-item'
+      APP.focused = null
+      @input.blur()
+    else
+      APP.focused = @input
+      @suggest()
   onFocusOut: ->
     at = @
     APP.timeoutId = win.setTimeout(->
@@ -76,6 +81,7 @@ class APP.View.Suggestion extends Backbone.View
     'click': 'addItem'
   addItem: ->
     win.clearTimeout(APP.timeoutId)
+    APP.focused = null
     APP.groceries.create name: @model.get('name')
     $("ul#suggestions").hide()
     $("ul#groceries").show()
