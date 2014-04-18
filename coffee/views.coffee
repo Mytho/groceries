@@ -4,6 +4,8 @@ class APP.View.Grocery extends Backbone.View
   input: $('input#new-item')
   suggestions: $('ul#suggestions')
   events:
+    'focusin input#new-item': 'onFocusIn'
+    'focusout input#new-item': 'onFocusOut'
     'keyup input#new-item': 'onKeyUp'
   addAll: ->
     APP.groceries.each @addOne, @
@@ -22,19 +24,25 @@ class APP.View.Grocery extends Backbone.View
     @listenTo(APP.groceries, 'reset', @addAll)
     APP.groceries.fetch()
     APP.suggestions.fetch()
+  onFocusIn: ->
+    @suggest()
+  onFocusOut: ->
+    at = @
+    APP.timeoutId = win.setTimeout(->
+      at.suggest()
+    , 250)
   onKeyUp: (e) ->
     @create() if e.keyCode is 13 and @input.val() isnt ''
     @suggest() if e.keyCode isnt 13
   suggest: ->
     at = @
     @suggestions.html('').show()
-    APP.suggestions.like @input.val() if @input.val() isnt ''
-    APP.suggestions.clear() if @input.val() is ''
+    APP.suggestions.like @input.val() if @input.is(':focus')
+    APP.suggestions.clear() if not @input.is(':focus') and @input.val() is ''
     _.each APP.suggestions.filtered, (suggestion) ->
       view = new APP.View.Suggestion model: suggestion
       $(at.suggestions).append view.render().el
-    @groceries.hide() if APP.suggestions.filtered.length
-    @groceries.show() if @input.val() is ''
+    @groceries.toggle(not @input.is(':focus') and @input.val() is '')
 
 
 class APP.View.Item extends Backbone.View
@@ -67,6 +75,7 @@ class APP.View.Suggestion extends Backbone.View
   events:
     'click': 'addItem'
   addItem: ->
+    win.clearTimeout(APP.timeoutId)
     APP.groceries.create name: @model.get('name')
     $("ul#suggestions").hide()
     $("ul#groceries").show()

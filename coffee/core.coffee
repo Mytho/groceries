@@ -6,6 +6,7 @@ win.APP =
   Model: {}
   View: {}
   Collection: {}
+  timeoutId: null
   ajaxErrorHandler: (e, xhr) ->
     win.location = "login" if xhr.status is 401
   init: ->
