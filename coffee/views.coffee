@@ -33,7 +33,9 @@ class APP.View.Grocery extends Backbone.View
       @suggest()
   onFocusOut: ->
     at = @
+    APP.focused = null
     APP.timeoutId = win.setTimeout(->
+      APP.focused = @input
       at.suggest()
     , 250)
   onKeyUp: (e) ->
@@ -81,7 +83,6 @@ class APP.View.Suggestion extends Backbone.View
     'click': 'addItem'
   addItem: ->
     win.clearTimeout(APP.timeoutId)
-    APP.focused = null
     APP.groceries.create name: @model.get('name')
     $("ul#suggestions").hide()
     $("ul#groceries").show()
