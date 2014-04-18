@@ -39,7 +39,7 @@ class APP.View.Grocery extends Backbone.View
     @suggestions.html('').show()
     APP.suggestions.like @input.val() if @input.is(':focus')
     APP.suggestions.clear() if not @input.is(':focus') and @input.val() is ''
-    _.each APP.suggestions.filtered, (suggestion) ->
+    _.each APP.suggestions.filtered.slice(0, 10), (suggestion) ->
       view = new APP.View.Suggestion model: suggestion
       $(at.suggestions).append view.render().el
     @groceries.toggle(not @input.is(':focus') and @input.val() is '')
