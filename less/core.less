@@ -2,7 +2,7 @@
 
 body {
 	background-color: #f7f7f7;
-	color: #555;
+	color: #545454;
 	font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
 	margin: 0;
 	padding: 0;
@@ -87,7 +87,7 @@ body {
 
 		input[type="text"],
 		input[type="password"] {
-			border: 1px solid #888;
+			border: 1px solid #878787;
 			box-shadow: inset 2px 2px 0 0 rgba(150,150,150,.4);
 			-webkit-box-shadow: inset 2px 2px 0 0 rgba(150,150,150,.4);
 			display: block;
@@ -98,6 +98,10 @@ body {
 			outline: none;
 			padding: 4px 8px;
 			width: 444px;
+
+			&:focus {
+				border-color: #545454;
+			}
 		}
 
 		button {
@@ -117,7 +121,7 @@ body {
 				margin: 0 4px;
 
 				&.bought {
-					color: #888;
+					color: #878787;
 
 					label {
 						text-decoration: line-through;
@@ -132,6 +136,12 @@ body {
 					margin: 0 8px 8px 0;
 					height: 16px;
 					width: 16px;
+				}
+			}
+
+			&#suggestions {
+				li {
+					color: #878787;
 				}
 			}
 
