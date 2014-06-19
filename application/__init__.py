@@ -8,17 +8,17 @@
     Licensed under MIT License.
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
+import json
 import time
 import os
 from decorators import cache_control, content_type
-from flask import (flash, make_response, redirect, render_template, request,
-                   url_for, send_from_directory, Flask)
+from flask import (abort, flash, make_response, redirect, render_template,
+                   request, url_for, send_from_directory, Flask)
 from flask.ext.login import (current_user, LoginManager, login_required,
                              login_user, logout_user)
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import desc, func
 from functools import wraps
-from json import dumps, loads
 from werkzeug.contrib.fixers import ProxyFix
 from werkzeug.security import check_password_hash
 
@@ -26,6 +26,8 @@ from werkzeug.security import check_password_hash
 app = Flask(__name__)
 app.config.from_object('application.config')
 db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 # Models
@@ -79,8 +81,8 @@ class Item(db.Model):
 
     def __init__(self, name):
         self.name = name
-        self.create_date = time()
-        self.created_by = current_user.id
+        self.create_date = time.time()
+        self.created_by = current_user.get_id()
         self.bought_date = None
         self.bought_by = None
 
@@ -90,9 +92,11 @@ class Item(db.Model):
     @staticmethod
     def bought(item_id, bought):
         item = Item.query.get(item_id)
+        if not item:
+            return item
         if bought:
-            item.bought_by = current_user.id
-            item.bought_date = time()
+            item.bought_by = current_user.get_id()
+            item.bought_date = time.time()
         else:
             item.bought_by = None
             item.bought_date = None
@@ -150,10 +154,6 @@ def internal_error(e):
 
 
 # Authentication
-login_manager = LoginManager()
-login_manager.init_app(app)
-
-
 def logged_in_or_redirect(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -210,25 +210,31 @@ def home():
 @content_type('application/json')
 def get_items():
     items = Item.query.filter_by(bought_by=None)
-    return make_response(dumps([item.serialize() for item in items]))
+    return make_response(json.dumps([item.serialize() for item in items]))
 
 
 @app.route('/items', methods=['POST'])
 @login_required
 @content_type('application/json')
 def post_items():
-    data = loads(request.data)
+    if not request.data:
+        abort(400)
+    data = json.loads(request.data)
     item = Item.create(data['name'])
-    return make_response(dumps(item.serialize()))
+    return make_response(json.dumps(item.serialize()))
 
 
 @app.route('/items/<item_id>', methods=['PUT'])
 @login_required
 @content_type('application/json')
 def put_items(item_id):
-    data = loads(request.data)
-    Item.bought(item_id, data['bought'])
-    return make_response(dumps(''))
+    if not request.data:
+        abort(400)
+    data = json.loads(request.data)
+    item = Item.bought(item_id, data['bought'])
+    if not item:
+        abort(404)
+    return make_response(json.dumps(item.serialize()))
 
 
 @app.route('/items/<item_id>', methods=['DELETE'])
@@ -245,7 +251,7 @@ def delete_items(item_id):
 def get_suggests():
     suggestions = [dict([['name', k], ['count', v]])
                    for (k, v) in Item.suggestions()]
-    return make_response(dumps(suggestions))
+    return make_response(json.dumps(suggestions))
 
 
 # This sets `REMOTE_ADDR`, `HTTP_POST` from `X-Forwarded` headers.

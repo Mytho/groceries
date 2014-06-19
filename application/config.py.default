@@ -10,6 +10,7 @@
 """
 ADMINS = ['t.zengerink@gmail.com']
 DEBUG = False
+TESTING = False
 SECRET_KEY = 'VerySecretKey'
 SESSION_COOKIE_DOMAIN = ''
 SESSION_COOKIE_HTTPONLY = True
