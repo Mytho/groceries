@@ -22,6 +22,7 @@ def content_type(content_type='text/plain'):
         return decorated_function
     return decorator
 
+
 def cache_control(seconds=86400):
     def decorator(f):
         @wraps(f)

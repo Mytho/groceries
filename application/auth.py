@@ -10,7 +10,7 @@
 """
 from application import app
 from flask import (flash, make_response, redirect, render_template, request,
-                  url_for)
+                   url_for)
 from flask.ext.login import current_user, LoginManager, login_user, logout_user
 from functools import wraps
 from models import User
@@ -34,6 +34,7 @@ def logged_in_or_redirect(f):
 def load_user(user_id):
     return User.query.get(user_id)
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -46,6 +47,7 @@ def login():
                 return redirect(url_for('home'))
         flash('Incorrect login supplied')
     return make_response(render_template('login.html'))
+
 
 @app.route('/logout', methods=['GET'])
 def logout():
