@@ -24,8 +24,9 @@ app.config.from_object('application.config')
 db.init_app(app)
 init_auth(app)
 
+
 @app.errorhandler(400)
-def unauthorized(e):
+def bad_request(e):
     return render_template('error/400.html'), 400
 
 
