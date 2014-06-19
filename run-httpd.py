@@ -5,7 +5,7 @@
     ------------------
     Simple development server.
 
-    Copyright (c) 2013 T. Zengerink
+    Copyright (c) 2014 T. Zengerink
     Licensed under MIT License.
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
