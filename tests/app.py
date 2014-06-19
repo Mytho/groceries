@@ -39,7 +39,7 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(response.headers['Content-Type'], 'application/json')
 
     def test_post_items(self):
-        item_name = 'Toiletpaper'
+        item_name = 'Toilet paper'
         data = '{"name":"%s"}' % item_name
         response = self.client.post('/items', data=data)
         self.assertEqual(response.status_code, 200)
