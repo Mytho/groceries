@@ -11,21 +11,18 @@
 import json
 import os
 from decorators import cache_control, content_type
-from flask import (abort, flash, make_response, redirect, render_template,
-                   request, url_for, send_from_directory, Flask)
-from flask.ext.login import (current_user, LoginManager, login_required,
-                             login_user, logout_user)
-from functools import wraps
+from flask import (abort, make_response, render_template, request,
+                   send_from_directory, Flask)
+from flask.ext.login import login_required
 from werkzeug.contrib.fixers import ProxyFix
-from werkzeug.security import check_password_hash
-from .models import db, Item, User
+from .auth import init_auth, logged_in_or_redirect
+from .models import db, Item
 
 
 app = Flask(__name__)
 app.config.from_object('application.config')
 db.init_app(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
+init_auth(app)
 
 
 @app.errorhandler(401)
@@ -46,42 +43,6 @@ def not_found(e):
 @app.errorhandler(500)
 def internal_error(e):
     return render_template('error/500.html'), 500
-
-
-# Authentication
-def logged_in_or_redirect(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if (not app.config.get('TESTING', False) and
-           not current_user.is_authenticated()):
-            return redirect(url_for('login'))
-        return f(*args, **kwargs)
-    return decorated_function
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if username and password:
-            user = User.query.filter_by(username=username).first()
-            if check_password_hash(user.password, password):
-                login_user(user, remember=True)
-                return redirect(url_for('home'))
-        flash('Incorrect login supplied')
-    return make_response(render_template('login.html'))
-
-
-@app.route('/logout', methods=['GET'])
-def logout():
-    logout_user()
-    return redirect(url_for('login'))
 
 
 # Views
