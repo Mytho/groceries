@@ -19,6 +19,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import desc, func
 from functools import wraps
 from json import dumps, loads
+from werkzeug.contrib.fixers import ProxyFix
 from werkzeug.security import check_password_hash
 
 
@@ -156,7 +157,8 @@ login_manager.init_app(app)
 def logged_in_or_redirect(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not current_user.is_authenticated():
+        if (not app.config.get('TESTING', False) and
+           not current_user.is_authenticated()):
             return redirect(url_for('login'))
         return f(*args, **kwargs)
     return decorated_function
@@ -248,5 +250,4 @@ def get_suggests():
 
 # This sets `REMOTE_ADDR`, `HTTP_POST` from `X-Forwarded` headers.
 # Commonly used for HTTP Proxy support.
-from werkzeug.contrib.fixers import ProxyFix
 app.wsgi_app = ProxyFix(app.wsgi_app)
