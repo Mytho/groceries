@@ -24,6 +24,10 @@ app.config.from_object('application.config')
 db.init_app(app)
 init_auth(app)
 
+@app.errorhandler(400)
+def unauthorized(e):
+    return render_template('error/400.html'), 400
+
 
 @app.errorhandler(401)
 def unauthorized(e):
@@ -45,7 +49,6 @@ def internal_error(e):
     return render_template('error/500.html'), 500
 
 
-# Views
 @app.route('/favicon.ico', methods=['GET'])
 @content_type('image/vnd.microsoft.icon')
 def favicon():
