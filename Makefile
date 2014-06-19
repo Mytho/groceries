@@ -1,4 +1,4 @@
-all: clean check
+all: clean check test
 
 check:
 	flake8 application
@@ -11,3 +11,6 @@ httpd:
 
 setup:
 	pip install -r requirements.txt
+
+test:
+	python run-tests.py
