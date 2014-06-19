@@ -1,0 +1,8 @@
+{% extends "error/base.html" %}
+{% block title %}Bad Request{% endblock %}
+{% block content %}
+<h1>{{ self.title() }}</h1>
+<div>
+  <p>The request cannot be fulfilled due to bad syntax.</p>
+</div>
+{% endblock %}
