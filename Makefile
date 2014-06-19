@@ -2,6 +2,7 @@ all: clean check test
 
 check:
 	flake8 application
+	flake8 tests
 
 clean:
 	find . -type f -name \*.pyc -delete
