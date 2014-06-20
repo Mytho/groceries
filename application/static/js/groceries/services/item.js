@@ -8,6 +8,14 @@ Groceries.service('itemService', ['$http', '$log', 'itemModel', function ($http,
         return items;
     };
 
+    this.addItem = function (name) {
+        return $http.post('/items', {name: name}).then(function (response) {
+            return new itemModel(response.data);
+        }, function (response) {
+            $log.error('Could not add item');
+        });
+    };
+
     this.deleteItem = function (id) {
         return $http.delete('/items/'+id).then(function (response) {
             return response.status = 200;

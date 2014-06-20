@@ -1,12 +1,20 @@
 Groceries.controller('listController', ['$scope', 'itemService', function ($scope, itemService) {
     $scope.groceries = [];
     $scope.inputFocused = false;
-    $scope.itemName = '';
+    $scope.inputValue = '';
     $scope.suggestions = [];
     $scope.visibleButtons = [];
 
     $scope.buttonIsVisible = function (item) {
         return $scope.visibleButtons.indexOf(item.id) > -1;
+    };
+
+    $scope.add = function (name) {
+        itemService.addItem(name).then(function (item) {
+            $scope.groceries.push(item);
+            $scope.inputFocused = false;
+            $scope.inputValue = '';
+        });
     };
 
     $scope.buy = function (item, $event) {
