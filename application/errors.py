@@ -16,11 +16,7 @@ def bad_request(e):
 
 
 def unauthorized(e):
-    return render_template('error/401.html'), 401
-
-
-def forbidden(e):
-    return render_template('error/403.html'), 403
+    return render_template('error/403.html'), 401
 
 
 def not_found(e):
@@ -34,6 +30,5 @@ def internal_error(e):
 def init_errors(app):
     app.error_handler_spec[None][400] = bad_request
     app.error_handler_spec[None][401] = unauthorized
-    app.error_handler_spec[None][403] = forbidden
     app.error_handler_spec[None][404] = not_found
     app.error_handler_spec[None][500] = internal_error
