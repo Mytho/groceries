@@ -2,14 +2,15 @@
 """
     APPLICATION.CONFIG
     ------------------
-    Configuration of the application
+    Configuration of the application.
 
-    Copyright (c) 2013 T. Zengerink
+    Copyright (c) 2014 T. Zengerink
     Licensed under MIT License.
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
 ADMINS = ['t.zengerink@gmail.com']
 DEBUG = False
+TESTING = False
 SECRET_KEY = 'VerySecretKey'
 SESSION_COOKIE_DOMAIN = ''
 SESSION_COOKIE_HTTPONLY = True

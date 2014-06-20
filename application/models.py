@@ -2,20 +2,19 @@
 """
     APPLICATION.MODELS
     ------------------
-    Models for the database objects.
+    Models used to store groceries in the database.
 
-    Copyright (c) 2013 T. Zengerink
+    Copyright (c) 2014 T. Zengerink
     Licensed under MIT License.
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
-from application import app
+import time
 from flask.ext.login import current_user
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import desc, func
-from time import time
 
 
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
 
 class User(db.Model):
@@ -68,8 +67,8 @@ class Item(db.Model):
 
     def __init__(self, name):
         self.name = name
-        self.create_date = time()
-        self.created_by = current_user.id
+        self.create_date = time.time()
+        self.created_by = current_user.get_id()
         self.bought_date = None
         self.bought_by = None
 
@@ -79,9 +78,11 @@ class Item(db.Model):
     @staticmethod
     def bought(item_id, bought):
         item = Item.query.get(item_id)
+        if not item:
+            return item
         if bought:
-            item.bought_by = current_user.id
-            item.bought_date = time()
+            item.bought_by = current_user.get_id()
+            item.bought_date = time.time()
         else:
             item.bought_by = None
             item.bought_date = None

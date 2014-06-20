@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS items;
+
 CREATE TABLE IF NOT EXISTS users (
 	id       INTEGER     PRIMARY KEY AUTOINCREMENT,
 	username VARCHAR(64) NOT NULL UNIQUE,
@@ -9,7 +12,7 @@ CREATE TABLE IF NOT EXISTS items (
 	id          INTEGER      PRIMARY KEY AUTOINCREMENT,
 	name        VARCHAR(255) NOT NULL,
 	create_date INT(10)      NOT NULL,
-	created_by  INT(11)      NOT NULL,
+	created_by  INT(11)      DEFAULT NULL,
 	bought_date INT(10)      DEFAULT NULL,
 	bought_by   INT(11)      DEFAULT NULL
 );
@@ -27,7 +30,7 @@ VALUES
    ('Milk',      1300000000, 1),
    ('Steak',     1300000000, 1),
    ('Chocolate', 1300000000, 1),
-   ('Cola',      1300000000, 1),
+   ('Soda',      1300000000, 1),
    ('Beer',      1300000000, 1),
    ('Wine',      1300000000, 1),
-   ('Water',     1300000000, 1);
+   ('Pizza',     1300000000, 1);
