@@ -10,7 +10,7 @@ Groceries.service('itemService', ['$http', '$log', 'itemModel', function ($http,
 
     this.deleteItem = function (id) {
         return $http.delete('/items/'+id).then(function (response) {
-            return response.data;
+            return response.status = 200;
         }, function (response) {
             $log.error('Could not delete item');
         });
