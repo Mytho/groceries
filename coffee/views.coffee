@@ -59,7 +59,6 @@ class APP.View.Grocery extends Backbone.View
       $(at.suggestions).append view.render().el
     @groceries.toggle(not @input.is(':focus'))
 
-
 class APP.View.Item extends Backbone.View
   tagName: 'li'
   events:
@@ -83,7 +82,6 @@ class APP.View.Item extends Backbone.View
     $(@el).toggleClass 'bought'
     @model.toggle()
     e.stopPropagation()
-
 
 class APP.View.Suggestion extends Backbone.View
   tagName: 'li'
