@@ -2,24 +2,21 @@ module.exports = function(grunt) {
 
     // Configuration
     grunt.initConfig({
+
         pkg: grunt.file.readJSON('package.json'),
-        coffee: {
-            coffee: {
-                files: {
-                    'build/app.js': 'build/app.coffee'
-                }
-            }
-        },
+
         concat: {
-            coffee: {
+            appJs: {
+                src: ['application/static/js/core.js'],
+                dest: 'build/app.js'
+            },
+            vendorJs: {
                 src: [
-                    'coffee/core.coffee',
-                    'coffee/router.coffee',
-                    'coffee/models.coffee',
-                    'coffee/collections.coffee',
-                    'coffee/views.coffee'
+                    'application/static/vendor/angular/1.2.18/angular.min.js',
+                    'application/static/vendor/angular/1.2.18/angular-resource.min.js',
+                    'application/static/vendor/angular/1.2.18/angular-route.min.js'
                 ],
-                dest: 'build/app.coffee'
+                dest: 'application/static/vendor.min.js'
             },
             less: {
                 src: ['less/core.less'],
@@ -49,16 +46,16 @@ module.exports = function(grunt) {
                     ' * <%= pkg.lisence.url %>\n' +
                     ' */\n'
             },
-            coffee: {
+            appJs: {
                 files: {
-                    'application/static/js/app.min.js': ['<banner>', 'build/app.js']
+                    'application/static/app.min.js': ['<banner>', 'build/app.js']
                 }
             }
         },
         watch: {
-            coffee: {
-                files: ['coffee/*.coffee'],
-                tasks: ['concat:coffee', 'coffee:coffee', 'uglify:coffee']
+            appJs: {
+                files: ['application/static/js/**/*.js'],
+                tasks: ['concat:appJs', 'uglify:appJs']
             },
             less: {
                 files: ['less/*.less'],
