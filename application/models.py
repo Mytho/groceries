@@ -17,6 +17,14 @@ from sqlalchemy import desc, func
 db = SQLAlchemy()
 
 
+def init_models(app):
+    """Initialize the module by binding the db to the current application.
+
+    app -- application to bind db to
+    """
+    db.init_app(app)
+
+
 class User(db.Model):
     __tablename__ = 'users'
 
@@ -77,6 +85,11 @@ class Item(db.Model):
 
     @staticmethod
     def bought(item_id, bought):
+        """Mark the item as bought or not bought.
+
+        item_id -- primary key of the item to mark
+        bought  -- is item bought?
+        """
         item = Item.query.get(item_id)
         if not item:
             return item
@@ -92,6 +105,10 @@ class Item(db.Model):
 
     @staticmethod
     def create(name):
+        """Create a new item on the list.
+
+        name -- name of the item
+        """
         item = Item(name)
         db.session.add(item)
         db.session.commit()
@@ -99,17 +116,23 @@ class Item(db.Model):
 
     @staticmethod
     def delete(item_id):
+        """Delete an existing item.
+
+        item_id -- primary key of the item
+        """
         db.session.delete(Item.query.get(item_id))
         db.session.commit()
 
     @staticmethod
     def suggestions():
+        """Returns a list of suggestions"""
         return db.session \
             .query(Item.name, func.count(Item.name).label('count')) \
             .group_by(Item.name) \
             .order_by(desc('count')).all()
 
     def serialize(self):
+        """Serializes the item for proper JSON-responses."""
         return {'id': self.id,
                 'name': self.name,
                 'create_date': self.create_date,

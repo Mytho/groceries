@@ -18,15 +18,9 @@ class AppTestCase(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
 
-    def test_favicon(self):
-        response = self.client.get('favicon.ico')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.headers['Content-Type'],
-                         'image/vnd.microsoft.icon')
-
-    def test_home(self):
-        response = self.client.get('/')
-        self.assertEqual(response.status_code, 200)
+    def test_404(self):
+        response = self.client.get('/non-existing-page')
+        self.assertEqual(response.status_code, 404)
         self.assertEqual(response.headers['Content-Type'],
                          'text/html; charset=utf-8')
 
@@ -42,10 +36,22 @@ class AppTestCase(unittest.TestCase):
         put_response = self.client.post('/items%s' % id)
         self.assertTrue(put_response.status_code, 404)
 
+    def test_favicon(self):
+        response = self.client.get('favicon.ico')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers['Content-Type'],
+                         'image/vnd.microsoft.icon')
+
     def test_get_items(self):
         response = self.client.get('/items')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.headers['Content-Type'], 'application/json')
+
+    def test_home(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers['Content-Type'],
+                         'text/html; charset=utf-8')
 
     def test_post_items(self):
         item_name = 'Toilet paper'
