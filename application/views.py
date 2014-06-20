@@ -49,7 +49,7 @@ class ItemView(ApiView):
         return make_response('')
 
     def get(self):
-        items = Item.query.filter_by(bought_by=None)
+        items = Item.query.filter_by(bought_by=None, bought_date=None)
         return make_response(json.dumps([item.serialize() for item in items]))
 
     def post(self):
