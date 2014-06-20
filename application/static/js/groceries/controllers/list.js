@@ -1,4 +1,4 @@
-Groceries.controller('listController', ['$scope', '$log', 'itemService', function ($scope, $log, itemService) {
+Groceries.controller('listController', ['$scope', 'itemService', function ($scope, itemService) {
     $scope.groceries = [];
     $scope.suggestions = [];
 
@@ -9,6 +9,4 @@ Groceries.controller('listController', ['$scope', '$log', 'itemService', functio
     itemService.getSuggestions().then(function (suggestions) {
         $scope.suggestions = suggestions;
     });
-
-    $log.debug($scope);
 }]);
