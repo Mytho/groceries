@@ -22,10 +22,19 @@ login_manager = LoginManager()
 
 @login_manager.user_loader
 def load_user(user_id):
+    """Load the user with the given `user_id` from the database.
+
+    user_id -- primary key of the user to load
+    """
     return User.query.get(user_id)
 
 
 def logged_in_or_redirect(f):
+    """Check if the user is logged in, if not then redirect the user to the
+    login page.
+
+    f -- function to decorate with the functionality
+    """
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if (not current_app.config.get('TESTING', False) and
@@ -36,16 +45,25 @@ def logged_in_or_redirect(f):
 
 
 def init_auth(app):
+    """Inititialize the login manager by binding it to the application and
+    adding the login- and logout views.
+
+    app -- current application
+    """
     login_manager.init_app(app)
     app.add_url_rule('/login', view_func=LoginView.as_view('login'))
     app.add_url_rule('/logout', view_func=LogoutView.as_view('logout'))
 
 
-class LoginView(View):
+class LoginView(MethodView):
+    """View responsible for showing the login form and handling the supplied
+    username and password when POST-data is submitted.
+    """
 
     methods = ['GET', 'POST']
 
     def dispatch_request(self):
+        """Handles the login requests."""
         if request.method == 'POST':
             username = request.form['username']
             password = request.form['password']
@@ -59,7 +77,11 @@ class LoginView(View):
 
 
 class LogoutView(View):
+    """View that logs out the current user and sends them back to the login
+    screen.
+    """
 
     def dispatch_request(self):
+        """Handles the logout requests."""
         logout_user()
         return redirect(url_for('login'))
