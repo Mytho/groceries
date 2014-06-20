@@ -14,7 +14,6 @@ from decorators import cache_control, content_type
 from flask import (abort, make_response, render_template, request,
                    send_from_directory, Flask)
 from flask.ext.login import login_required
-from werkzeug.contrib.fixers import ProxyFix
 from .auth import init_auth, logged_in_or_redirect
 from .models import db, Item
 
@@ -112,8 +111,3 @@ def get_suggests():
     suggestions = [dict([['name', k], ['count', v]])
                    for (k, v) in Item.suggestions()]
     return make_response(json.dumps(suggestions))
-
-
-# This sets `REMOTE_ADDR`, `HTTP_POST` from `X-Forwarded` headers.
-# Commonly used for HTTP Proxy support.
-app.wsgi_app = ProxyFix(app.wsgi_app)
