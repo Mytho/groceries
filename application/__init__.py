@@ -10,6 +10,7 @@
 """
 from flask import render_template, Flask
 from .auth import init_auth
+from .errors import init_errors
 from .models import init_models
 from .views import FaviconView, HomeView, ItemView, SuggestionView
 
@@ -17,32 +18,8 @@ from .views import FaviconView, HomeView, ItemView, SuggestionView
 app = Flask(__name__)
 app.config.from_object('application.config')
 init_auth(app)
+init_errors(app)
 init_models(app)
-
-
-@app.errorhandler(400)
-def bad_request(e):
-    return render_template('error/400.html'), 400
-
-
-@app.errorhandler(401)
-def unauthorized(e):
-    return render_template('error/401.html'), 401
-
-
-@app.errorhandler(403)
-def forbidden(e):
-    return render_template('error/403.html'), 403
-
-
-@app.errorhandler(404)
-def not_found(e):
-    return render_template('error/404.html'), 404
-
-
-@app.errorhandler(500)
-def internal_error(e):
-    return render_template('error/500.html'), 500
 
 
 app.add_url_rule('/', view_func=HomeView.as_view('home'))
