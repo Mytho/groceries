@@ -3,7 +3,7 @@
 	<link charset="utf-8" href="{{ url_for('static', filename='css/screen.min.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
-<div ng-app="Groceries" ng-controller="listController">
+<div ng-app="Groceries" ng-controller="listController" class="disable-select">
 	<input id="new-item" placeholder="What needs to be bought?" type="text" />
 	<ul id="groceries" ng-show="showGroceries">
 		<li ng-repeat="item in groceries" ng-class="{'bought':item.isBought()}" ng-click="toggleButton(item)">

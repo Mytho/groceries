@@ -34,12 +34,12 @@ class FaviconView(MethodView):
         return make_response(file)
 
 
-class HomeView(MethodView):
+class GroceriesView(MethodView):
 
     decorators = [cache_control(86400), logged_in_or_redirect]
 
     def get(self):
-        return make_response(render_template('home.html'))
+        return make_response(render_template('groceries.html'))
 
 
 class ItemView(ApiView):
