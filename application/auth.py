@@ -55,7 +55,7 @@ def init_auth(app):
     app.add_url_rule('/logout', view_func=LogoutView.as_view('logout'))
 
 
-class LoginView(MethodView):
+class LoginView(View):
     """View responsible for showing the login form and handling the supplied
     username and password when POST-data is submitted.
     """
