@@ -13,6 +13,11 @@ from functools import wraps
 
 
 def content_type(content_type='text/plain'):
+    """Wrap a function that returns a response and add the specified
+    content-type to the headers of the response.
+
+    content_type -- content type of the resonse
+    """
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
@@ -24,6 +29,11 @@ def content_type(content_type='text/plain'):
 
 
 def cache_control(seconds=86400):
+    """Wraps a function that returns a response and add the specified
+    cache-control to the headers of the response.
+
+    seconds -- number of seconds to cache the response
+    """
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
