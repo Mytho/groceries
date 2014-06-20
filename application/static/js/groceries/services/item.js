@@ -16,6 +16,14 @@ Groceries.service('itemService', ['$http', '$log', 'itemModel', function ($http,
         });
     };
 
+    this.toggleItem = function (id, isBought) {
+        return $http.put('/items/'+id, {bought: isBought}).then(function (response) {
+            return new itemModel(response.data);
+        }, function (response) {
+            $log.error('Could not toggle items');
+        });
+    };
+
     this.getGroceries = function () {
         return $http.get('/items').then(function (response) {
             return convertItems(response.data);

@@ -6,10 +6,10 @@
 <div ng-app="Groceries" ng-controller="listController">
 	<input id="new-item" placeholder="What needs to be bought?" type="text" />
 	<ul id="groceries">
-		<li ng-repeat="item in groceries">
-		<input type="checkbox" class="buy" ng-checked="[[item.is_bought()]]" />
-		<label>[[item.name]]</label>
-		<button class="delete" ng-click="deleteItem([[item.id]])">delete</button>
+		<li ng-repeat="item in groceries" ng-class="{'bought':item.isBought()}">
+		<input type="checkbox" class="buy" ng-click="buy(item)" ng-checked="item.isBought()" />
+		<label ng-click="buy(item)">[[item.name]]</label>
+		<button class="delete" ng-click="delete(item, $index)">delete</button>
 		</li>
 	</ul>
 	<ul id="suggestions">

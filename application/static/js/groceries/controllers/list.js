@@ -2,8 +2,15 @@ Groceries.controller('listController', ['$scope', 'itemService', function ($scop
     $scope.groceries = [];
     $scope.suggestions = [];
 
-    $scope.deleteItem = function (id) {
-        itemService.deleteItem(id);
+    $scope.buy = function (item) {
+        itemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
+            item.update(data);
+        });
+    };
+
+    $scope.delete = function (item, idx) {
+        itemService.deleteItem(item.id);
+        $scope.groceries.splice(idx, 1);
     };
 
     itemService.getGroceries().then(function (groceries) {

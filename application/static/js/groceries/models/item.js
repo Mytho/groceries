@@ -5,8 +5,11 @@ Groceries.factory('itemModel', function () {
             name: '',
             bought_by: null,
             bought_date: null,
-            is_bought: function () {
-                return (this.bought_by && this.bought_date);
+            isBought: function () {
+                return !! (this.bought_by || this.bought_date);
+            },
+            update: function (data) {
+                angular.extend(this, data);
             }
         });
 
