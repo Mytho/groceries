@@ -8,6 +8,14 @@ Groceries.service('itemService', ['$http', '$log', 'itemModel', function ($http,
         return items;
     };
 
+    this.deleteItem = function (id) {
+        return $http.delete('/items/'+id).then(function (response) {
+            return response.data;
+        }, function (response) {
+            $log.error('Could not delete item');
+        });
+    };
+
     this.getGroceries = function () {
         return $http.get('/items').then(function (response) {
             return convertItems(response.data);

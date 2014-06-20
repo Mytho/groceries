@@ -2,6 +2,10 @@ Groceries.controller('listController', ['$scope', 'itemService', function ($scop
     $scope.groceries = [];
     $scope.suggestions = [];
 
+    $scope.deleteItem = function (id) {
+        itemService.deleteItem(id);
+    };
+
     itemService.getGroceries().then(function (groceries) {
         $scope.groceries = groceries;
     });

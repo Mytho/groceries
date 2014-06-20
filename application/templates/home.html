@@ -9,7 +9,7 @@
 		<li ng-repeat="item in groceries">
 		<input type="checkbox" class="buy" ng-checked="[[item.is_bought()]]" />
 		<label>[[item.name]]</label>
-		<button class="delete">delete</button>
+		<button class="delete" ng-click="deleteItem([[item.id]])">delete</button>
 		</li>
 	</ul>
 	<ul id="suggestions">
