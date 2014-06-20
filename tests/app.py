@@ -1,4 +1,13 @@
 # -*- coding: utf-8 -*-
+"""
+    TESTS.APP
+    ---------
+    Testing application response.
+
+    Copyright (c) 2014 Teun Zengerink
+    Licensed under MIT License.
+    See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
+"""
 import json
 import unittest
 from application import app
