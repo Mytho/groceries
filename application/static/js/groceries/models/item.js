@@ -1,15 +1,15 @@
 Groceries.factory('itemModel', function () {
-    var itemModel = function (data) {
+    return function (data) {
         angular.extend(this, {
             id: null,
             name: '',
             bought_by: null,
             bought_date: null,
-            bought: function () {
-                return (this.bought_by || this.bought_date);
+            is_bought: function () {
+                return (this.bought_by && this.bought_date);
             }
         });
-    };
 
-    return itemModel;
+        angular.extend(this, data);
+    };
 });
