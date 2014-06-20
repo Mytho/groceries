@@ -1,7 +1,7 @@
 Groceries.controller('listController', ['$scope', 'itemService', function ($scope, itemService) {
     $scope.groceries = [];
-    $scope.showGroceries = true;
-    $scope.showSuggestions = false;
+    $scope.inputFocused = false;
+    $scope.itemName = '';
     $scope.suggestions = [];
     $scope.visibleButtons = [];
 
@@ -29,6 +29,10 @@ Groceries.controller('listController', ['$scope', 'itemService', function ($scop
         } else {
             $scope.visibleButtons.push(item.id);
         }
+    };
+
+    $scope.toggleFocus= function () {
+        $scope.inputFocused = ! $scope.inputFocused;
     };
 
     itemService.getGroceries().then(function (groceries) {
