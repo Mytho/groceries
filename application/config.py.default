@@ -4,11 +4,11 @@
     ------------------
     Configuration of the application.
 
-    Copyright (c) 2014 T. Zengerink
+    Copyright (c) 2014 Teun Zengerink
     Licensed under MIT License.
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
-ADMINS = ['t.zengerink@gmail.com']
+ADMINS = ['teun@zengerink.com']
 DEBUG = False
 TESTING = False
 SECRET_KEY = 'VerySecretKey'

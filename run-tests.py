@@ -5,7 +5,7 @@
     -----
     Run entire testsuite.
 
-    Copyright (c) 2014 T. Zengerink
+    Copyright (c) 2014 Teun Zengerink
     Licensed under MIT License.
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
