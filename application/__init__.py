@@ -8,7 +8,7 @@
     Licensed under MIT License.
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
-from flask import render_template, Flask
+from flask import Flask
 from .auth import init_auth
 from .errors import init_errors
 from .models import init_models
