@@ -16,7 +16,7 @@ def bad_request(e):
 
 
 def unauthorized(e):
-    return render_template('error/403.html'), 401
+    return render_template('error/401.html'), 401
 
 
 def not_found(e):

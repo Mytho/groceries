@@ -10,7 +10,7 @@
 """
 from flask import (current_app, flash, make_response, redirect,
                    render_template, request, url_for)
-from flask.views import View
+from flask.views import MethodView, View
 from flask.ext.login import current_user, LoginManager, login_user, logout_user
 from functools import wraps
 from werkzeug.security import check_password_hash
@@ -55,33 +55,26 @@ def init_auth(app):
     app.add_url_rule('/logout', view_func=LogoutView.as_view('logout'))
 
 
-class LoginView(View):
-    """View responsible for showing the login form and handling the supplied
-    username and password when POST-data is submitted.
-    """
+class LoginView(MethodView):
 
-    methods = ['GET', 'POST']
-
-    def dispatch_request(self):
-        """Handles the login requests."""
-        if request.method == 'POST':
-            username = request.form['username']
-            password = request.form['password']
-            if username and password:
-                user = User.query.filter_by(username=username).first()
-                if check_password_hash(user.password, password):
-                    login_user(user, remember=True)
-                    return redirect(url_for('home'))
-            flash('Incorrect login supplied')
+    def get(self):
         return make_response(render_template('login.html'))
+
+    def post(self):
+        print(request.form)
+        username = request.form['username']
+        password = request.form['password']
+        if username and password:
+            user = User.query.filter_by(username=username).first()
+            if user and check_password_hash(user.password, password):
+                login_user(user, remember=True)
+                return redirect(url_for('home'))
+        flash('Incorrect login supplied')
+        return redirect(url_for('login'))
 
 
 class LogoutView(View):
-    """View that logs out the current user and sends them back to the login
-    screen.
-    """
 
     def dispatch_request(self):
-        """Handles the logout requests."""
         logout_user()
         return redirect(url_for('login'))
