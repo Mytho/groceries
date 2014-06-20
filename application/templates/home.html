@@ -3,20 +3,19 @@
 	<link charset="utf-8" href="{{ url_for('static', filename='css/screen.min.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
+<div ng-app="Groceries" ng-controller="listController">
 	<input id="new-item" placeholder="What needs to be bought?" type="text" />
 	<ul id="groceries"></ul>
 	<ul id="suggestions"></ul>
 	<div class="clearfix"></div>
+</div>
 {% endblock %}
 {% block footer %}
 	<a href="https://raw.github.com/Mytho/groceries/master/LISENCE.md">Copyright &copy; Teun Zengerink</a></a>
 {% endblock %}
 {% block script %}
-	<script charset=utf-8" src="{{ url_for('static', filename='js/vendor/jquery.min.js') }}" type="text/javascript"></script>
-	<script charset=utf-8" src="{{ url_for('static', filename='js/vendor/underscore-min.js') }}" type="text/javascript"></script>
-	<script charset=utf-8" src="{{ url_for('static', filename='js/vendor/backbone-min.js') }}" type="text/javascript"></script>
-	<script charset=utf-8" src="{{ url_for('static', filename='js/app.min.js') }}" type="text/javascript"></script>
-	<script type="text/javascript">$(function(){ APP.init(); });</script>
+	<script charset=utf-8" src="{{ url_for('static', filename='vendor.min.js') }}" type="text/javascript"></script>
+	<script charset=utf-8" src="{{ url_for('static', filename='app.min.js') }}" type="text/javascript"></script>
 	<script type="text/template" id="item-template">
 		<input type="checkbox" class="buy" <%= bought ? 'checked="checked"' : '' %> />
 		<label><%= name %></label>

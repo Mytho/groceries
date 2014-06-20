@@ -3,9 +3,13 @@ module.exports = function(grunt) {
     // Configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+
         concat: {
             appJs: {
-                src: ['application/static/js/core.js'],
+                src: [
+                    'application/static/js/groceries/groceries.js',
+                    'application/static/js/groceries/controllers/*.js'
+                ],
                 dest: 'build/app.js'
             },
             vendorJs: {
@@ -21,12 +25,14 @@ module.exports = function(grunt) {
                 dest: 'build/screen.less'
             }
         },
+
         cssmin: {
             less: {
                 src: ["build/screen.css"],
                 dest: "application/static/css/screen.min.css"
             }
         },
+
         less: {
             less: {
                 files: {
@@ -34,6 +40,7 @@ module.exports = function(grunt) {
                 }
             }
         },
+
         uglify: {
             options: {
                 banner: '/*!\n' +
@@ -50,6 +57,7 @@ module.exports = function(grunt) {
                 }
             }
         },
+
         watch: {
             appJs: {
                 files: ['application/static/js/**/*.js'],
@@ -63,7 +71,7 @@ module.exports = function(grunt) {
     });
 
     // Load Tasks
-    grunt.loadNpmTasks('grunt-contrib-coffee');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-uglify');
