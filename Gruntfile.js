@@ -2,9 +2,7 @@ module.exports = function(grunt) {
 
     // Configuration
     grunt.initConfig({
-
         pkg: grunt.file.readJSON('package.json'),
-
         concat: {
             appJs: {
                 src: ['application/static/js/core.js'],
@@ -66,13 +64,12 @@ module.exports = function(grunt) {
 
     // Load Tasks
     grunt.loadNpmTasks('grunt-contrib-coffee');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // Default Task
-    grunt.registerTask('default', ['concat', 'coffee', 'uglify', 'less', 'cssmin']);
+    grunt.registerTask('default', ['concat', 'uglify', 'less', 'cssmin']);
 
 };
