@@ -31,6 +31,12 @@ Groceries.controller('listController', ['$scope', 'itemService', function ($scop
         });
     };
 
+    $scope.keyup = function ($event) {
+        if ($event.keyCode == 13) {
+            $scope.add($scope.inputValue);
+        }
+    };
+
     $scope.toggleButton = function (item) {
         if ($scope.visibleButtons.indexOf(item.id) > -1) {
             $scope.visibleButtons.splice($scope.visibleButtons.indexOf(item.id), 1);
