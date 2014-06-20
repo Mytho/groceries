@@ -1,9 +1,16 @@
+# COLLECTIONS
+# -----------
+# Ordered sets of models.
+#
+# Copyright (c) 2014 Teun Zengerink
+# Licensed under MIT License.
+# See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
+
 class APP.Collection.Grocery extends Backbone.Collection
   model: APP.Model.Item
   url: '/items'
   comparator: (item) ->
     item.get('create_date')
-
 
 class APP.Collection.Suggestion extends Backbone.Collection
   filtered: []

@@ -1,6 +1,14 @@
+# VIEWS
+# -----
+# Organisation of the user interface into logical units.
+#
+# Copyright (c) 2014 Teun Zengerink
+# Licensed under MIT License.
+# See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
+
 class APP.View.Grocery extends Backbone.View
   el: $('div#content')
-  groceries: $("ul#groceries")
+  groceries: $('ul#groceries')
   input: $('input#new-item')
   suggestions: $('ul#suggestions')
   events:
@@ -84,9 +92,9 @@ class APP.View.Suggestion extends Backbone.View
   addItem: ->
     win.clearTimeout(APP.timeoutId)
     APP.groceries.create name: @model.get('name')
-    $("ul#suggestions").hide()
-    $("ul#groceries").show()
-    $("input#new-item").val('')
+    $('ul#suggestions').hide()
+    $('ul#groceries').show()
+    $('input#new-item').val('')
   initialize: ->
     @template = _.template $('#suggestion-template').html()
   render: ->
