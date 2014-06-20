@@ -1,8 +1,9 @@
 Groceries.controller('listController', ['$scope', 'itemService', function ($scope, itemService) {
     $scope.groceries = [];
+    $scope.showGroceries = true;
+    $scope.showSuggestions = false;
     $scope.suggestions = [];
     $scope.visibleButtons = [];
-    $scope.showSuggestions = false;
 
     $scope.buttonIsVisible = function (item) {
         return $scope.visibleButtons.indexOf(item.id) > -1;

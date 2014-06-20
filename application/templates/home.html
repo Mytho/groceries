@@ -5,7 +5,7 @@
 {% block content %}
 <div ng-app="Groceries" ng-controller="listController">
 	<input id="new-item" placeholder="What needs to be bought?" type="text" />
-	<ul id="groceries">
+	<ul id="groceries" ng-show="showGroceries">
 		<li ng-repeat="item in groceries" ng-class="{'bought':item.isBought()}" ng-click="toggleButton(item)">
 		<input type="checkbox" class="buy" ng-click="buy(item, $event)" ng-checked="item.isBought()" />
 		<label ng-click="buy(item, $event)">[[item.name]]</label>
