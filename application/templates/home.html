@@ -12,7 +12,7 @@
 		<button class="delete" ng-click="delete(item, $event)" ng-show="buttonIsVisible(item)">delete</button>
 		</li>
 	</ul>
-	<ul id="suggestions">
+	<ul id="suggestions" ng-show="showSuggestions">
 		<li ng-repeat="item in suggestions">[[item.name]]</li>
 	</ul>
 	<div class="clearfix"></div>
