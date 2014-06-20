@@ -8,6 +8,8 @@ module.exports = function(grunt) {
             appJs: {
                 src: [
                     'application/static/js/groceries/groceries.js',
+                    'application/static/js/groceries/models/*.js',
+                    'application/static/js/groceries/services/*.js',
                     'application/static/js/groceries/controllers/*.js'
                 ],
                 dest: 'build/app.js'
