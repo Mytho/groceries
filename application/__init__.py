@@ -10,14 +10,14 @@
 """
 from flask import render_template, Flask
 from .auth import init_auth
-from .models import db
+from .models import init_models
 from .views import FaviconView, HomeView, ItemView, SuggestionView
 
 
 app = Flask(__name__)
 app.config.from_object('application.config')
-db.init_app(app)
 init_auth(app)
+init_models(app)
 
 
 @app.errorhandler(400)

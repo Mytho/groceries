@@ -17,6 +17,10 @@ from sqlalchemy import desc, func
 db = SQLAlchemy()
 
 
+def init_models(app):
+    db.init_app(app)
+
+
 class User(db.Model):
     __tablename__ = 'users'
 
