@@ -1,16 +1,12 @@
-Groceries.controller('listController', ['$scope', '$timeout', 'itemService', function ($scope, $timeout, itemService) {
+Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', function ($scope, $timeout, ItemService) {
     $scope.groceries = [];
     $scope.inputFocused = false;
     $scope.inputValue = '';
     $scope.suggestions = [];
     $scope.visibleButtons = [];
 
-    $scope.buttonIsVisible = function (item) {
-        return $scope.visibleButtons.indexOf(item.id) > -1;
-    };
-
     $scope.add = function (name) {
-        itemService.addItem(name).then(function (item) {
+        ItemService.addItem(name).then(function (item) {
             $scope.groceries.push(item);
             $scope.inputFocused = false;
             $scope.inputValue = '';
@@ -19,34 +15,29 @@ Groceries.controller('listController', ['$scope', '$timeout', 'itemService', fun
 
     $scope.buy = function (item, $event) {
         $event.stopPropagation();
-        itemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
+        ItemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
             item.update(data);
         });
     };
 
     $scope.delete = function (item, $event) {
         $event.stopPropagation();
-        itemService.deleteItem(item.id).then(function () {
+        ItemService.deleteItem(item.id).then(function () {
             $scope.groceries.splice($scope.groceries.indexOf(item), 1);
         });
     };
 
-    $scope.focusIn = function () {
-        $scope.inputFocused = true;
-    };
-
-    $scope.focusOut = function () {
-        $timeout(function () {
-            $scope.inputFocused = false;
-        }, 250);
+    $scope.isButtonVisible = function (item) {
+        return $scope.visibleButtons.indexOf(item.id) > -1;
     };
 
     $scope.keyup = function ($event) {
-        if ($event.keyCode != 13) {
+        if ($event.keyCode !== 13) {
             return;
         }
 
         $scope.add($scope.inputValue);
+
         $timeout(function () {
             $event.target.blur();
         }, 250);
@@ -60,11 +51,22 @@ Groceries.controller('listController', ['$scope', '$timeout', 'itemService', fun
         }
     };
 
-    itemService.getGroceries().then(function (groceries) {
+    $scope.toggleFocus = function () {
+        if ( ! $scope.inputFocused) {
+            $scope.inputFocused = true;
+            return;
+        }
+
+        $timeout(function () {
+            $scope.inputFocused = false;
+        }, 250);
+    };
+
+    ItemService.getGroceries().then(function (groceries) {
         $scope.groceries = groceries;
     });
 
-    itemService.getSuggestions().then(function (suggestions) {
+    ItemService.getSuggestions().then(function (suggestions) {
         $scope.suggestions = suggestions;
     });
 }]);
