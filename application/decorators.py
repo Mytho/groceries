@@ -16,7 +16,7 @@ def content_type(content_type='text/plain'):
     """Wrap a function that returns a response and add the specified
     content-type to the headers of the response.
 
-    content_type -- content type of the resonse
+    content_type -- content type of the response
     """
     def decorator(f):
         @wraps(f)
