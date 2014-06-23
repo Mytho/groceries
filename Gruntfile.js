@@ -110,7 +110,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
 
-    grunt.registerTask('default', ['karma', 'concat', 'jshint', 'uglify', 'cssmin']);
+    grunt.registerTask('default', ['concat', 'jshint', 'uglify', 'cssmin']);
     grunt.registerTask('test', ['karma:appJs']);
 
 };
