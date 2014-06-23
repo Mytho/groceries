@@ -2,6 +2,10 @@
 
 module.exports = function(grunt) {
 
+    grunt.config('karmaOptions', {
+
+    });
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -49,28 +53,32 @@ module.exports = function(grunt) {
         },
 
         karma: {
-            appJs: {
-                options: {
-                    frameworks: ['jasmine'],
-                    files: [
-                        'application/static/vendor/angular/1.2.18/angular.min.js',
-                        'application/static/vendor/angular/1.2.18/angular-resource.min.js',
-                        'application/static/vendor/angular/1.2.18/angular-route.min.js',
-                        'application/static/vendor/angular/1.2.18/angular-mocks.js',
-                        'application/static/js/*/core.js',
-                        'application/static/js/*/models.js',
-                        'application/static/js/*/services.js',
-                        'application/static/js/*/controllers.js',
-                        'application/static/js/*/tests.js'
-                    ],
-                    reporters: ['progress'],
-                    port: 8002,
-                    colors: true,
-                    loglevel: 'INFO',
-                    autoWatch: true,
-                    singleRun: false,
-                    plugins: ['karma-jasmine']
-                }
+            options: {
+                frameworks: ['jasmine'],
+                files: [
+                    'application/static/vendor/angular/1.2.18/angular.min.js',
+                    'application/static/vendor/angular/1.2.18/angular-resource.min.js',
+                    'application/static/vendor/angular/1.2.18/angular-route.min.js',
+                    'application/static/vendor/angular/1.2.18/angular-mocks.js',
+                    'application/static/js/*/core.js',
+                    'application/static/js/*/models.js',
+                    'application/static/js/*/services.js',
+                    'application/static/js/*/controllers.js',
+                    'application/static/js/*/tests.js'
+                ],
+                reporters: ['progress'],
+                port: 8002,
+                colors: true,
+                logLevel: 'ERROR',
+                plugins: ['karma-jasmine']
+            },
+            continuous: {
+                autoWatch: false,
+                singleRun: true
+            },
+            watch: {
+                autoWatch: true,
+                singleRun: false
             }
         },
 
@@ -111,6 +119,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('default', ['concat', 'jshint', 'uglify', 'cssmin']);
-    grunt.registerTask('test', ['karma:appJs']);
+    grunt.registerTask('test-watch', ['karma:watch']);
+    grunt.registerTask('test', ['karma:continuous']);
 
 };
