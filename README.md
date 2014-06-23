@@ -12,7 +12,7 @@ Only a few easy steps are needed to install the application:
 
 ## Development
 
-If you want to develop the application, it is advised to create a virtualenvironment for Python. As a virtual environment for node, you could use nodeenv. Install all dependencies by running `make setup-req`.
+If you want to develop the application, it is advised to create a virtualenv for Python. As a virtual environment for node, you could use nodeenv. Once both environments are activated, install all dependencies by running `make setup-req`.
 
 ## Testing
 
