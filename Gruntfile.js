@@ -1,6 +1,7 @@
+'use strict';
+
 module.exports = function(grunt) {
 
-    // Configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -31,6 +32,17 @@ module.exports = function(grunt) {
             }
         },
 
+        jshint: {
+            options: {
+                globalstrict: true,
+                globals: {
+                    angular: true,
+                    module: true
+                }
+            },
+            before: ['Gruntfile.js', 'build/app.js']
+        },
+
         uglify: {
             options: {
                 banner: '/*!\n' +
@@ -51,7 +63,7 @@ module.exports = function(grunt) {
         watch: {
             appJs: {
                 files: ['application/static/js/**/*.js'],
-                tasks: ['concat:appJs', 'uglify:appJs']
+                tasks: ['concat:appJs', 'jshint', 'uglify:appJs']
             },
             screenCss: {
                 files: ['application/static/js/**/*.css'],
@@ -60,13 +72,12 @@ module.exports = function(grunt) {
         }
     });
 
-    // Load Tasks
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    // Default Task
-    grunt.registerTask('default', ['concat', 'uglify', 'cssmin']);
+    grunt.registerTask('default', ['concat', 'jshint', 'uglify', 'cssmin']);
 
 };

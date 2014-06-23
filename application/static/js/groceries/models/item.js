@@ -1,4 +1,4 @@
-Groceries.factory('itemModel', function () {
+Groceries.factory('ItemModel', function () {
     return function (data) {
         angular.extend(this, {
             id: null,

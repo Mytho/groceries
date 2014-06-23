@@ -26,7 +26,7 @@ Groceries.controller('listController', ['$scope', '$timeout', 'itemService', fun
 
     $scope.delete = function (item, $event) {
         $event.stopPropagation();
-        itemService.deleteItem(item.id).then(function () {;
+        itemService.deleteItem(item.id).then(function () {
             $scope.groceries.splice($scope.groceries.indexOf(item), 1);
         });
     };
@@ -48,7 +48,7 @@ Groceries.controller('listController', ['$scope', '$timeout', 'itemService', fun
 
         $scope.add($scope.inputValue);
         $timeout(function () {
-            $event.target.blur()
+            $event.target.blur();
         }, 250);
     };
 

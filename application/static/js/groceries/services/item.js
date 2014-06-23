@@ -1,16 +1,16 @@
-Groceries.service('itemService', ['$http', '$log', 'itemModel', function ($http, $log, itemModel) {
+Groceries.service('itemService', ['$http', '$log', 'ItemModel', function ($http, $log, ItemModel) {
     var convertItems = function (data) {
         var i, items;
         items = [];
         for (i = 0; i < data.length; i++) {
-            items.push(new itemModel(data[i]));
+            items.push(new ItemModel(data[i]));
         }
         return items;
     };
 
     this.addItem = function (name) {
         return $http.post('/items', {name: name}).then(function (response) {
-            return new itemModel(response.data);
+            return new ItemModel(response.data);
         }, function (response) {
             $log.error('Could not add item');
         });
@@ -18,7 +18,7 @@ Groceries.service('itemService', ['$http', '$log', 'itemModel', function ($http,
 
     this.deleteItem = function (id) {
         return $http.delete('/items/'+id).then(function (response) {
-            return response.status = 200;
+            return response.status === 200;
         }, function (response) {
             $log.error('Could not delete item');
         });
@@ -26,7 +26,7 @@ Groceries.service('itemService', ['$http', '$log', 'itemModel', function ($http,
 
     this.toggleItem = function (id, isBought) {
         return $http.put('/items/'+id, {bought: isBought}).then(function (response) {
-            return new itemModel(response.data);
+            return new ItemModel(response.data);
         }, function (response) {
             $log.error('Could not toggle items');
         });
