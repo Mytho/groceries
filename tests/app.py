@@ -54,7 +54,7 @@ class AppTestCase(unittest.TestCase):
                          'text/html; charset=utf-8')
 
     def test_post_items(self):
-        item_name = 'Toilet paper'
+        item_name = 'Bananas'
         data = '{"name":"%s"}' % item_name
         response = self.client.post('/items', data=data)
         self.assertEqual(response.status_code, 200)
