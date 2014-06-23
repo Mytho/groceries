@@ -5,10 +5,6 @@ Groceries.controller('listController', ['$scope', '$timeout', 'itemService', fun
     $scope.suggestions = [];
     $scope.visibleButtons = [];
 
-    $scope.buttonIsVisible = function (item) {
-        return $scope.visibleButtons.indexOf(item.id) > -1;
-    };
-
     $scope.add = function (name) {
         itemService.addItem(name).then(function (item) {
             $scope.groceries.push(item);
@@ -31,14 +27,8 @@ Groceries.controller('listController', ['$scope', '$timeout', 'itemService', fun
         });
     };
 
-    $scope.focusIn = function () {
-        $scope.inputFocused = true;
-    };
-
-    $scope.focusOut = function () {
-        $timeout(function () {
-            $scope.inputFocused = false;
-        }, 250);
+    $scope.isButtonVisible = function (item) {
+        return $scope.visibleButtons.indexOf(item.id) > -1;
     };
 
     $scope.keyup = function ($event) {
@@ -47,6 +37,7 @@ Groceries.controller('listController', ['$scope', '$timeout', 'itemService', fun
         }
 
         $scope.add($scope.inputValue);
+
         $timeout(function () {
             $event.target.blur();
         }, 250);
@@ -58,6 +49,17 @@ Groceries.controller('listController', ['$scope', '$timeout', 'itemService', fun
         } else {
             $scope.visibleButtons.push(item.id);
         }
+    };
+
+    $scope.toggleFocus = function () {
+        if ( ! $scope.inputFocused) {
+            $scope.inputFocused = true;
+            return;
+        }
+
+        $timeout(function () {
+            $scope.inputFocused = false;
+        }, 250);
     };
 
     itemService.getGroceries().then(function (groceries) {
