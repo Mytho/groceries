@@ -22,7 +22,7 @@ init_errors(app)
 init_models(app)
 
 
-app.add_url_rule('/', view_func=GroceriesView.as_view('groceries'))
+app.add_url_rule('/', view_func=GroceriesView.as_view('home'))
 app.add_url_rule('/favicon.ico', view_func=FaviconView.as_view('favicon'))
 app.add_url_rule('/items', view_func=ItemView.as_view('items'))
 app.add_url_rule('/items/<item_id>', view_func=ItemView.as_view('spec_items'))
