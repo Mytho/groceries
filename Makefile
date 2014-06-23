@@ -14,6 +14,7 @@ setup: setup-req setup-db
 
 setup-req:
 	pip install -r requirements.txt
+	npm install
 
 setup-db:
 	cat db/setup.sql | sqlite3 db/groceries.db
