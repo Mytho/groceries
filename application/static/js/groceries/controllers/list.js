@@ -1,4 +1,4 @@
-Groceries.controller('listController', ['$scope', '$timeout', 'itemService', function ($scope, $timeout, itemService) {
+Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', function ($scope, $timeout, ItemService) {
     $scope.groceries = [];
     $scope.inputFocused = false;
     $scope.inputValue = '';
@@ -6,7 +6,7 @@ Groceries.controller('listController', ['$scope', '$timeout', 'itemService', fun
     $scope.visibleButtons = [];
 
     $scope.add = function (name) {
-        itemService.addItem(name).then(function (item) {
+        ItemService.addItem(name).then(function (item) {
             $scope.groceries.push(item);
             $scope.inputFocused = false;
             $scope.inputValue = '';
@@ -15,14 +15,14 @@ Groceries.controller('listController', ['$scope', '$timeout', 'itemService', fun
 
     $scope.buy = function (item, $event) {
         $event.stopPropagation();
-        itemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
+        ItemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
             item.update(data);
         });
     };
 
     $scope.delete = function (item, $event) {
         $event.stopPropagation();
-        itemService.deleteItem(item.id).then(function () {
+        ItemService.deleteItem(item.id).then(function () {
             $scope.groceries.splice($scope.groceries.indexOf(item), 1);
         });
     };
@@ -62,11 +62,11 @@ Groceries.controller('listController', ['$scope', '$timeout', 'itemService', fun
         }, 250);
     };
 
-    itemService.getGroceries().then(function (groceries) {
+    ItemService.getGroceries().then(function (groceries) {
         $scope.groceries = groceries;
     });
 
-    itemService.getSuggestions().then(function (suggestions) {
+    ItemService.getSuggestions().then(function (suggestions) {
         $scope.suggestions = suggestions;
     });
 }]);

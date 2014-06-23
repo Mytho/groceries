@@ -8,11 +8,74 @@ describe('Groceries', function () {
         expect(expression({name: 'World'})).toBe('Hello World!');
     }));
 
-    describe('listController', function () {
-        var $httpBackend, $timeout, itemService, listController, boughtItem, unboughtItem, scope, ItemModel;
+    describe('ItemModel', function () {
+        var ItemModel;
 
         beforeEach(function () {
-            inject(function ($controller, _$timeout_, _$httpBackend_, _itemService_, _ItemModel_) {
+            inject(function (_ItemModel_) {
+                ItemModel = _ItemModel_;
+            });
+        });
+
+        it('should extend default values', function () {
+            var item = new ItemModel({
+                id: 123,
+                name: 'Oranges'
+            });
+            expect(typeof item.id).not.toBe('undefined');
+            expect(typeof item.name).toBe('string');
+            expect(typeof item.bought_by).not.toBe('undefined');
+            expect(typeof item.bought_date).not.toBe('undefined');
+            expect(typeof item.created_by).not.toBe('undefined');
+            expect(typeof item.created_date).not.toBe('undefined');
+            expect(typeof item.isBought).toBe('function');
+            expect(typeof item.update).toBe('function');
+        });
+
+        it('should tell if it is bought or not', function () {
+            var itemOne, itemTwo, itemThree, itemFour;
+            itemOne = new ItemModel({
+                bought_by: null,
+                bought_date: null
+            });
+            itemTwo = new ItemModel({
+                bought_by: 1,
+                bought_date: null
+            });
+            itemThree = new ItemModel({
+                bought_by: null,
+                bought_date: 1300000000
+            });
+            itemFour = new ItemModel({
+                bought_by: 1,
+                bought_date: 1300000000
+            });
+            expect(itemOne.isBought()).toBe(false);
+            expect(itemTwo.isBought()).toBe(true);
+            expect(itemThree.isBought()).toBe(true);
+            expect(itemFour.isBought()).toBe(true);
+        });
+
+        it('should update it\'s data', function () {
+            var item = new ItemModel({
+                id: 123,
+                name: 'Apples'
+            });
+            expect(item.bought_by).toBe(null);
+            item.update({ bought_by: 789 });
+            expect(item.bought_by).toBe(789);
+        });
+    });
+
+    describe('ItemService', function () {
+
+    });
+
+    describe('ListController', function () {
+        var $httpBackend, $timeout, ItemModel, ItemService, ListController, boughtItem, unboughtItem, scope;
+
+        beforeEach(function () {
+            inject(function ($controller, _$timeout_, _$httpBackend_, _ItemService_, _ItemModel_) {
                 ItemModel = _ItemModel_;
                 unboughtItem = new ItemModel({
                     id: 1,
@@ -36,18 +99,18 @@ describe('Groceries', function () {
                 $httpBackend.whenPUT('/items/'+unboughtItem.id).respond(boughtItem);
                 $httpBackend.whenGET('/suggestions').respond([new ItemModel({id: 535, name: 'Lemons'})]);
                 scope = {};
-                itemService = _itemService_;
-                listController = $controller('listController', {
+                ItemService = _ItemService_;
+                ListController = $controller('ListController', {
                     $scope: scope,
                     $timeout: $timeout,
-                    itemService: itemService
+                    ItemService: ItemService
                 });
                 $httpBackend.flush();
             });
         });
 
         it('should exist', function () {
-            expect( !! listController).toBe(true);
+            expect( !! ListController).toBe(true);
         });
 
         it('should contain a list of groceries', function () {
@@ -60,7 +123,7 @@ describe('Groceries', function () {
             expect(scope.suggestions.length).toBeGreaterThan(0);
         });
 
-        it('should contain an empty input', function () {
+        it('should initialize with an empty input', function () {
             expect(scope.inputValue).toBe('');
         });
 
@@ -146,65 +209,6 @@ describe('Groceries', function () {
             scope.toggleFocus();
             $timeout.flush();
             expect(scope.inputFocused).toBe(false);
-        });
-    });
-
-    describe('ItemModel', function () {
-        var ItemModel;
-
-        beforeEach(function () {
-            inject(function (_ItemModel_) {
-                ItemModel = _ItemModel_;
-            });
-        });
-
-        it('should extend default values', function () {
-            var item = new ItemModel({
-                id: 123,
-                name: 'Oranges'
-            });
-            expect(typeof item.id).not.toBe('undefined');
-            expect(typeof item.name).toBe('string');
-            expect(typeof item.bought_by).not.toBe('undefined');
-            expect(typeof item.bought_date).not.toBe('undefined');
-            expect(typeof item.created_by).not.toBe('undefined');
-            expect(typeof item.created_date).not.toBe('undefined');
-            expect(typeof item.isBought).toBe('function');
-            expect(typeof item.update).toBe('function');
-        });
-
-        it('should tell if it is bought or not', function () {
-            var itemOne, itemTwo, itemThree, itemFour;
-            itemOne = new ItemModel({
-                bought_by: null,
-                bought_date: null
-            });
-            itemTwo = new ItemModel({
-                bought_by: 1,
-                bought_date: null
-            });
-            itemThree = new ItemModel({
-                bought_by: null,
-                bought_date: 1300000000
-            });
-            itemFour = new ItemModel({
-                bought_by: 1,
-                bought_date: 1300000000
-            });
-            expect(itemOne.isBought()).toBe(false);
-            expect(itemTwo.isBought()).toBe(true);
-            expect(itemThree.isBought()).toBe(true);
-            expect(itemFour.isBought()).toBe(true);
-        });
-
-        it('should update it\'s data', function () {
-            var item = new ItemModel({
-                id: 123,
-                name: 'Apples'
-            });
-            expect(item.bought_by).toBe(null);
-            item.update({ bought_by: 789 });
-            expect(item.bought_by).toBe(789);
         });
     });
 });
