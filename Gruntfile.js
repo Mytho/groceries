@@ -54,6 +54,7 @@ module.exports = function(grunt) {
 
         karma: {
             options: {
+                browsers: ['PhantomJS'],
                 frameworks: ['jasmine'],
                 files: [
                     'application/static/vendor/angular/1.2.18/angular.min.js',
@@ -70,7 +71,7 @@ module.exports = function(grunt) {
                 port: 8002,
                 colors: true,
                 logLevel: 'ERROR',
-                plugins: ['karma-jasmine']
+                plugins: ['karma-jasmine', 'karma-phantomjs-launcher']
             },
             continuous: {
                 autoWatch: false,
