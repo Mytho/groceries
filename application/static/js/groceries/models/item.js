@@ -3,6 +3,8 @@ Groceries.factory('ItemModel', function () {
         angular.extend(this, {
             id: null,
             name: '',
+            created_by: null,
+            created_date: null,
             bought_by: null,
             bought_date: null,
             isBought: function () {

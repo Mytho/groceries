@@ -148,4 +148,63 @@ describe('Groceries', function () {
             expect(scope.inputFocused).toBe(false);
         });
     });
+
+    describe('ItemModel', function () {
+        var ItemModel;
+
+        beforeEach(function () {
+            inject(function (_ItemModel_) {
+                ItemModel = _ItemModel_;
+            });
+        });
+
+        it('should extend default values', function () {
+            var item = new ItemModel({
+                id: 123,
+                name: 'Oranges'
+            });
+            expect(typeof item.id).not.toBe('undefined');
+            expect(typeof item.name).toBe('string');
+            expect(typeof item.bought_by).not.toBe('undefined');
+            expect(typeof item.bought_date).not.toBe('undefined');
+            expect(typeof item.created_by).not.toBe('undefined');
+            expect(typeof item.created_date).not.toBe('undefined');
+            expect(typeof item.isBought).toBe('function');
+            expect(typeof item.update).toBe('function');
+        });
+
+        it('should tell if it is bought or not', function () {
+            var itemOne, itemTwo, itemThree, itemFour;
+            itemOne = new ItemModel({
+                bought_by: null,
+                bought_date: null
+            });
+            itemTwo = new ItemModel({
+                bought_by: 1,
+                bought_date: null
+            });
+            itemThree = new ItemModel({
+                bought_by: null,
+                bought_date: 1300000000
+            });
+            itemFour = new ItemModel({
+                bought_by: 1,
+                bought_date: 1300000000
+            });
+            expect(itemOne.isBought()).toBe(false);
+            expect(itemTwo.isBought()).toBe(true);
+            expect(itemThree.isBought()).toBe(true);
+            expect(itemFour.isBought()).toBe(true);
+        });
+
+        it('should update it\'s data', function () {
+            var item = new ItemModel({
+                id: 123,
+                name: 'Apples'
+            });
+            expect(item.bought_by).toBe(null);
+            item.update({ bought_by: 789 });
+            expect(item.bought_by).toBe(789);
+        });
+    });
 });
