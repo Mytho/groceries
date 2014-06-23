@@ -1,14 +1,20 @@
-all: setup-db check build test
+all: clean setup-db check build-js test
 
-build:
+clean:
 	find . -type f -name \*.pyc -delete
+
+build-js:
 	grunt concat
 	grunt uglify
 	grunt cssmin
 
-check:
+check: check-py check-js
+
+check-py:
 	flake8 application
 	flake8 tests
+
+check-js:
 	grunt jshint
 
 httpd:
@@ -23,6 +29,10 @@ setup-req:
 setup-db:
 	cat db/setup.sql | sqlite3 db/groceries.db
 
-test:
+test: test-py test-js
+
+test-py:
 	python run-tests.py
+
+test-js:
 	grunt karma:continuous

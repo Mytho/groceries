@@ -10,7 +10,7 @@
 """
 from flask import (current_app, flash, make_response, redirect,
                    render_template, request, url_for)
-from flask.views import MethodView, View
+from flask.views import MethodView
 from flask.ext.login import current_user, LoginManager, login_user, logout_user
 from functools import wraps
 from werkzeug.security import check_password_hash
@@ -73,8 +73,8 @@ class LoginView(MethodView):
         return redirect(url_for('login'))
 
 
-class LogoutView(View):
+class LogoutView(MethodView):
 
-    def dispatch_request(self):
+    def get(self):
         logout_user()
         return redirect(url_for('login'))
