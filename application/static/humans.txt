@@ -4,6 +4,6 @@
 	From:         Amsterdam, Netherlands
 
 /* SITE */
-	Languages:  Python, CoffeeScript & Less
-	Frameworks: jQuery, Backbone and Flask
+	Languages:  HTML, CSS, JavaScript & Python
+	Frameworks: Angular & Flask
 	Software:   Git, Vim & Nginx
