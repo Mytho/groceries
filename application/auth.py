@@ -61,7 +61,6 @@ class LoginView(MethodView):
         return make_response(render_template('login.html'))
 
     def post(self):
-        print(request.form)
         username = request.form['username']
         password = request.form['password']
         if username and password:
