@@ -11,11 +11,9 @@ describe('Groceries', function () {
     describe('ItemModel', function () {
         var ItemModel;
 
-        beforeEach(function () {
-            inject(function (_ItemModel_) {
-                ItemModel = _ItemModel_;
-            });
-        });
+        beforeEach(inject(function (_ItemModel_) {
+            ItemModel = _ItemModel_;
+        }));
 
         it('should extend default values', function () {
             var item = new ItemModel({
@@ -68,7 +66,68 @@ describe('Groceries', function () {
     });
 
     describe('ItemService', function () {
+        var $httpBackend, ItemModel, ItemService;
 
+        beforeEach(inject(function (_$httpBackend_, _ItemModel_, _ItemService_) {
+            $httpBackend = _$httpBackend_;
+            ItemModel = _ItemModel_;
+            ItemService = _ItemService_;
+        }));
+
+        it('should return a list of ItemModels as groceries', function () {
+            var groceries = [];
+            $httpBackend.whenGET('/items').respond([{id: 1, name: 'Apples'}, {id: 2, name: 'Bananas'}]);
+            ItemService.getGroceries().then(function (items) {
+                groceries = items;
+            });
+            $httpBackend.flush();
+            expect(groceries instanceof Array).toBe(true);
+            expect(groceries.length).toBe(2);
+        });
+
+        it('should return a list of ItemModels as suggestions', function () {
+            var suggestions = [];
+            $httpBackend.whenGET('/suggestions').respond([{id: 1, name: 'Apples'}, {id: 2, name: 'Bananas'}]);
+            ItemService.getSuggestions().then(function (items) {
+                suggestions = items;
+            });
+            $httpBackend.flush();
+            expect(suggestions instanceof Array).toBe(true);
+            expect(suggestions.length).toBe(2);
+        });
+
+        it('should add items', function () {
+            var item, testName;
+            testName = 'Oranges';
+            $httpBackend.whenPOST('/items').respond({id: 123, name: testName});
+            ItemService.addItem(testName).then(function (_item_) {
+                item = _item_;
+            });
+            $httpBackend.flush();
+            expect(item.name).toBe(testName);
+        });
+
+        it('should delete items', function () {
+            var itemId, isSuccessful;
+            itemId = 1;
+            $httpBackend.whenDELETE('/items/'+itemId).respond(200, '');
+            ItemService.deleteItem(itemId).then(function (_isSuccessful_) {
+                isSuccessful = _isSuccessful_;
+            });
+            $httpBackend.flush();
+            expect(isSuccessful).toBe(true);
+        });
+
+        it('should toggle items bought data', function () {
+            var item, testName;
+            item = new ItemModel({name: testName});
+            $httpBackend.whenPUT('/items/'+item.id).respond({name: testName, bought_date: 1300000000, bought_by: 3});
+            ItemService.toggleItem(item.id, {bought: true}).then(function (_item_) {
+                item = _item_;
+            });
+            $httpBackend.flush();
+            expect(item.isBought()).toBe(true);
+        });
     });
 
     describe('ListController', function () {
