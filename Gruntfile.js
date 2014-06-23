@@ -8,10 +8,10 @@ module.exports = function(grunt) {
         concat: {
             appJs: {
                 src: [
-                    'application/static/js/*/module.js',
-                    'application/static/js/*/models/*.js',
-                    'application/static/js/*/services/*.js',
-                    'application/static/js/*/controllers/*.js'
+                    'application/static/js/*/core.js',
+                    'application/static/js/*/models.js',
+                    'application/static/js/*/services.js',
+                    'application/static/js/*/controllers.js'
                 ],
                 dest: 'build/app.js'
             },
@@ -57,10 +57,10 @@ module.exports = function(grunt) {
                         'application/static/vendor/angular/1.2.18/angular-resource.min.js',
                         'application/static/vendor/angular/1.2.18/angular-route.min.js',
                         'application/static/vendor/angular/1.2.18/angular-mocks.js',
-                        'application/static/js/*/module.js',
-                        'application/static/js/*/models/*.js',
-                        'application/static/js/*/services/*.js',
-                        'application/static/js/*/controllers/*.js',
+                        'application/static/js/*/core.js',
+                        'application/static/js/*/models.js',
+                        'application/static/js/*/services.js',
+                        'application/static/js/*/controllers.js',
                         'application/static/js/*/tests.js'
                     ],
                     reporters: ['progress'],
