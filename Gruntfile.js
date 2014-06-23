@@ -1,44 +1,48 @@
+'use strict';
+
 module.exports = function(grunt) {
 
-    // Configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        coffee: {
-            coffee: {
-                files: {
-                    'build/app.js': 'build/app.coffee'
-                }
-            }
-        },
+
         concat: {
-            coffee: {
+            appJs: {
                 src: [
-                    'coffee/core.coffee',
-                    'coffee/router.coffee',
-                    'coffee/models.coffee',
-                    'coffee/collections.coffee',
-                    'coffee/views.coffee'
+                    'application/static/js/groceries/groceries.js',
+                    'application/static/js/groceries/models/*.js',
+                    'application/static/js/groceries/services/*.js',
+                    'application/static/js/groceries/controllers/*.js'
                 ],
-                dest: 'build/app.coffee'
+                dest: 'build/app.js'
             },
-            less: {
-                src: ['less/core.less'],
-                dest: 'build/screen.less'
+            vendorJs: {
+                src: [
+                    'application/static/vendor/angular/1.2.18/angular.min.js',
+                    'application/static/vendor/angular/1.2.18/angular-resource.min.js',
+                    'application/static/vendor/angular/1.2.18/angular-route.min.js'
+                ],
+                dest: 'application/static/vendor.min.js'
             }
         },
+
         cssmin: {
-            less: {
-                src: ["build/screen.css"],
-                dest: "application/static/css/screen.min.css"
+            screenCss: {
+                src: ["application/static/css/screen.css"],
+                dest: "application/static/screen.min.css"
             }
         },
-        less: {
-            less: {
-                files: {
-                    "build/screen.css": "build/screen.less"
+
+        jshint: {
+            options: {
+                globalstrict: true,
+                globals: {
+                    angular: true,
+                    module: true
                 }
-            }
+            },
+            before: ['Gruntfile.js', 'build/app.js']
         },
+
         uglify: {
             options: {
                 banner: '/*!\n' +
@@ -49,33 +53,31 @@ module.exports = function(grunt) {
                     ' * <%= pkg.lisence.url %>\n' +
                     ' */\n'
             },
-            coffee: {
+            appJs: {
                 files: {
-                    'application/static/js/app.min.js': ['<banner>', 'build/app.js']
+                    'application/static/app.min.js': ['<banner>', 'build/app.js']
                 }
             }
         },
+
         watch: {
-            coffee: {
-                files: ['coffee/*.coffee'],
-                tasks: ['concat:coffee', 'coffee:coffee', 'uglify:coffee']
+            appJs: {
+                files: ['application/static/js/**/*.js'],
+                tasks: ['concat:appJs', 'jshint', 'uglify:appJs']
             },
-            less: {
-                files: ['less/*.less'],
-                tasks: ['concat:less', 'less:less', 'cssmin:less']
+            screenCss: {
+                files: ['application/static/js/**/*.css'],
+                tasks: ['cssmin:screenCss']
             }
         }
     });
 
-    // Load Tasks
-    grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    // Default Task
-    grunt.registerTask('default', ['concat', 'coffee', 'uglify', 'less', 'cssmin']);
+    grunt.registerTask('default', ['concat', 'jshint', 'uglify', 'cssmin']);
 
 };

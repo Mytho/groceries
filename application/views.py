@@ -34,12 +34,12 @@ class FaviconView(MethodView):
         return make_response(file)
 
 
-class HomeView(MethodView):
+class GroceriesView(MethodView):
 
     decorators = [cache_control(86400), logged_in_or_redirect]
 
     def get(self):
-        return make_response(render_template('home.html'))
+        return make_response(render_template('groceries.html'))
 
 
 class ItemView(ApiView):
@@ -49,7 +49,7 @@ class ItemView(ApiView):
         return make_response('')
 
     def get(self):
-        items = Item.query.filter_by(bought_by=None)
+        items = Item.query.filter_by(bought_by=None, bought_date=None)
         return make_response(json.dumps([item.serialize() for item in items]))
 
     def post(self):

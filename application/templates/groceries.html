@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block head_style %}
+	<link charset="utf-8" href="{{ url_for('static', filename='screen.min.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block content %}
+<div class="disable-select" ng-app="Groceries" ng-controller="listController">
+	<input id="new-item" type="text" placeholder="What needs to be bought?" ng-model="inputValue" ng-focus="focusIn()" ng-blur="focusOut()" ng-keyup="keyup($event)">
+	<ul id="groceries" ng-show="! inputFocused">
+		<li ng-repeat="item in groceries" ng-class="{'bought':item.isBought()}" ng-click="toggleButton(item)">
+		<input class="buy" type="checkbox" ng-click="buy(item, $event)" ng-checked="item.isBought()" />
+		<label ng-click="buy(item, $event)">[[item.name]]</label>
+		<button class="delete" ng-click="delete(item, $event)" ng-show="buttonIsVisible(item)">delete</button>
+		</li>
+	</ul>
+	<ul id="suggestions" ng-show="inputFocused">
+		<li ng-repeat="item in suggestions | filter:inputValue" ng-click="add(item.name)">[[item.name]]</li>
+	</ul>
+	<div class="clearfix"></div>
+</div>
+{% endblock %}
+{% block footer %}
+	<a href="https://raw.github.com/Mytho/groceries/master/LISENCE.md">Copyright &copy; Teun Zengerink</a></a>
+{% endblock %}
+{% block script %}
+	<script charset=utf-8" src="{{ url_for('static', filename='vendor.min.js') }}" type="text/javascript"></script>
+	<script charset=utf-8" src="{{ url_for('static', filename='app.min.js') }}" type="text/javascript"></script>
+{% endblock %}
