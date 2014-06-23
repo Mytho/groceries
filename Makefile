@@ -1,4 +1,4 @@
-all: clean check setup-db test-py
+all: clean check setup-db test
 
 check:
 	flake8 application
@@ -19,10 +19,6 @@ setup-req:
 setup-db:
 	cat db/setup.sql | sqlite3 db/groceries.db
 
-test-py:
+test:
 	python run-tests.py
-
-test-js:
 	grunt test
-
-test: test-py test-js
