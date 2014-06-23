@@ -36,3 +36,6 @@ test-py:
 
 test-js:
 	grunt karma:continuous
+
+user:
+	python add-user.py

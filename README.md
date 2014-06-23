@@ -9,6 +9,7 @@ Only a few easy steps are needed to install the application:
     1. Clone the repository by executing `git@github.com:Mytho/groceries.git`.
     2. Copy the Flask configuration file and modify it to meet your needs: `cp application/example.config.py application/config.py`.
     3. Create the initial database by executing `make setup-db`.
+    4. Add user accounts by running the `make user` command.
 
 ## Development
 
