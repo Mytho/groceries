@@ -2,10 +2,6 @@
 
 module.exports = function(grunt) {
 
-    grunt.config('karmaOptions', {
-
-    });
-
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -119,8 +115,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
 
-    grunt.registerTask('default', ['concat', 'jshint', 'uglify', 'cssmin']);
-    grunt.registerTask('test-watch', ['karma:watch']);
-    grunt.registerTask('test', ['karma:continuous']);
+    grunt.registerTask('default', ['']);
 
 };

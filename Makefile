@@ -1,11 +1,15 @@
-all: clean check setup-db test
+all: setup-db check build test
+
+build:
+	find . -type f -name \*.pyc -delete
+	grunt concat
+	grunt uglify
+	grunt cssmin
 
 check:
 	flake8 application
 	flake8 tests
-
-clean:
-	find . -type f -name \*.pyc -delete
+	grunt jshint
 
 httpd:
 	python run-httpd.py
@@ -21,4 +25,4 @@ setup-db:
 
 test:
 	python run-tests.py
-	grunt test
+	grunt karma:continuous
