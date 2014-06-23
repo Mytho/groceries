@@ -3,7 +3,7 @@
 	<link charset="utf-8" href="{{ url_for('static', filename='screen.min.css') }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
-<div class="disable-select" ng-app="Groceries" ng-controller="listController">
+<div class="disable-select" ng-app="Groceries" ng-controller="ListController">
 	<input id="new-item" type="text" placeholder="What needs to be bought?" ng-model="inputValue" ng-focus="toggleFocus()" ng-blur="toggleFocus()" ng-keyup="keyup($event)">
 	<ul id="groceries" ng-show="! inputFocused">
 		<li ng-repeat="item in groceries" ng-class="{'bought':item.isBought()}" ng-click="toggleButton(item)">
