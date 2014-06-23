@@ -1,7 +1,4 @@
 {% extends "layout.html" %}
-{% block head_style %}
-	<link charset="utf-8" href="{{ url_for('static', filename='screen.min.css') }}" rel="stylesheet" type="text/css" />
-{% endblock %}
 {% block content %}
 		{% with messages = get_flashed_messages() %}
 			{% if messages %}
@@ -18,7 +15,4 @@
 			<button class="primary" type="submit">Login</button>
 		</form>
 		<div class="clearfix"></div>
-{% endblock %}
-{% block footer %}
-	<a href="https://raw.github.com/Mytho/groceries/master/LISENCE.md">Copyright &copy; Teun Zengerink</a></a>
 {% endblock %}
