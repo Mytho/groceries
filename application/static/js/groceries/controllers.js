@@ -51,15 +51,23 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
         }
     };
 
-    $scope.toggleFocus = function () {
+    $scope.toggleFocus = function ($event) {
         if ( ! $scope.inputFocused) {
             $scope.inputFocused = true;
+            $event.target.focus();
             return;
         }
 
         $timeout(function () {
             $scope.inputFocused = false;
+            $event.target.blur();
         }, 250);
+    };
+
+    $scope.removeFocus = function ($event) {
+        if ($scope.inputFocused) {
+            $scope.inputFocused = false;
+        }
     };
 
     ItemService.getGroceries().then(function (groceries) {

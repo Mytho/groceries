@@ -6,15 +6,17 @@ body {
 	font-size: 14px;
 	font-weight: 110;
 	-webkit-font-smoothing: antialiased;
+}
+.clearfix {
+	clear:both;
+}
+.disable-select {
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-}
-.clearfix {
-	clear:both;
 }
 ::-webkit-input-placeholder {
 	color: #b1b6bb;
