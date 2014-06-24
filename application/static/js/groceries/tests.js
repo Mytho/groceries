@@ -287,6 +287,7 @@ describe('Groceries', function () {
             scope.toggleFocus(e);
             expect(scope.inputFocused).toBe(true);
             scope.removeFocus();
+            $timeout.flush();
             expect(scope.inputFocused).toBe(false);
         });
     });

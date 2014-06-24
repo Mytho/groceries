@@ -66,7 +66,9 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
 
     $scope.removeFocus = function () {
         if ($scope.inputFocused) {
-            $scope.inputFocused = false;
+            $timeout(function () {
+                $scope.inputFocused = false;
+            }, 250);
         }
     };
 
