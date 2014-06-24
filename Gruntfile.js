@@ -30,8 +30,8 @@ module.exports = function(grunt) {
 
         cssmin: {
             screenCss: {
-                src: ["application/static/css/screen.css"],
-                dest: "application/static/screen.min.css"
+                src: ['application/static/css/**/*.css'],
+                dest: 'application/static/screen.min.css'
             }
         },
 
@@ -105,7 +105,7 @@ module.exports = function(grunt) {
                 tasks: ['concat:appJs', 'jshint', 'uglify:appJs']
             },
             screenCss: {
-                files: ['application/static/js/**/*.css'],
+                files: ['application/static/css/**/*.css'],
                 tasks: ['cssmin:screenCss']
             }
         }

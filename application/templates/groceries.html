@@ -6,7 +6,7 @@
 			<li ng-repeat="item in groceries" ng-class="{'bought':item.isBought()}" ng-click="toggleButton(item)">
 			<input class="buy" type="checkbox" ng-click="buy(item, $event)" ng-checked="item.isBought()" />
 			<label ng-click="buy(item, $event)">[[item.name]]</label>
-			<button class="delete" ng-click="delete(item, $event)" ng-show="isButtonVisible(item)">delete</button>
+			<button class="warning" ng-click="delete(item, $event)" ng-show="isButtonVisible(item)">DELETE</button>
 			</li>
 		</ul>
 		<ul id="suggestions" ng-show="inputFocused">
