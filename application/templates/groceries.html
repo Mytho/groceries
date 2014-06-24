@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 	<div class="disable-select" ng-app="Groceries" ng-controller="ListController">
-		<input id="new-item" type="text" placeholder="What needs to be bought?" ng-model="inputValue" ng-click="toggleFocus($event)" ng-blur="removeFocus($event)" ng-keyup="keyup($event)">
+		<input id="new-item" type="text" placeholder="What needs to be bought?" ng-model="inputValue" ng-click="toggleFocus($event)" ng-blur="removeFocus()" ng-keyup="keyup($event)">
 		<ul id="groceries" ng-show="! inputFocused">
 			<li ng-repeat="item in groceries" ng-class="{'bought':item.isBought()}" ng-click="toggleButton(item)">
 			<input class="buy" type="checkbox" ng-click="buy(item, $event)" ng-checked="item.isBought()" />
