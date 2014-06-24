@@ -30,7 +30,7 @@ class FaviconView(MethodView):
 
     def get(self):
         path = os.path.join(current_app.root_path, 'static')
-        file = send_from_directory(path, 'icons/shopping-cart-32x32.png')
+        file = send_from_directory(path, 'icons/shopping-bag-32x32.png')
         return make_response(file)
 
 
