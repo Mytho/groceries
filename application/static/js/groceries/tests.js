@@ -261,12 +261,32 @@ describe('Groceries', function () {
         });
 
         it('should toggle input focus', function () {
+            var e = {
+                target: {
+                    blur: function () {},
+                    focus: function () {}
+                }
+            };
             expect(scope.inputFocused).toBe(false);
-            scope.toggleFocus();
+            scope.toggleFocus(e);
             $timeout.flush();
             expect(scope.inputFocused).toBe(true);
-            scope.toggleFocus();
+            scope.toggleFocus(e);
             $timeout.flush();
+            expect(scope.inputFocused).toBe(false);
+        });
+
+        it('should remove input focus', function () {
+            var e = {
+                target: {
+                    blur: function () {},
+                    focus: function () {}
+                }
+            };
+            expect(scope.inputFocused).toBe(false);
+            scope.toggleFocus(e);
+            expect(scope.inputFocused).toBe(true);
+            scope.removeFocus();
             expect(scope.inputFocused).toBe(false);
         });
     });
