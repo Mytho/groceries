@@ -9,7 +9,6 @@
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
 import unittest
-from flask import url_for
 from application import app
 
 
@@ -25,14 +24,12 @@ class AuthTestCase(unittest.TestCase):
                          'text/html; charset=utf-8')
         self.assertTrue('Username' in response.data)
         self.assertTrue('Password' in response.data)
-        with app.app_context():
-            data = {'username': 'FakeUser', 'password': 'WrongPass'}
-            response = self.client.post('/login', data=data)
-            self.assertEqual(response.status_code, 302)
-            self.assertEqual(response.headers['Location'], url_for('login'))
+        data = {'username': 'FakeUser', 'password': 'WrongPass'}
+        response = self.client.post('/login', data=data)
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue('/login' in response.headers['Location'])
 
     def test_logout(self):
-        with app.app_context():
-            response = self.client.get('/logout')
-            self.assertEqual(response.status_code, 302)
-            self.assertEqual(response.headers['Location'], url_for('login'))
+        response = self.client.get('/logout')
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue('/login' in response.headers['Location'])
