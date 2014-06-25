@@ -218,7 +218,11 @@ describe('Groceries', function () {
         });
 
         it('should add items', function () {
-            var item;
+            var item, calledSetSuggestions;
+            calledSetSuggestions = false;
+            scope.setSuggestions = function () {
+                calledSetSuggestions = true;
+            };
             scope.inputValue = 'SomeMockValue';
             scope.inputFocused = true;
             scope.add(unboughtItem.name);
@@ -226,6 +230,7 @@ describe('Groceries', function () {
             item = scope.groceries.pop();
             expect(scope.inputValue).toBe('');
             expect(scope.inputFocused).toBe(false);
+            expect(calledSetSuggestions).toBe(true);
             expect(item.name).toEqual(unboughtItem.name);
         });
 
@@ -252,14 +257,19 @@ describe('Groceries', function () {
         });
 
         it('should delete items', function () {
-            var e, item;
+            var e, item, calledSetSuggestions;
             e = {
                 stopPropagation: function () {}
+            };
+            calledSetSuggestions = false;
+            scope.setSuggestions = function () {
+                calledSetSuggestions = true;
             };
             scope.groceries.push(unboughtItem);
             expect(scope.groceries.indexOf(unboughtItem)).toBe(scope.groceries.length - 1);
             scope.delete(unboughtItem, e);
             $httpBackend.flush();
+            expect(calledSetSuggestions).toBe(true);
             expect(scope.groceries.indexOf(unboughtItem)).toBe(-1);
         });
 

@@ -27,6 +27,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
 
         ItemService.deleteItem(item.id).then(function () {
             $scope.groceries.splice($scope.groceries.indexOf(item), 1);
+            $scope.setSuggestions();
         });
     };
 
