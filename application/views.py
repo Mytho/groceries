@@ -13,7 +13,7 @@ import json
 from flask import (abort, current_app, make_response, render_template, request,
                    send_from_directory)
 from flask.views import MethodView
-from flask.ext.login import login_required
+from flask.ext.login import current_user, login_required
 from .auth import logged_in_or_redirect
 from .models import Item
 from .decorators import cache_control, content_type
@@ -45,7 +45,7 @@ class GroceriesView(MethodView):
 class ItemView(ApiView):
 
     def delete(self, item_id):
-        Item.delete(item_id)
+        Item.query.get(item_id).delete()
         return make_response('')
 
     def get(self):
@@ -56,14 +56,14 @@ class ItemView(ApiView):
         if not request.data:
             abort(400)
         data = json.loads(request.data)
-        item = Item.create(data['name'])
+        item = Item(data['name'], current_user).save()
         return make_response(json.dumps(item.serialize()))
 
     def put(self, item_id):
         if not request.data:
             abort(400)
         data = json.loads(request.data)
-        item = Item.bought(item_id, data['bought'])
+        item = Item.query.get(item_id).buy(current_user, data['bought']).save()
         if not item:
             abort(404)
         return make_response(json.dumps(item.serialize()))

@@ -9,7 +9,6 @@
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
 import time
-from flask.ext.login import current_user
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import desc, func
 
@@ -46,6 +45,11 @@ class Item(db.Model):
                                   foreign_keys=[bought_by])
 
     def __init__(self, name, user):
+        """Create a new Item instance.
+
+        name -- name of the item
+        user -- creator of the item
+        """
         self.name = name
         self.create_date = time.time()
         self.created_by = user.get_id()
@@ -56,46 +60,6 @@ class Item(db.Model):
         return '<Item %r>' % self.name
 
     @staticmethod
-    def bought(item_id, bought):
-        """Mark the item as bought or not bought.
-
-        item_id -- primary key of the item to mark
-        bought  -- is item bought?
-        """
-        item = Item.query.get(item_id)
-        if not item:
-            return item
-        if bought:
-            item.bought_by = current_user.get_id()
-            item.bought_date = time.time()
-        else:
-            item.bought_by = None
-            item.bought_date = None
-        db.session.add(item)
-        db.session.commit()
-        return item
-
-    @staticmethod
-    def create(name):
-        """Create a new item on the list.
-
-        name -- name of the item
-        """
-        item = Item(name, current_user)
-        db.session.add(item)
-        db.session.commit()
-        return item
-
-    @staticmethod
-    def delete(item_id):
-        """Delete an existing item.
-
-        item_id -- primary key of the item
-        """
-        db.session.delete(Item.query.get(item_id))
-        db.session.commit()
-
-    @staticmethod
     def suggestions(limit=20):
         """Returns a list of suggestions"""
         return db.session \
@@ -104,6 +68,32 @@ class Item(db.Model):
             .order_by(desc('count')) \
             .limit(limit) \
             .all()
+
+    def buy(self, user, is_bought=True):
+        """Mark the item as bought.
+
+        user      -- buyer of the item
+        is_bought -- is item bought?
+        """
+        if is_bought:
+            self.bought_by = user.get_id()
+            self.bought_date = time.time()
+        else:
+            self.bought_by = None
+            self.bought_date = None
+        return self
+
+    def delete(self):
+        """Delete the item from the list."""
+        db.session.delete(self)
+        db.session.commit()
+        return self
+
+    def save(self):
+        """Saves an item to the list."""
+        db.session.add(self)
+        db.session.commit()
+        return self
 
     def serialize(self):
         """Serializes the item for proper JSON-responses."""

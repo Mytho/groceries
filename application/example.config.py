@@ -12,7 +12,6 @@ ADMINS = ['teun@zengerink.com']
 DEBUG = False
 TESTING = False
 SECRET_KEY = 'VerySecretKey'
-SERVER_NAME = ''
 SESSION_COOKIE_DOMAIN = 'localhost'
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_NAME = 'session'
