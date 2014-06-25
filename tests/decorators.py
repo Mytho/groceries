@@ -27,7 +27,7 @@ class DecoratorsTestCase(unittest.TestCase):
             self.assertEqual(response.headers['Content-Type'],
                              'application/json')
 
-    def test_content_type(self):
+    def test_cache_control(self):
         with app.app_context():
             response = self.get_response()
             self.assertEqual(response.headers['Cache-Control'],
