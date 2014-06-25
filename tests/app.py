@@ -18,12 +18,6 @@ class AppTestCase(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
 
-    def test_404(self):
-        response = self.client.get('/non-existing-page')
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.headers['Content-Type'],
-                         'text/html; charset=utf-8')
-
     def test_delete_items(self):
         post_data = '{"name":"Oranges"}'
         post_response = self.client.post('/items', data=post_data)

@@ -13,6 +13,7 @@ import unittest
 from tests.app import AppTestCase
 from tests.auth import AuthTestCase
 from tests.decorators import DecoratorsTestCase
+from tests.errors import ErrorsTestCase
 from tests.models import ItemTestCase, UserTestCase
 
 
