@@ -172,12 +172,22 @@ describe('Groceries', function () {
             expect( !! ListController).toBe(true);
         });
 
-        it('should contain a list of groceries', function () {
+        it('should set the list of groceries', function () {
+            expect(scope.groceries instanceof Array).toBe(true);
+            expect(scope.groceries.length).toBeGreaterThan(0);
+            scope.groceries = [];
+            scope.setGroceries();
+            $httpBackend.flush();
             expect(scope.groceries instanceof Array).toBe(true);
             expect(scope.groceries.length).toBeGreaterThan(0);
         });
 
-        it('should contain a list of suggestions', function () {
+        it('should set the list of suggestions', function () {
+            expect(scope.suggestions instanceof Array).toBe(true);
+            expect(scope.suggestions.length).toBeGreaterThan(0);
+            scope.suggestions = [];
+            scope.setSuggestions();
+            $httpBackend.flush();
             expect(scope.suggestions instanceof Array).toBe(true);
             expect(scope.suggestions.length).toBeGreaterThan(0);
         });

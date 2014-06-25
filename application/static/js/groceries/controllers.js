@@ -10,11 +10,13 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
             $scope.groceries.push(item);
             $scope.inputFocused = false;
             $scope.inputValue = '';
+            $scope.setSuggestions();
         });
     };
 
     $scope.buy = function (item, $event) {
         $event.stopPropagation();
+
         ItemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
             item.update(data);
         });
@@ -22,6 +24,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
 
     $scope.delete = function (item, $event) {
         $event.stopPropagation();
+
         ItemService.deleteItem(item.id).then(function () {
             $scope.groceries.splice($scope.groceries.indexOf(item), 1);
         });
@@ -41,6 +44,18 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
         $timeout(function () {
             $event.target.blur();
         }, 250);
+    };
+
+    $scope.setGroceries = function () {
+        ItemService.getGroceries().then(function (groceries) {
+            $scope.groceries = groceries;
+        });
+    };
+
+    $scope.setSuggestions = function () {
+        ItemService.getSuggestions().then(function (suggestions) {
+            $scope.suggestions = suggestions;
+        });
     };
 
     $scope.toggleButton = function (item) {
@@ -72,11 +87,6 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
         }
     };
 
-    ItemService.getGroceries().then(function (groceries) {
-        $scope.groceries = groceries;
-    });
-
-    ItemService.getSuggestions().then(function (suggestions) {
-        $scope.suggestions = suggestions;
-    });
+    $scope.setGroceries();
+    $scope.setSuggestions();
 }]);
