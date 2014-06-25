@@ -25,34 +25,6 @@ def init_models(app):
     db.init_app(app)
 
 
-class User(db.Model):
-    __tablename__ = 'users'
-
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), unique=True)
-    password = db.Column(db.String(64))
-    active = db.Column(db.Integer)
-
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-
-    def __repr__(self):
-        return '<User %r>' % self.username
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True if self.active else False
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return self.id
-
-
 class Item(db.Model):
     __tablename__ = 'items'
 
@@ -73,10 +45,10 @@ class Item(db.Model):
                                                      lazy='dynamic'),
                                   foreign_keys=[bought_by])
 
-    def __init__(self, name):
+    def __init__(self, name, user):
         self.name = name
         self.create_date = time.time()
-        self.created_by = current_user.get_id()
+        self.created_by = user.get_id()
         self.bought_date = None
         self.bought_by = None
 
@@ -109,7 +81,7 @@ class Item(db.Model):
 
         name -- name of the item
         """
-        item = Item(name)
+        item = Item(name, current_user)
         db.session.add(item)
         db.session.commit()
         return item
@@ -141,3 +113,31 @@ class Item(db.Model):
                 'created_by': self.created_by,
                 'bought_date': self.bought_date,
                 'bought_by': self.bought_by}
+
+
+class User(db.Model):
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), unique=True)
+    password = db.Column(db.String(64))
+    active = db.Column(db.Integer)
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True if self.active else False
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
