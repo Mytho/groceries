@@ -155,8 +155,7 @@ div#content li input[type='checkbox'] {
 }
 div#content li button {
 	float: right;
-	margin-top: 14px;
-	margin-right: 10px;
+	margin-top: 11px;
 }
 div#content li.bought label {
   text-decoration: line-through;
