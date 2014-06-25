@@ -31,11 +31,14 @@ setup-db:
 
 test: test-py test-js
 
-test-py:
+test-py: setup-db
 	python run-tests.py
 
 test-js:
 	grunt karma:continuous
+
+test-e2e: setup-db
+	protractor e2e/conf.js
 
 user:
 	python add-user.py

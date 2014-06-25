@@ -41,20 +41,25 @@ module.exports = function(grunt) {
                 globals: {
                     angular: true,
                     beforeEach: true,
+                    browser: true,
+                    by: true,
                     describe: true,
+                    element: true,
                     expect: true,
                     inject: true,
                     it: true,
-                    module: true
+                    module: true,
+                    protractor: true
                 }
             },
-            before: ['Gruntfile.js', 'application/static/js/*/tests.js', 'build/app.js']
+            before: ['Gruntfile.js', 'application/static/js/*/tests.js', 'e2e/specs.js', 'build/app.js']
         },
 
         karma: {
             options: {
+                autoWatch: false,
                 browsers: ['PhantomJS'],
-                frameworks: ['jasmine'],
+                colors: true,
                 files: [
                     'application/static/vendor/angular/1.2.18/angular.min.js',
                     'application/static/vendor/angular/1.2.18/angular-resource.min.js',
@@ -66,16 +71,14 @@ module.exports = function(grunt) {
                     'application/static/js/*/controllers.js',
                     'application/static/js/*/tests.js'
                 ],
-                reporters: ['progress'],
-                port: 8002,
-                colors: true,
+                frameworks: ['jasmine'],
                 logLevel: 'ERROR',
-                plugins: ['karma-jasmine', 'karma-phantomjs-launcher']
-            },
-            continuous: {
-                autoWatch: false,
+                plugins: ['karma-jasmine', 'karma-phantomjs-launcher'],
+                port: 8002,
+                reporters: ['progress'],
                 singleRun: true
             },
+            continuous: { },
             unit: {
                 autoWatch: true,
                 singleRun: false
@@ -100,11 +103,11 @@ module.exports = function(grunt) {
         },
 
         watch: {
-            appJs: {
-                files: ['application/static/js/**/*.js'],
+            js: {
+                files: ['Gruntfile.js', 'e2e/specs.js', 'application/static/js/**/*.js'],
                 tasks: ['concat:appJs', 'jshint', 'uglify:appJs']
             },
-            screenCss: {
+            css: {
                 files: ['application/static/css/**/*.css'],
                 tasks: ['cssmin:screenCss']
             }
