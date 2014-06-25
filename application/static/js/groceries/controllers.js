@@ -32,7 +32,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
     };
 
     $scope.keyup = function ($event) {
-        if ($event.keyCode !== 13 || $scope.inputValue !== '') {
+        if ($event.keyCode !== 13 || ! $scope.inputValue) {
             return;
         }
 
