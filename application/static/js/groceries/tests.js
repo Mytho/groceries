@@ -219,20 +219,24 @@ describe('Groceries', function () {
             expect(item.name).toEqual(unboughtItem.name);
         });
 
-        it('should add item with name equal to value of input when enter is pressed', function () {
-            var e, item;
+        it('should add item with name equal to value of input when enter is pressed and value is not empty', function () {
+            var e, item, lengthAtStart;
             e = {
                 keyCode: 13,
                 target: {
                     blur: function () {}
                 }
             };
+            lengthAtStart = scope.groceries.length;
             scope.inputFocused = true;
+            scope.inputValue = '';
+            scope.keyup(e);
             scope.inputValue = unboughtItem.name;
             scope.keyup(e);
             $httpBackend.flush();
-            item = scope.groceries.pop();
             $timeout.flush();
+            expect(scope.groceries.length).toBe(lengthAtStart + 1);
+            item = scope.groceries.pop();
             expect(item.name).toBe(unboughtItem.name);
             expect(scope.inputFocused).toBe(false);
         });

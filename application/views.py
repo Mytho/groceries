@@ -73,5 +73,5 @@ class SuggestionView(ApiView):
 
     def get(self):
         suggestions = [dict([['name', k], ['count', v]])
-                       for (k, v) in Item.suggestions()]
+                       for (k, v) in Item.suggestions(20)]
         return make_response(json.dumps(suggestions))

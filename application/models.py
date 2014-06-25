@@ -124,12 +124,14 @@ class Item(db.Model):
         db.session.commit()
 
     @staticmethod
-    def suggestions():
+    def suggestions(limit=20):
         """Returns a list of suggestions"""
         return db.session \
             .query(Item.name, func.count(Item.name).label('count')) \
             .group_by(Item.name) \
-            .order_by(desc('count')).all()
+            .order_by(desc('count')) \
+            .limit(limit) \
+            .all()
 
     def serialize(self):
         """Serializes the item for proper JSON-responses."""
