@@ -1,17 +1,19 @@
-<input id="new-item"
-	type="text"
-	placeholder="What needs to be bought?"
-	ng-model="inputValue"
-	ng-click="toggleFocus($event)"
-	ng-blur="removeFocus()"
-	ng-keyup="keyup($event)">
-<ul id="groceries" ng-show="! inputFocused">
-	<li ng-repeat="item in groceries" ng-class="{'bought':item.isBought()}" ng-click="toggleButton(item)">
-	<input class="buy" type="checkbox" ng-click="buy(item, $event)" ng-checked="item.isBought()" />
-	<label ng-click="buy(item, $event)">[[item.name]]</label>
-	<button class="warning" ng-click="delete(item, $event)" ng-show="isButtonVisible(item)">DELETE</button>
-	</li>
-</ul>
-<ul id="suggestions" ng-show="inputFocused">
-	<li ng-repeat="item in suggestions | filter:inputValue" ng-click="add(item.name)">[[item.name]]</li>
-</ul>
+<div ng-controller="ListController">
+	<input id="new-item"
+		type="text"
+		placeholder="What needs to be bought?"
+		ng-blur="removeFocus()"
+		ng-click="toggleFocus($event)"
+		ng-keyup="keyup($event)"
+		ng-model="inputValue">
+	<ul id="groceries" ng-show="! inputFocused">
+		<li ng-repeat="item in groceries" ng-class="{'bought':item.isBought()}" ng-click="toggleButton(item)">
+		<input class="buy" type="checkbox" ng-click="buy(item, $event)" ng-checked="item.isBought()" />
+		<label ng-click="buy(item, $event)">[[item.name]]</label>
+		<button class="warning" ng-click="delete(item, $event)" ng-show="isButtonVisible(item)">DELETE</button>
+		</li>
+	</ul>
+	<ul id="suggestions" ng-show="inputFocused">
+		<li ng-repeat="item in suggestions | filter:inputValue" ng-click="add(item.name)">[[item.name]]</li>
+	</ul>
+</div>
