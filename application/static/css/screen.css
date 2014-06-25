@@ -7,8 +7,10 @@ body {
 	font-weight: 110;
 	-webkit-font-smoothing: antialiased;
 }
-.clearfix {
-	clear:both;
+.clearfix:after {
+	content: '';
+	display: table;
+	clear: both;
 }
 .disable-select {
 	-webkit-touch-callout: none;
