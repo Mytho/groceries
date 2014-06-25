@@ -76,7 +76,7 @@ module.exports = function(grunt) {
                 autoWatch: false,
                 singleRun: true
             },
-            watch: {
+            unit: {
                 autoWatch: true,
                 singleRun: false
             }
