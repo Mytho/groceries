@@ -8,8 +8,8 @@
     Licensed under MIT License.
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
-from flask import (current_app, flash, make_response, redirect,
-                   render_template, request, url_for)
+from flask import (current_app, get_flashed_messages, flash, make_response,
+                   redirect, render_template, request, session, url_for)
 from flask.views import MethodView
 from flask.ext.login import current_user, LoginManager, login_user, logout_user
 from functools import wraps
@@ -61,7 +61,9 @@ class LoginView(MethodView):
     decorators = [check_csrf_token]
 
     def get(self):
-        return make_response(render_template('login.html'))
+        context = {'messages':get_flashed_messages(),
+                   'username': session.pop('username', '')}
+        return make_response(render_template('login.html', **context))
 
     def post(self):
         username = request.form['username']
@@ -71,6 +73,7 @@ class LoginView(MethodView):
             if user and check_password_hash(user.password, password):
                 login_user(user, remember=True)
                 return redirect(url_for('home'))
+        session['username'] = username
         flash('The username or password you entered is incorrect')
         return redirect(url_for('login'))
 

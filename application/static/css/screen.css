@@ -58,6 +58,10 @@ input[type='password']:focus {
 	border: 2px solid #00af89;
 	background-color: #fff;
 }
+input[type='text'].warning,
+input[type='password'].warning {
+	border: 2px solid #ba281c;
+}
 input[type='checkbox'] {
 	position: absolute;
 	overflow: hidden;
@@ -80,10 +84,6 @@ input[type='checkbox'] + label {
 }
 input[type='checkbox']:checked + label {
 	background-position: 0 -20px;
-}
-input[type='password']:focus {
-	background-color: #fff;
-	border-color: #00af89;
 }
 button {
 	display: inline-block;
