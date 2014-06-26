@@ -49,13 +49,13 @@ input[type='password'] {
 	margin: 0 auto;
 	background-color: #e7ecee;
 	color: #565f64;
-	border: 1px solid #b1b6bb;
+	border: 2px solid #b1b6bb;
 	font-size: 22px;
 	outline: none;
 }
 input[type='text']:focus,
 input[type='password']:focus {
-	border: 1px solid #00af89;
+	border: 2px solid #00af89;
 	background-color: #fff;
 }
 input[type='checkbox'] {
@@ -162,8 +162,10 @@ div#content li.bought label {
 	color: #d2d7d9;
 }
 div#content ul#suggestions li {
-	padding-top: 18px;
-	padding-left: 12px;
+	padding-top: 14px;
+	padding-right: 8px;
+	padding-bottom: 14px;
+	padding-left: 8px;
 	cursor: pointer;
 }
 div#footer {
