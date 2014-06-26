@@ -1,58 +1,82 @@
 'use strict';
 
 describe('Groceries', function () {
-    var ptor;
+    var deleteButtons, groceries, groceryCheckboxes, groceryLabels, input, ptor,
+        sleep, groceriesCount, suggestions, suggestionsCount;
 
     beforeEach(function () {
         ptor = protractor.getInstance();
         ptor.ignoreSynchronization = true;
         browser.get('/');
+        deleteButtons = element.all(by.css('#groceries li button.warning'));
+        groceries = element.all(by.repeater('item in groceries'));
+        groceryLabels = element.all(by.css('#groceries li label'));
+        groceryCheckboxes = element.all(by.css('#groceries li input[type="checkbox"]'));
+        input = element(by.css('#new-item'));
+        sleep = 300;
+        suggestions = element.all(by.repeater('item in suggestions'));
+        element.all(by.repeater('item in groceries')).count().then(function (count) {
+            groceriesCount = count;
+        });
+        element.all(by.repeater('item in suggestions')).count().then(function (count) {
+            suggestionsCount = count;
+        });
     });
 
-    it('should display a list of groceries that is hidden when the suggestions are displayed', function () {
-        expect(element.all(by.css('#groceries li')).count()).toBe(10);
-        expect(element(by.css('#groceries')).isDisplayed()).toBe(true);
-        element(by.css('#new-item')).click();
-        expect(element(by.css('#groceries')).isDisplayed()).toBe(false);
+    it('should display a list of groceries that is hidden when the input is clicked', function () {
+        expect(groceriesCount).toBe(10);
+        expect(groceries.first().isDisplayed()).toBe(true);
+        input.click();
+        expect(groceries.first().isDisplayed()).toBe(false);
     });
 
     it('should contain a list of suggestions that is shown when the input is clicked', function () {
-        expect(element.all(by.css('#suggestions li')).count()).toBe(10);
-        expect(element(by.css('#suggestions')).isDisplayed()).toBe(false);
-        element(by.css('#new-item')).click();
-        expect(element(by.css('#suggestions')).isDisplayed()).toBe(true);
+        expect(suggestionsCount).toBe(10);
+        expect(suggestions.first().isDisplayed()).toBe(false);
+        input.click();
+        expect(suggestions.first().isDisplayed()).toBe(true);
     });
 
-    it('should toggle the delete button when a groceries is clicked', function () {
-        expect(element.all(by.css('#groceries li button.warning')).get(1).isDisplayed()).toBe(false);
-        element.all(by.css('#groceries li')).get(1).click();
-        expect(element.all(by.css('#groceries li button.warning')).get(1).isDisplayed()).toBe(true);
-        element.all(by.css('#groceries li')).get(1).click();
-        expect(element.all(by.css('#groceries li button.warning')).get(1).isDisplayed()).toBe(false);
+    it('should toggle the delete button when a grocery item is clicked', function () {
+        expect(deleteButtons.first().isDisplayed()).toBe(false);
+        groceries.first().click();
+        expect(deleteButtons.first().isDisplayed()).toBe(true);
+        groceries.first().click();
+        expect(deleteButtons.first().isDisplayed()).toBe(false);
     });
 
-    it('should mark a grocery bought/not bought, when it\'s label or checkbox is clicked', function () {
-        expect(element.all(by.css('#groceries li')).get(1).getAttribute('class')).not.toMatch('bought');
-        element.all(by.css('#groceries li label')).get(1).click();
-        expect(element.all(by.css('#groceries li')).get(1).getAttribute('class')).toMatch('bought');
-        element.all(by.css('#groceries li input[type="checkbox"]')).get(1).click();
-        expect(element.all(by.css('#groceries li')).get(1).getAttribute('class')).not.toMatch('bought');
+    it('should mark a grocery item as bought/not bought, when it\'s label or checkbox is clicked', function () {
+        expect(groceries.first().getAttribute('class')).not.toMatch(/bought/);
+        groceryLabels.first().click();
+        browser.driver.sleep(sleep);
+        expect(groceries.first().getAttribute('class')).toMatch(/bought/);
+        groceryCheckboxes.first().click();
+        browser.driver.sleep(sleep);
+        expect(groceries.first().getAttribute('class')).not.toMatch(/bought/);
     });
 
     it('should add an item when the input is focused, the input has a value and the enter key is pressed', function () {
-        element(by.css('#new-item')).click();
-        element(by.css('#new-item')).sendKeys(protractor.Key.ENTER);
-        element(by.css('#new-item')).sendKeys('Apples');
-        element(by.css('#new-item')).sendKeys(protractor.Key.ENTER);
-        browser.driver.sleep(300);
-        expect(element.all(by.css('#groceries li label')).get(10).getText()).toMatch('Apples');
+        input.click();
+        input.sendKeys(protractor.Key.ENTER);
+        input.sendKeys('Apples');
+        input.sendKeys(protractor.Key.ENTER);
+        browser.driver.sleep(sleep);
+        expect(groceryLabels.last().getInnerHtml()).toMatch('Apples');
     });
 
     it('should add an item with the same name, when a suggestions is clicked', function () {
-        var firstSuggestion = element.all(by.css('#suggestions li')).get(1);
-        element(by.css('#new-item')).click();
-        firstSuggestion.click();
-        browser.driver.sleep(300);
-        expect(element.all(by.css('#groceries li label')).get(11).getText()).toMatch(firstSuggestion.getText());
+        input.click();
+        suggestions.first().click();
+        browser.driver.sleep(sleep);
+        expect(groceryLabels.last().getInnerHtml()).toBe(suggestions.first().getInnerHtml());
+    });
+
+    it('should delete an item when the delete button is clicked', function () {
+        var firstItemName = groceryLabels.first().getInnerHtml();
+        groceries.first().click();
+        deleteButtons.first().click();
+        browser.driver.sleep(sleep);
+        expect(groceryLabels.first().getInnerHtml()).not.toBe(firstItemName);
+        expect(groceryLabels.count()).toBe(groceriesCount - 1);
     });
 });

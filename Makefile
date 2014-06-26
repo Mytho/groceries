@@ -44,4 +44,4 @@ user:
 	python add-user.py
 
 webdriver:
-	phantomjs --webdriver=4444
+	phantomjs --webdriver=8003

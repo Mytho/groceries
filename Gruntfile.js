@@ -89,7 +89,7 @@ module.exports = function(grunt) {
             e2e: {
                 options: {
                     args: {
-                        seleniumAddress: 'http://0.0.0.0:4444/wd/hub',
+                        seleniumAddress: 'http://0.0.0.0:8003/wd/hub',
                         capabilities: {
                             browserName: 'phantomjs'
                         },
