@@ -17,3 +17,17 @@
 		</form>
 		<div class="clearfix"></div>
 {% endblock %}
+{% block script %}
+	<script type="text/javascript">
+		(function (doc) {
+			var f, i;
+			f = doc.forms[0];
+			for (i = 0; i < f.length; i++) {
+				if (f[i].type != 'hidden' && f[i].value == '') {
+					f[i].focus();
+					return;
+				}
+			}
+		})(document);
+	</script>
+{% endblock %}
