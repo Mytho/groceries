@@ -166,6 +166,7 @@ div#content ul#suggestions li {
 	padding-right: 8px;
 	padding-bottom: 14px;
 	padding-left: 8px;
+	cursor: pointer;
 }
 div#content ul.messages li {
 	background-color: #ba281c;
