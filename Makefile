@@ -50,8 +50,5 @@ test-e2e:
 user:
 	python add-user.py
 
-watch:
-	grunt watch
-
 webdriver:
 	phantomjs --webdriver=8003

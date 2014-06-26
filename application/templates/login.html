@@ -1,18 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
-		{% with messages = get_flashed_messages() %}
-			{% if messages %}
-				<ul class="messages">
-					{% for message in messages %}
-						<li>{{ message }}</li>
-					{% endfor %}
-				</ul>
-			{% endif %}
-		{% endwith %}
+		{% if messages %}
+			<ul class="messages">
+				{% for message in messages %}
+					<li>{{ message }}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
 		<form action="{{ url_for('login') }}" method="post">
 			<input name="csrf" value="{{ csrf_token() }}" type="hidden">
-			<input name="username" placeholder="Username" type="text" autocomplete="off">
-			<input name="password" placeholder="Password" type="password">
+			<input{% if messages and not username %} class="warning"{% endif %} name="username" value="{{ username }}" placeholder="Username" type="text" autocomplete="off">
+			<input{% if messages %} class="warning"{% endif %} name="password" placeholder="Password" type="password">
 			<button class="large primary" type="submit">LOGIN</button>
 		</form>
 		<div class="clearfix"></div>
