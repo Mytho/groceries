@@ -29,15 +29,17 @@ setup-req:
 setup-db:
 	cat db/setup.sql | sqlite3 db/groceries.db
 
-test: test-py test-js
+test: test-py test-js test-e2e
 
-test-py: setup-db
+test-py:
+	cat db/setup.sql | sqlite3 db/groceries.db
 	python run-tests.py
 
 test-js:
 	grunt karma:continuous
 
-test-e2e: setup-db
+test-e2e:
+	cat db/setup.sql | sqlite3 db/groceries.db
 	grunt protractor:e2e
 
 user:
