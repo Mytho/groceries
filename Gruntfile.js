@@ -41,20 +41,25 @@ module.exports = function(grunt) {
                 globals: {
                     angular: true,
                     beforeEach: true,
+                    browser: true,
+                    by: true,
                     describe: true,
+                    element: true,
                     expect: true,
                     inject: true,
                     it: true,
-                    module: true
+                    module: true,
+                    protractor: true
                 }
             },
-            before: ['Gruntfile.js', 'application/static/js/*/tests.js', 'build/app.js']
+            before: ['Gruntfile.js', 'application/static/js/*/tests/*.js', 'build/app.js']
         },
 
         karma: {
             options: {
+                autoWatch: false,
                 browsers: ['PhantomJS'],
-                frameworks: ['jasmine'],
+                colors: true,
                 files: [
                     'application/static/vendor/angular/1.2.18/angular.min.js',
                     'application/static/vendor/angular/1.2.18/angular-resource.min.js',
@@ -64,21 +69,38 @@ module.exports = function(grunt) {
                     'application/static/js/*/models.js',
                     'application/static/js/*/services.js',
                     'application/static/js/*/controllers.js',
-                    'application/static/js/*/tests.js'
+                    'application/static/js/*/tests/unit.js'
                 ],
-                reporters: ['progress'],
-                port: 8002,
-                colors: true,
+                frameworks: ['jasmine'],
                 logLevel: 'ERROR',
-                plugins: ['karma-jasmine', 'karma-phantomjs-launcher']
-            },
-            continuous: {
-                autoWatch: false,
+                plugins: ['karma-jasmine', 'karma-phantomjs-launcher'],
+                port: 8002,
+                reporters: ['progress'],
                 singleRun: true
             },
+            continuous: { },
             unit: {
                 autoWatch: true,
                 singleRun: false
+            }
+        },
+
+        protractor: {
+            e2e: {
+                options: {
+                    args: {
+                        seleniumAddress: 'http://0.0.0.0:8003/wd/hub',
+                        capabilities: {
+                            browserName: 'phantomjs'
+                        },
+                        baseUrl: 'http://127.0.0.1:8001',
+                        specs: ['application/static/js/*/tests/e2e.js'],
+                        jasmineNodeOpts: {
+                            showColors: true,
+                            defaultTimeoutInterval: 30000
+                        }
+                    }
+                }
             }
         },
 
@@ -100,11 +122,11 @@ module.exports = function(grunt) {
         },
 
         watch: {
-            appJs: {
-                files: ['application/static/js/**/*.js'],
+            js: {
+                files: ['Gruntfile.js', 'application/static/js/**/*.js'],
                 tasks: ['concat:appJs', 'jshint', 'uglify:appJs']
             },
-            screenCss: {
+            css: {
                 files: ['application/static/css/**/*.css'],
                 tasks: ['cssmin:screenCss']
             }
@@ -117,5 +139,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-protractor-runner');
 
 };

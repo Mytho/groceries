@@ -1,4 +1,6 @@
-all: clean setup-db check build-js test
+# NOTE: For the (e2e-)tests to run properly a httpd and webdriver must be
+#       running
+all: clean check build-js test
 
 clean:
 	find . -type f -name \*.pyc -delete
@@ -29,13 +31,21 @@ setup-req:
 setup-db:
 	cat db/setup.sql | sqlite3 db/groceries.db
 
-test: test-py test-js
+test: test-py test-js test-e2e
 
 test-py:
+	cat db/setup.sql | sqlite3 db/groceries.db
 	python run-tests.py
 
 test-js:
 	grunt karma:continuous
 
+test-e2e:
+	cat db/setup.sql | sqlite3 db/groceries.db
+	grunt protractor:e2e
+
 user:
 	python add-user.py
+
+webdriver:
+	phantomjs --webdriver=8003
