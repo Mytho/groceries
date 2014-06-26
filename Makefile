@@ -13,6 +13,9 @@ build-js:
 check: check-py check-js
 
 check-py:
+	flake8 add-user.py
+	flake8 run-httpd.py
+	flake8 run-tests.py
 	flake8 application
 	flake8 tests
 

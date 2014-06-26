@@ -17,6 +17,7 @@ from werkzeug import generate_password_hash
 def username():
     return raw_input('Username: ')
 
+
 def password():
     password = getpass.getpass('Password: ')
     password_check = getpass.getpass('Confirm password: ')
@@ -25,6 +26,7 @@ def password():
         password = getpass.getpass('Password: ')
         password_check = getpass.getpass('Confirm password: ')
     return generate_password_hash(password)
+
 
 def main():
     print('Creating a new user.')

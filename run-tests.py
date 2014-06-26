@@ -10,11 +10,11 @@
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
 import unittest
-from tests.app import AppTestCase
-from tests.auth import AuthTestCase
-from tests.decorators import DecoratorsTestCase
-from tests.errors import ErrorsTestCase
-from tests.models import ItemTestCase, UserTestCase
+from tests.app import AppTestCase  # NOQA
+from tests.auth import AuthTestCase  # NOQA
+from tests.decorators import DecoratorsTestCase  # NOQA
+from tests.errors import ErrorsTestCase  # NOQA
+from tests.models import ItemTestCase, UserTestCase  # NOQA
 
 
 if __name__ == '__main__':
