@@ -123,7 +123,7 @@ module.exports = function(grunt) {
 
         watch: {
             js: {
-                files: ['Gruntfile.js', 'e2e/specs.js', 'application/static/js/**/*.js'],
+                files: ['Gruntfile.js', 'application/static/js/**/*.js'],
                 tasks: ['concat:appJs', 'jshint', 'uglify:appJs']
             },
             css: {
