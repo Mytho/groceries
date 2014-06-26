@@ -52,7 +52,7 @@ module.exports = function(grunt) {
                     protractor: true
                 }
             },
-            before: ['Gruntfile.js', 'application/static/js/*/tests.js', 'e2e/specs.js', 'build/app.js']
+            before: ['Gruntfile.js', 'application/static/js/*/tests/*.js', 'build/app.js']
         },
 
         karma: {
@@ -69,7 +69,7 @@ module.exports = function(grunt) {
                     'application/static/js/*/models.js',
                     'application/static/js/*/services.js',
                     'application/static/js/*/controllers.js',
-                    'application/static/js/*/tests.js'
+                    'application/static/js/*/tests/unit.js'
                 ],
                 frameworks: ['jasmine'],
                 logLevel: 'ERROR',
@@ -94,7 +94,7 @@ module.exports = function(grunt) {
                             browserName: 'phantomjs'
                         },
                         baseUrl: 'http://127.0.0.1:8001',
-                        specs: ['application/static/js/*/e2e.js'],
+                        specs: ['application/static/js/*/tests/e2e.js'],
                         jasmineNodeOpts: {
                             showColors: true,
                             defaultTimeoutInterval: 30000
