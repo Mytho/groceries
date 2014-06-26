@@ -71,7 +71,7 @@ class LoginView(MethodView):
             if user and check_password_hash(user.password, password):
                 login_user(user, remember=True)
                 return redirect(url_for('home'))
-        flash('Incorrect login supplied')
+        flash('The username or password you entered is incorrect')
         return redirect(url_for('login'))
 
 
