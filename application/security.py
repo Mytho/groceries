@@ -8,7 +8,7 @@
     Licensed under MIT License.
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
-from flask import abort, current_app, request, session
+from flask import abort, current_app, request, session, url_for
 from functools import wraps
 from uuid import uuid4
 
@@ -33,6 +33,20 @@ def check_csrf_token(f):
             if (not current_app.config.get('TESTING', False) and (not token
                or token != request.form.get('csrf'))):
                 abort(401)
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+def check_referer_header(f):
+    """Wraps a function to check the referer-header.
+
+    f -- function to decorate
+    """
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if (not current_app.config.get('TESTING', False) and
+           request.headers['Referer'] != url_for('home', _external=True)):
+            abort(401)
         return f(*args, **kwargs)
     return decorated_function
 

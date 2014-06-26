@@ -17,11 +17,13 @@ from flask.ext.login import current_user, login_required
 from .auth import logged_in_or_redirect
 from .models import Item
 from .decorators import cache_control, content_type
+from .security import check_referer_header
 
 
 class ApiView(MethodView):
 
-    decorators = [content_type('application/json'), login_required]
+    decorators = [check_referer_header, content_type('application/json'),
+                  login_required]
 
 
 class FaviconView(MethodView):
