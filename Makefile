@@ -38,7 +38,7 @@ test-js:
 	grunt karma:continuous
 
 test-e2e: setup-db
-	protractor e2e/conf.js
+	grunt protractor:e2e
 
 user:
 	python add-user.py

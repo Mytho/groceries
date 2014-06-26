@@ -85,6 +85,25 @@ module.exports = function(grunt) {
             }
         },
 
+        protractor: {
+            e2e: {
+                options: {
+                    args: {
+                        seleniumAddress: 'http://0.0.0.0:4444/wd/hub',
+                        capabilities: {
+                            browserName: 'phantomjs'
+                        },
+                        baseUrl: 'http://127.0.0.1:8001',
+                        specs: ['application/static/js/*/e2e.js'],
+                        jasmineNodeOpts: {
+                            showColors: true,
+                            defaultTimeoutInterval: 30000
+                        }
+                    }
+                }
+            }
+        },
+
         uglify: {
             options: {
                 banner: '/*!\n' +
@@ -120,5 +139,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-protractor-runner');
 
 };
