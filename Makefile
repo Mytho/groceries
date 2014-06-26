@@ -42,3 +42,6 @@ test-e2e: setup-db
 
 user:
 	python add-user.py
+
+webdriver:
+	phantomjs --webdriver=4444
