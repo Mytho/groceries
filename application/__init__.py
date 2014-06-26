@@ -12,6 +12,7 @@ from flask import Flask
 from .auth import init_auth
 from .errors import init_errors
 from .models import init_models
+from .security import init_security
 from .views import FaviconView, GroceriesView, ItemView, SuggestionView
 
 
@@ -20,6 +21,7 @@ app.config.from_object('application.config')
 init_auth(app)
 init_errors(app)
 init_models(app)
+init_security(app)
 
 
 app.add_url_rule('/', view_func=GroceriesView.as_view('home'))

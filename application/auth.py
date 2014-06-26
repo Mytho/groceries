@@ -15,6 +15,7 @@ from flask.ext.login import current_user, LoginManager, login_user, logout_user
 from functools import wraps
 from werkzeug.security import check_password_hash
 from .models import User
+from .security import check_csrf_token
 
 
 login_manager = LoginManager()
@@ -57,6 +58,8 @@ def init_auth(app):
 
 class LoginView(MethodView):
 
+    decorators = [check_csrf_token]
+
     def get(self):
         return make_response(render_template('login.html'))
 
@@ -68,7 +71,7 @@ class LoginView(MethodView):
             if user and check_password_hash(user.password, password):
                 login_user(user, remember=True)
                 return redirect(url_for('home'))
-        flash('Incorrect login supplied')
+        flash('The username or password you entered is incorrect')
         return redirect(url_for('login'))
 
 
