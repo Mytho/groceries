@@ -1,4 +1,6 @@
-all: clean setup-db check build-js test
+# NOTE: For the (e2e-)tests to run properly a httpd and webdriver must be
+#       running
+all: clean check build-js test
 
 clean:
 	find . -type f -name \*.pyc -delete
