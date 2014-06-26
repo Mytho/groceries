@@ -15,6 +15,7 @@ from flask.ext.login import current_user, LoginManager, login_user, logout_user
 from functools import wraps
 from werkzeug.security import check_password_hash
 from .models import User
+from .security import check_csrf_token
 
 
 login_manager = LoginManager()
@@ -56,6 +57,8 @@ def init_auth(app):
 
 
 class LoginView(MethodView):
+
+    decorators = [check_csrf_token]
 
     def get(self):
         return make_response(render_template('login.html'))
