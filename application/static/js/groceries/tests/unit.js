@@ -210,6 +210,32 @@ describe('Groceries', function () {
             expect(scope.visibleButtons).toEqual([2]);
         });
 
+        it('should hide all buttons when an item is added', function () {
+            var itemOne = {id: 1},
+                itemTwo = {id: 2};
+            expect(scope.visibleButtons.length).toBe(0);
+            scope.toggleButton(itemOne);
+            scope.toggleButton(itemTwo);
+            expect(scope.visibleButtons).toEqual([1, 2]);
+            scope.add('Strawberries');
+            expect(scope.visibleButtons).toEqual([]);
+        });
+
+        it('should hide all buttons when an item is deleted', function () {
+            var itemOne = {id: 1},
+                itemTwo = {id: 2},
+                itemThree = {id: 3},
+                e = {
+                    stopPropagation: function () {}
+                };
+            expect(scope.visibleButtons.length).toBe(0);
+            scope.toggleButton(itemOne);
+            scope.toggleButton(itemTwo);
+            expect(scope.visibleButtons).toEqual([1, 2]);
+            scope.delete(itemThree, e);
+            expect(scope.visibleButtons).toEqual([]);
+        });
+
         it('should check button visibility', function () {
             var item = {id: 1};
             expect(scope.isButtonVisible(item)).toBe(false);
