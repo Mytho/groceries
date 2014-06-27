@@ -12,15 +12,15 @@ check: check-py check-js
 check-js:
 	grunt jshint
 
-clean:
-	find . -type f -name \*.pyc -delete
-
 check-py:
 	flake8 add-user.py
 	flake8 run-httpd.py
 	flake8 run-tests.py
 	flake8 application
 	flake8 tests
+
+clean:
+	find . -type f -name \*.pyc -delete
 
 httpd:
 	python run-httpd.py
