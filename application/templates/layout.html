@@ -3,14 +3,16 @@
   <head>
 		{% block head %}
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-			<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-			<meta name="viewport" content="width=device-width" />
+			<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
+			<meta name="viewport" content="width=device-width">
+			<meta name="apple-mobile-web-app-callable" content="yes">
+			<meta name="mobile-web-app-capable" content="yes">
 			<title>{% block title %}Groceries{% endblock %}</title>
-			<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ url_for('static', filename='img/icons/shopping-bag-114x114.png') }}" />
-			<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ url_for('static', filename='img/icons/shopping-bag-72x72.png') }}" />
-			<link rel="apple-touch-icon-precomposed" href="{{ url_for('static', filename='img/icons/shopping-bag-57x57.png') }}" />
+			<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ url_for('static', filename='img/icons/shopping-bag-114x114.png') }}">
+			<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ url_for('static', filename='img/icons/shopping-bag-72x72.png') }}">
+			<link rel="apple-touch-icon-precomposed" href="{{ url_for('static', filename='img/icons/shopping-bag-57x57.png') }}">
 			{% block head_style %}
-				<link charset="utf-8" href="{{ url_for('static', filename='screen.min.css') }}" rel="stylesheet" type="text/css" />
+				<link charset="utf-8" href="{{ url_for('static', filename='screen.min.css') }}" rel="stylesheet" type="text/css">
 			{% endblock %}
 			{% block head_script %}{% endblock %}
 		{% endblock %}
