@@ -14,8 +14,15 @@ import sqlite3
 from werkzeug import generate_password_hash
 
 
-def username():
-    return raw_input('Username: ')
+def main():
+    print('Creating a new user.')
+    user = username()
+    passwd = password()
+    conn = sqlite3.connect('db/groceries.db')
+    conn.execute('INSERT INTO users (username, password) VALUES (?, ?)',
+                 [user, passwd])
+    conn.commit()
+    print('New user created.')
 
 
 def password():
@@ -28,15 +35,8 @@ def password():
     return generate_password_hash(password)
 
 
-def main():
-    print('Creating a new user.')
-    user = username()
-    passwd = password()
-    conn = sqlite3.connect('db/groceries.db')
-    conn.execute('INSERT INTO users (username, password) VALUES (?, ?)',
-                 [user, passwd])
-    conn.commit()
-    print('New user created.')
+def username():
+    return raw_input('Username: ')
 
 
 if __name__ == '__main__':
