@@ -21,8 +21,7 @@ module.exports = function(grunt) {
             vendorJs: {
                 src: [
                     'application/static/vendor/angular/1.2.18/angular.min.js',
-                    'application/static/vendor/angular/1.2.18/angular-resource.min.js',
-                    'application/static/vendor/angular/1.2.18/angular-route.min.js'
+                    'application/static/vendor/angular/1.2.18/angular-resource.min.js'
                 ],
                 dest: 'application/static/vendor.min.js'
             }
@@ -63,7 +62,6 @@ module.exports = function(grunt) {
                 files: [
                     'application/static/vendor/angular/1.2.18/angular.min.js',
                     'application/static/vendor/angular/1.2.18/angular-resource.min.js',
-                    'application/static/vendor/angular/1.2.18/angular-route.min.js',
                     'application/static/vendor/angular/1.2.18/angular-mocks.js',
                     'application/static/js/*/core.js',
                     'application/static/js/*/models.js',
