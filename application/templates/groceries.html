@@ -5,6 +5,6 @@
 		ng-include="'{{ url_for('static', filename='js/groceries/templates/groceries.html') }}'"></div>
 {% endblock %}
 {% block script %}
-	<script charset=utf-8" src="{{ url_for('static', filename='vendor.min.js') }}" type="text/javascript"></script>
-	<script charset=utf-8" src="{{ url_for('static', filename='app.min.js') }}" type="text/javascript"></script>
+	<script src="{{ url_for('static', filename='vendor.min.js') }}" type="text/javascript"></script>
+	<script src="{{ url_for('static', filename='app.min.js') }}" type="text/javascript"></script>
 {% endblock %}
