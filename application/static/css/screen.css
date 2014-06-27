@@ -50,8 +50,10 @@ input[type='password'] {
 	background-color: #e7ecee;
 	color: #565f64;
 	border: 2px solid #b1b6bb;
+	border-radius: 0;
 	font-size: 22px;
 	outline: none;
+	-webkit-appearance: none;
 }
 input[type='text']:focus,
 input[type='password']:focus {
