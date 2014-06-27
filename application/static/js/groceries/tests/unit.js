@@ -218,13 +218,13 @@ describe('Groceries', function () {
             scope.toggleButton(itemTwo);
             expect(scope.visibleButtons).toEqual([1, 2]);
             scope.add('Strawberries');
+            $httpBackend.flush();
             expect(scope.visibleButtons).toEqual([]);
         });
 
         it('should hide all buttons when an item is deleted', function () {
             var itemOne = {id: 1},
                 itemTwo = {id: 2},
-                itemThree = {id: 3},
                 e = {
                     stopPropagation: function () {}
                 };
@@ -232,7 +232,9 @@ describe('Groceries', function () {
             scope.toggleButton(itemOne);
             scope.toggleButton(itemTwo);
             expect(scope.visibleButtons).toEqual([1, 2]);
-            scope.delete(itemThree, e);
+            scope.groceries.push(unboughtItem);
+            scope.delete(unboughtItem, e);
+            $httpBackend.flush();
             expect(scope.visibleButtons).toEqual([]);
         });
 
