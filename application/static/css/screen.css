@@ -2,9 +2,8 @@ body {
   margin: 0;
   padding: 0;
 	background-color: #fff;
-	font-family: "Helvetica Neue", Arial, sans-serif;
+	font-family: 'PT Sans', sans-serif;
 	font-size: 14px;
-	font-weight: 110;
 	-webkit-font-smoothing: antialiased;
 }
 .clearfix:after {
@@ -22,6 +21,8 @@ body {
 }
 ::-webkit-input-placeholder {
 	color: #b1b6bb;
+	font-family: 'PT Sans', sans-serif;
+	font-style: italic;
 }
 ul {
 	margin: 0;
@@ -75,7 +76,7 @@ input[type='checkbox'] {
 	border: 0;
 }
 input[type='checkbox'] + label {
-	padding-left: 28px;
+	padding-left: 32px;
 	display: inline-block;
 	line-height: 20px;
 	background-image: url('img/checkbox.png');
@@ -142,18 +143,11 @@ div#content input[type='text'] {
 div#content li {
 	padding-bottom: 16px;
 	border-bottom: 2px solid #f4f4f4;
-	font-size: 20px;
+	font-size: 25px;
 }
 div#content li label {
 	display: inline-block;
-	margin-top: 16px;
-}
-div#content li input[type='checkbox'] {
-	float: left;
 	margin-top: 21px;
-	margin-right: 10px;
-	margin-left: 12px;
-	cursor: pointer;
 }
 div#content li button {
 	float: right;
