@@ -222,6 +222,21 @@ describe('Groceries', function () {
             expect(scope.visibleButtons).toEqual([]);
         });
 
+        it('should hide all buttons when an item is bought', function () {
+            var itemOne = {id: 1},
+                itemTwo = {id: 2},
+                e = {
+                    stopPropagation: function () {}
+                };
+            scope.groceries.push(unboughtItem);
+            scope.toggleButton(itemOne);
+            scope.toggleButton(itemTwo);
+            expect(scope.visibleButtons).toEqual([1, 2]);
+            scope.buy(unboughtItem, e);
+            $httpBackend.flush();
+            expect(scope.visibleButtons).toEqual([]);
+        });
+
         it('should hide all buttons when an item is deleted', function () {
             var itemOne = {id: 1},
                 itemTwo = {id: 2},

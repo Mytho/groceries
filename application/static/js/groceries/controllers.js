@@ -20,6 +20,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
 
         ItemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
             item.update(data);
+            $scope.hideAllButtons();
         });
     };
 
