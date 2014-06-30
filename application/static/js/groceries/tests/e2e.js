@@ -37,12 +37,14 @@ describe('Groceries', function () {
         expect(suggestions.first().isDisplayed()).toBe(true);
     });
 
-    it('should toggle the delete button when a grocery item is clicked', function () {
-        expect(deleteButtons.first().isDisplayed()).toBe(false);
-        groceries.first().click();
-        expect(deleteButtons.first().isDisplayed()).toBe(true);
-        groceries.first().click();
-        expect(deleteButtons.first().isDisplayed()).toBe(false);
+    it('should delete a grocery item when it is swiped to the right', function () {
+        // TODO: It's impossible to properly trigger a swipe event, therefore
+        //       testing this functionality is difficult.
+    });
+
+    it('should cancel a delete when the cancel button is clicked', function () {
+        // TODO: It's impossible to properly trigger a swipe event, therefore
+        //       testing this functionality is difficult.
     });
 
     it('should mark a grocery item as bought/not bought, when it\'s label or checkbox is clicked', function () {
@@ -69,14 +71,5 @@ describe('Groceries', function () {
         suggestions.first().click();
         browser.driver.sleep(sleep);
         expect(groceryLabels.last().getInnerHtml()).toBe(suggestions.first().getInnerHtml());
-    });
-
-    it('should delete an item when the delete button is clicked', function () {
-        var firstItemName = groceryLabels.first().getInnerHtml();
-        groceries.first().click();
-        deleteButtons.first().click();
-        browser.driver.sleep(sleep);
-        expect(groceryLabels.first().getInnerHtml()).not.toBe(firstItemName);
-        expect(groceryLabels.count()).toBe(groceriesCount - 1);
     });
 });
