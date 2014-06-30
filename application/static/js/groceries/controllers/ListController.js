@@ -15,6 +15,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
     };
 
     $scope.buy = function ($event, item) {
+        $event.preventDefault();
         $event.stopPropagation();
 
         if ($scope.isScheduledForDelete(item)) {
@@ -27,6 +28,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
     };
 
     $scope.cancelDelete = function ($event, item) {
+        $event.preventDefault();
         $event.stopPropagation();
 
         $timeout.cancel($scope.deleteSchedule[item.id]);
@@ -49,6 +51,9 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
     };
 
     $scope.keyup = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
         if ($event.keyCode !== 13 || ! $scope.inputValue) {
             return;
         }
@@ -61,7 +66,10 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
     };
 
     $scope.scheduleDelete = function ($event, item, timeout) {
+        $event.preventDefault();
         $event.stopPropagation();
+
+        timeout = timeout || 3000;
 
         $scope.deleteSchedule[item.id] = $timeout(function () {
             $scope.delete(item, function () {
@@ -91,6 +99,9 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
     };
 
     $scope.toggleFocus = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
         if ( ! $scope.inputFocused) {
             $scope.inputFocused = true;
             $event.target.focus();
