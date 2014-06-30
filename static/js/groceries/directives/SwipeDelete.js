@@ -1,29 +1,27 @@
-Groceries.directive('swipeDelete', ['$log', '$swipe', function ($log, $swipe) {
+Groceries.directive('swipeDelete', ['$swipe', function ($swipe) {
     return {
         restrict: 'A',
         scope: {},
         link: function (scope, element, attrs) {
-            var getOffset, handlers;
+            var swipeHandlers = {};
 
-            handlers = {};
+            swipeHandlers.move = function (coords) {
+                var x = coords.x - element[0].offsetLeft;
 
-            handlers.move = function (coords) {
-                var x = coords.x;
-
-                if (coords.x > element[0].offsetWidth)  {
-                    x = element[0].offsetWidth;
+                if (x > element[0].clientWidth) {
+                    x = element[0].clientWidth;
                 }
 
                 element.addClass('swipe-delete-active');
                 element.find('span').css('width', x + 'px');
             };
 
-            handlers.end = function (coords) {
+            swipeHandlers.end = function (coords) {
                 element.removeClass('swipe-delete-active');
                 element.find('span').css('width', '');
             };
 
-            $swipe.bind(element, handlers);
+            $swipe.bind(element, swipeHandlers);
         }
     };
 }]);
