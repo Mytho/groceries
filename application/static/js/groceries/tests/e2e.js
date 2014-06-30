@@ -47,12 +47,12 @@ describe('Groceries', function () {
         //       testing this functionality is difficult.
     });
 
-    it('should mark a grocery item as bought/not bought, when it\'s label or checkbox is clicked', function () {
+    it('should mark a grocery item as bought/not bought, when it is clicked', function () {
         expect(groceries.first().getAttribute('class')).not.toMatch(/bought/);
-        groceryLabels.first().click();
+        groceries.first().click();
         browser.driver.sleep(sleep);
         expect(groceries.first().getAttribute('class')).toMatch(/bought/);
-        groceryCheckboxes.first().click();
+        groceries.first().click();
         browser.driver.sleep(sleep);
         expect(groceries.first().getAttribute('class')).not.toMatch(/bought/);
     });
