@@ -235,6 +235,30 @@ describe('Groceries', function () {
             expect(scope.inputFocused).toBe(false);
         });
 
+        it('should schedule items for deletion', function () {
+            var e = {
+                stopPropagation: function () {}
+            };
+            expect(scope.deleteSchedule).toEqual({});
+            scope.scheduleDelete(e, unboughtItem, 3500);
+            expect(scope.deleteSchedule.hasOwnProperty(unboughtItem.id)).toBe(true);
+            $timeout.flush();
+            $httpBackend.flush();
+            expect(scope.deleteSchedule.hasOwnProperty(unboughtItem.id)).toBe(false);
+        });
+
+        it('should cancel scheduled deletes', function () {
+            var e = {
+                stopPropagation: function () {}
+            };
+            expect(scope.deleteSchedule).toEqual({});
+            scope.scheduleDelete(e, unboughtItem, 3500);
+            expect(scope.deleteSchedule.hasOwnProperty(unboughtItem.id)).toBe(true);
+            scope.cancelDelete(e, unboughtItem);
+            $timeout.flush();
+            expect(scope.deleteSchedule.hasOwnProperty(unboughtItem.id)).toBe(false);
+        });
+
         it('should delete items', function () {
             var item, calledSetSuggestions;
             calledSetSuggestions = false;
