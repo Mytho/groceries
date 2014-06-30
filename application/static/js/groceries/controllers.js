@@ -10,7 +10,6 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
             $scope.groceries.push(item);
             $scope.inputFocused = false;
             $scope.inputValue = '';
-            $scope.hideAllButtons();
             $scope.setSuggestions();
         });
     };
@@ -20,7 +19,6 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
 
         ItemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
             item.update(data);
-            $scope.hideAllButtons();
         });
     };
 
@@ -35,7 +33,10 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
         ItemService.deleteItem(item.id).then(function () {
             $scope.groceries.splice($scope.groceries.indexOf(item), 1);
             $scope.setSuggestions();
-            callback();
+
+            if (typeof(callback) === 'function') {
+                callback();
+            }
         });
     };
 
