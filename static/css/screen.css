@@ -125,6 +125,25 @@ form button {
 	float: right;
 	margin-top: 10px;
 }
+.swipe-delete-overlay {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 100%;
+	background-color: #ef5a4e;
+	color: #fff;
+	overflow: hidden;
+}
+.swipe-delete.swipe-delete-active .swipe-delete-overlay {
+	display: inline-block;
+}
+.swipe-delete.swipe-delete-active .swipe-delete-overlay-label {
+	display: inline-block;
+	padding-top: 11px;
+	padding-left: 32px;
+}
 div#content,
 div#footer {
 	width: 480px;
@@ -145,25 +164,6 @@ div#content li {
 	padding-bottom: 17px;
 	border-bottom: 2px solid #f4f4f4;
 	font-size: 25px;
-}
-div#content li span.swipe-delete-overlay {
-	display: none;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 0;
-	height: 100%;
-	background-color: #ef5a4e;
-	color: #fff;
-	overflow: hidden;
-}
-div#content li.swipe-delete-active span.swipe-delete-overlay {
-	display: inline-block;
-}
-div#content li.swipe-delete-active span.swipe-delete-overlay-label {
-	display: inline-block;
-	padding-top: 11px;
-	padding-left: 32px;
 }
 div#content li label {
 	display: inline-block;

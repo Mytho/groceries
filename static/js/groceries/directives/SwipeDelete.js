@@ -1,7 +1,9 @@
 Groceries.directive('swipeDelete', ['$swipe', function ($swipe) {
     return {
         restrict: 'A',
-        scope: {},
+        scope: {
+            label: '=swipeDelete'
+        },
         link: function (scope, element, attrs) {
             var swipeHandlers = {};
 
@@ -20,6 +22,9 @@ Groceries.directive('swipeDelete', ['$swipe', function ($swipe) {
                 element.removeClass('swipe-delete-active');
                 element.find('span').css('width', '');
             };
+
+            element.addClass('swipe-delete');
+            element.append('<span class="swipe-delete-overlay"><span class="swipe-delete-overlay-label">'+ scope.label +'</span></span>');
 
             $swipe.bind(element, swipeHandlers);
         }
