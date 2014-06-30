@@ -66,7 +66,9 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
         });
     };
 
-    $scope.toggleButton = function (item) {
+    $scope.toggleButton = function (item, $event) {
+        $event.stopPropagation();
+
         if ($scope.visibleButtons.indexOf(item.id) > -1) {
             $scope.visibleButtons.splice($scope.visibleButtons.indexOf(item.id), 1);
         } else {
