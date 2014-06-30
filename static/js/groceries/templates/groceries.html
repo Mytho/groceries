@@ -1,10 +1,13 @@
 <div ng-controller="ListController">
 	<input id="new-item" type="text" placeholder="What needs to be bought?" ng-blur="removeFocus()" ng-click="toggleFocus($event)" ng-keyup="keyup($event)" ng-model="inputValue">
 	<ul id="groceries" ng-show="! inputFocused">
-		<li ng-repeat="item in groceries" ng-class="{bought: item.isBought(), warning: isScheduledForDelete(item)}" ng-click="buy($event, item)" ng-swipe-right="scheduleDelete($event, item)">
-		<input class="buy" type="checkbox" ng-checked="item.isBought()">
-		<label>[[item.name]]</label>
-		<button class="warning" ng-click="cancelDelete($event, item)">CANCEL</button>
+		<li ng-repeat="item in groceries" ng-class="{bought: item.isBought(), warning: isScheduledForDelete(item)}" ng-click="buy($event, item)" ng-swipe-right="scheduleDelete($event, item)" swipe-delete>
+			<span class="swipe-delete-overlay">
+				<span class="swipe-delete-overlay-label">[[item.name]]</span>
+			</span>
+			<input class="buy" type="checkbox" ng-checked="item.isBought()">
+			<label>[[item.name]]</label>
+			<button class="warning" ng-click="cancelDelete($event, item)">CANCEL</button>
 		</li>
 	</ul>
 	<ul id="suggestions" ng-show="inputFocused">

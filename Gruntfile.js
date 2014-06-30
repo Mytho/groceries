@@ -12,6 +12,7 @@ module.exports = function(grunt) {
             appJs: {
                 src: [
                     'static/js/*/core.js',
+                    'static/js/*/directives/*.js',
                     'static/js/*/models/*.js',
                     'static/js/*/services/*.js',
                     'static/js/*/controllers/*.js'
@@ -66,6 +67,7 @@ module.exports = function(grunt) {
                     'static/vendor/angular/1.2.18/angular-touch.min.js',
                     'static/vendor/angular/1.2.18/angular-mocks.js',
                     'static/js/*/core.js',
+                    'static/js/*/directives/*.js',
                     'static/js/*/models/*.js',
                     'static/js/*/services/*.js',
                     'static/js/*/controllers/*.js',
