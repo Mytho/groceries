@@ -284,6 +284,20 @@ describe('Groceries', function () {
             expect(unboughtItem.bought_date).not.toBe(null);
         });
 
+        it('should not mark items as bought when the item is scheduled for deletion', function () {
+            var e = {
+                stopPropagation: function () {}
+            };
+            scope.groceries.push(unboughtItem);
+            expect(unboughtItem.bought_date).toBe(null);
+            scope.scheduleDelete(e, unboughtItem, 3500);
+            scope.buy(e, unboughtItem);
+            // Due to `no pending requests to flush` this extra request is added
+            scope.add('Apples');
+            $httpBackend.flush();
+            expect(unboughtItem.bought_date).toBe(null);
+        });
+
         it('should toggle input focus', function () {
             var e = {
                 target: {

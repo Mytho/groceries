@@ -17,6 +17,10 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
     $scope.buy = function ($event, item) {
         $event.stopPropagation();
 
+        if ($scope.isScheduledForDelete(item)) {
+            return;
+        }
+
         ItemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
             item.update(data);
         });
