@@ -5,7 +5,10 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
     $scope.inputValue = '';
     $scope.suggestions = [];
 
-    $scope.add = function (name) {
+    $scope.add = function ($event, name) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
         ItemService.addItem(name).then(function (item) {
             $scope.groceries.push(item);
             $scope.inputFocused = false;
@@ -58,7 +61,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
             return;
         }
 
-        $scope.add($scope.inputValue);
+        $scope.add($event, $scope.inputValue);
 
         $timeout(function () {
             $event.target.blur();

@@ -214,7 +214,7 @@ describe('Groceries', function () {
             };
             scope.inputValue = 'SomeMockValue';
             scope.inputFocused = true;
-            scope.add(unboughtItem.name);
+            scope.add(mockEvent, unboughtItem.name);
             $httpBackend.flush();
             item = scope.groceries.pop();
             expect(scope.inputValue).toBe('');
@@ -285,7 +285,7 @@ describe('Groceries', function () {
             scope.scheduleDelete(mockEvent, unboughtItem, 3500);
             scope.buy(mockEvent, unboughtItem);
             // Due to `no pending requests to flush` this extra request is added
-            scope.add('Apples');
+            scope.add(mockEvent, 'Apples');
             $httpBackend.flush();
             expect(unboughtItem.bought_date).toBe(null);
         });
