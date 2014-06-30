@@ -202,20 +202,26 @@ describe('Groceries', function () {
         });
 
         it('should toggle buttons', function () {
-            var itemOne = {id: 1},
+            var e = {
+                    stopPropagation: function () {}
+                },
+                itemOne = {id: 1},
                 itemTwo = {id: 2};
-            scope.toggleButton(itemOne);
-            scope.toggleButton(itemTwo);
-            scope.toggleButton(itemOne);
+            scope.toggleButton(e, itemOne);
+            scope.toggleButton(e, itemTwo);
+            scope.toggleButton(e, itemOne);
             expect(scope.visibleButtons).toEqual([2]);
         });
 
         it('should hide all buttons when an item is added', function () {
-            var itemOne = {id: 1},
+            var e = {
+                    stopPropagation: function () {}
+                },
+                itemOne = {id: 1},
                 itemTwo = {id: 2};
             expect(scope.visibleButtons.length).toBe(0);
-            scope.toggleButton(itemOne);
-            scope.toggleButton(itemTwo);
+            scope.toggleButton(e, itemOne);
+            scope.toggleButton(e, itemTwo);
             expect(scope.visibleButtons).toEqual([1, 2]);
             scope.add('Strawberries');
             $httpBackend.flush();
@@ -223,40 +229,43 @@ describe('Groceries', function () {
         });
 
         it('should hide all buttons when an item is bought', function () {
-            var itemOne = {id: 1},
-                itemTwo = {id: 2},
-                e = {
+            var e = {
                     stopPropagation: function () {}
-                };
+                },
+                itemOne = {id: 1},
+                itemTwo = {id: 2};
             scope.groceries.push(unboughtItem);
-            scope.toggleButton(itemOne);
-            scope.toggleButton(itemTwo);
+            scope.toggleButton(e, itemOne);
+            scope.toggleButton(e, itemTwo);
             expect(scope.visibleButtons).toEqual([1, 2]);
-            scope.buy(unboughtItem, e);
+            scope.buy(e, unboughtItem);
             $httpBackend.flush();
             expect(scope.visibleButtons).toEqual([]);
         });
 
         it('should hide all buttons when an item is deleted', function () {
-            var itemOne = {id: 1},
-                itemTwo = {id: 2},
-                e = {
+            var e = {
                     stopPropagation: function () {}
-                };
+                },
+                itemOne = {id: 1},
+                itemTwo = {id: 2};
             expect(scope.visibleButtons.length).toBe(0);
-            scope.toggleButton(itemOne);
-            scope.toggleButton(itemTwo);
+            scope.toggleButton(e, itemOne);
+            scope.toggleButton(e, itemTwo);
             expect(scope.visibleButtons).toEqual([1, 2]);
             scope.groceries.push(unboughtItem);
-            scope.delete(unboughtItem, e);
+            scope.delete(e, unboughtItem);
             $httpBackend.flush();
             expect(scope.visibleButtons).toEqual([]);
         });
 
         it('should check button visibility', function () {
-            var item = {id: 1};
+            var e = {
+                    stopPropagation: function () {}
+                },
+                item = {id: 1};
             expect(scope.isButtonVisible(item)).toBe(false);
-            scope.toggleButton(item);
+            scope.toggleButton(e, item);
             expect(scope.isButtonVisible(item)).toBe(true);
         });
 
@@ -310,7 +319,7 @@ describe('Groceries', function () {
             };
             scope.groceries.push(unboughtItem);
             expect(scope.groceries.indexOf(unboughtItem)).toBe(scope.groceries.length - 1);
-            scope.delete(unboughtItem, e);
+            scope.delete(e, unboughtItem);
             $httpBackend.flush();
             expect(calledSetSuggestions).toBe(true);
             expect(scope.groceries.indexOf(unboughtItem)).toBe(-1);
@@ -322,7 +331,7 @@ describe('Groceries', function () {
             };
             scope.groceries.push(unboughtItem);
             expect(unboughtItem.bought_date).toBe(null);
-            scope.buy(unboughtItem, e);
+            scope.buy(e, unboughtItem);
             $httpBackend.flush();
             expect(unboughtItem.bought_date).not.toBe(null);
         });
