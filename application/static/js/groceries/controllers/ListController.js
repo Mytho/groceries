@@ -69,7 +69,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
         $event.preventDefault();
         $event.stopPropagation();
 
-        timeout = timeout || 3000;
+        timeout = timeout || 2500;
 
         $scope.deleteSchedule[item.id] = $timeout(function () {
             $scope.delete(item, function () {
