@@ -15,7 +15,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
         });
     };
 
-    $scope.buy = function (item, $event) {
+    $scope.buy = function ($event, item) {
         $event.stopPropagation();
 
         ItemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
@@ -24,7 +24,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
         });
     };
 
-    $scope.delete = function (item, $event) {
+    $scope.delete = function ($event, item) {
         $event.stopPropagation();
 
         ItemService.deleteItem(item.id).then(function () {
@@ -66,7 +66,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
         });
     };
 
-    $scope.toggleButton = function (item, $event) {
+    $scope.toggleButton = function ($event, item) {
         $event.stopPropagation();
 
         if ($scope.visibleButtons.indexOf(item.id) > -1) {
