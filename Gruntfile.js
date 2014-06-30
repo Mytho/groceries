@@ -12,16 +12,17 @@ module.exports = function(grunt) {
             appJs: {
                 src: [
                     'application/static/js/*/core.js',
-                    'application/static/js/*/models.js',
-                    'application/static/js/*/services.js',
-                    'application/static/js/*/controllers.js'
+                    'application/static/js/*/models/*.js',
+                    'application/static/js/*/services/*.js',
+                    'application/static/js/*/controllers/*.js'
                 ],
                 dest: 'build/app.js'
             },
             vendorJs: {
                 src: [
                     'application/static/vendor/angular/1.2.18/angular.min.js',
-                    'application/static/vendor/angular/1.2.18/angular-resource.min.js'
+                    'application/static/vendor/angular/1.2.18/angular-resource.min.js',
+                    'application/static/vendor/angular/1.2.18/angular-touch.min.js'
                 ],
                 dest: 'application/static/vendor.min.js'
             }
@@ -62,11 +63,12 @@ module.exports = function(grunt) {
                 files: [
                     'application/static/vendor/angular/1.2.18/angular.min.js',
                     'application/static/vendor/angular/1.2.18/angular-resource.min.js',
+                    'application/static/vendor/angular/1.2.18/angular-touch.min.js',
                     'application/static/vendor/angular/1.2.18/angular-mocks.js',
                     'application/static/js/*/core.js',
-                    'application/static/js/*/models.js',
-                    'application/static/js/*/services.js',
-                    'application/static/js/*/controllers.js',
+                    'application/static/js/*/models/*.js',
+                    'application/static/js/*/services/*.js',
+                    'application/static/js/*/controllers/*.js',
                     'application/static/js/*/tests/unit.js'
                 ],
                 frameworks: ['jasmine'],

@@ -131,7 +131,8 @@ describe('Groceries', function () {
     });
 
     describe('ListController', function () {
-        var $httpBackend, $timeout, ItemModel, ItemService, ListController, boughtItem, unboughtItem, scope;
+        var $httpBackend, $timeout, ItemModel, ItemService, ListController,
+            boughtItem, mockEvent, unboughtItem, scope;
 
         beforeEach(function () {
             inject(function ($controller, _$timeout_, _$httpBackend_, _ItemService_, _ItemModel_) {
@@ -157,6 +158,15 @@ describe('Groceries', function () {
                 $httpBackend.whenDELETE('/items/'+unboughtItem.id).respond(200, '');
                 $httpBackend.whenPUT('/items/'+unboughtItem.id).respond(boughtItem);
                 $httpBackend.whenGET('/suggestions').respond([new ItemModel({id: 535, name: 'Lemons'})]);
+                mockEvent = {
+                    keyCode: 13,
+                    target: {
+                        blur: function () {},
+                        focus: function () {}
+                    },
+                    preventDefault: function () {},
+                    stopPropagation: function () {}
+                };
                 scope = {};
                 ItemService = _ItemService_;
                 ListController = $controller('ListController', {
@@ -196,70 +206,6 @@ describe('Groceries', function () {
             expect(scope.inputValue).toBe('');
         });
 
-        it('should not display the buttons', function () {
-            expect(scope.visibleButtons instanceof Array).toBe(true);
-            expect(scope.visibleButtons.length).toBe(0);
-        });
-
-        it('should toggle buttons', function () {
-            var itemOne = {id: 1},
-                itemTwo = {id: 2};
-            scope.toggleButton(itemOne);
-            scope.toggleButton(itemTwo);
-            scope.toggleButton(itemOne);
-            expect(scope.visibleButtons).toEqual([2]);
-        });
-
-        it('should hide all buttons when an item is added', function () {
-            var itemOne = {id: 1},
-                itemTwo = {id: 2};
-            expect(scope.visibleButtons.length).toBe(0);
-            scope.toggleButton(itemOne);
-            scope.toggleButton(itemTwo);
-            expect(scope.visibleButtons).toEqual([1, 2]);
-            scope.add('Strawberries');
-            $httpBackend.flush();
-            expect(scope.visibleButtons).toEqual([]);
-        });
-
-        it('should hide all buttons when an item is bought', function () {
-            var itemOne = {id: 1},
-                itemTwo = {id: 2},
-                e = {
-                    stopPropagation: function () {}
-                };
-            scope.groceries.push(unboughtItem);
-            scope.toggleButton(itemOne);
-            scope.toggleButton(itemTwo);
-            expect(scope.visibleButtons).toEqual([1, 2]);
-            scope.buy(unboughtItem, e);
-            $httpBackend.flush();
-            expect(scope.visibleButtons).toEqual([]);
-        });
-
-        it('should hide all buttons when an item is deleted', function () {
-            var itemOne = {id: 1},
-                itemTwo = {id: 2},
-                e = {
-                    stopPropagation: function () {}
-                };
-            expect(scope.visibleButtons.length).toBe(0);
-            scope.toggleButton(itemOne);
-            scope.toggleButton(itemTwo);
-            expect(scope.visibleButtons).toEqual([1, 2]);
-            scope.groceries.push(unboughtItem);
-            scope.delete(unboughtItem, e);
-            $httpBackend.flush();
-            expect(scope.visibleButtons).toEqual([]);
-        });
-
-        it('should check button visibility', function () {
-            var item = {id: 1};
-            expect(scope.isButtonVisible(item)).toBe(false);
-            scope.toggleButton(item);
-            expect(scope.isButtonVisible(item)).toBe(true);
-        });
-
         it('should add items', function () {
             var item, calledSetSuggestions;
             calledSetSuggestions = false;
@@ -278,19 +224,13 @@ describe('Groceries', function () {
         });
 
         it('should add item with name equal to value of input when enter is pressed and value is not empty', function () {
-            var e, item, lengthAtStart;
-            e = {
-                keyCode: 13,
-                target: {
-                    blur: function () {}
-                }
-            };
+            var item, lengthAtStart;
             lengthAtStart = scope.groceries.length;
             scope.inputFocused = true;
             scope.inputValue = '';
-            scope.keyup(e);
+            scope.keyup(mockEvent);
             scope.inputValue = unboughtItem.name;
-            scope.keyup(e);
+            scope.keyup(mockEvent);
             $httpBackend.flush();
             $timeout.flush();
             expect(scope.groceries.length).toBe(lengthAtStart + 1);
@@ -299,59 +239,70 @@ describe('Groceries', function () {
             expect(scope.inputFocused).toBe(false);
         });
 
+        it('should schedule items for deletion', function () {
+            expect(scope.deleteSchedule).toEqual({});
+            scope.scheduleDelete(mockEvent, unboughtItem, 3500);
+            expect(scope.deleteSchedule.hasOwnProperty(unboughtItem.id)).toBe(true);
+            $timeout.flush();
+            $httpBackend.flush();
+            expect(scope.deleteSchedule.hasOwnProperty(unboughtItem.id)).toBe(false);
+        });
+
+        it('should cancel scheduled deletes', function () {
+            expect(scope.deleteSchedule).toEqual({});
+            scope.scheduleDelete(mockEvent, unboughtItem, 3500);
+            expect(scope.deleteSchedule.hasOwnProperty(unboughtItem.id)).toBe(true);
+            scope.cancelDelete(mockEvent, unboughtItem);
+            $timeout.flush();
+            expect(scope.deleteSchedule.hasOwnProperty(unboughtItem.id)).toBe(false);
+        });
+
         it('should delete items', function () {
-            var e, item, calledSetSuggestions;
-            e = {
-                stopPropagation: function () {}
-            };
+            var item, calledSetSuggestions;
             calledSetSuggestions = false;
             scope.setSuggestions = function () {
                 calledSetSuggestions = true;
             };
             scope.groceries.push(unboughtItem);
             expect(scope.groceries.indexOf(unboughtItem)).toBe(scope.groceries.length - 1);
-            scope.delete(unboughtItem, e);
+            scope.delete(unboughtItem);
             $httpBackend.flush();
             expect(calledSetSuggestions).toBe(true);
             expect(scope.groceries.indexOf(unboughtItem)).toBe(-1);
         });
 
         it('should mark items as bought', function () {
-            var e = {
-                stopPropagation: function () {}
-            };
             scope.groceries.push(unboughtItem);
             expect(unboughtItem.bought_date).toBe(null);
-            scope.buy(unboughtItem, e);
+            scope.buy(mockEvent, unboughtItem);
             $httpBackend.flush();
             expect(unboughtItem.bought_date).not.toBe(null);
         });
 
+        it('should not mark items as bought when the item is scheduled for deletion', function () {
+            scope.groceries.push(unboughtItem);
+            expect(unboughtItem.bought_date).toBe(null);
+            scope.scheduleDelete(mockEvent, unboughtItem, 3500);
+            scope.buy(mockEvent, unboughtItem);
+            // Due to `no pending requests to flush` this extra request is added
+            scope.add('Apples');
+            $httpBackend.flush();
+            expect(unboughtItem.bought_date).toBe(null);
+        });
+
         it('should toggle input focus', function () {
-            var e = {
-                target: {
-                    blur: function () {},
-                    focus: function () {}
-                }
-            };
             expect(scope.inputFocused).toBe(false);
-            scope.toggleFocus(e);
+            scope.toggleFocus(mockEvent);
             $timeout.flush();
             expect(scope.inputFocused).toBe(true);
-            scope.toggleFocus(e);
+            scope.toggleFocus(mockEvent);
             $timeout.flush();
             expect(scope.inputFocused).toBe(false);
         });
 
         it('should remove input focus', function () {
-            var e = {
-                target: {
-                    blur: function () {},
-                    focus: function () {}
-                }
-            };
             expect(scope.inputFocused).toBe(false);
-            scope.toggleFocus(e);
+            scope.toggleFocus(mockEvent);
             expect(scope.inputFocused).toBe(true);
             scope.removeFocus();
             $timeout.flush();
