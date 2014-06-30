@@ -16,7 +16,7 @@ from .security import init_security
 from .views import FaviconView, GroceriesView, ItemView, SuggestionView
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../static')
 app.config.from_object('application.config')
 init_auth(app)
 init_errors(app)

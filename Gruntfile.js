@@ -11,27 +11,27 @@ module.exports = function(grunt) {
             },
             appJs: {
                 src: [
-                    'application/static/js/*/core.js',
-                    'application/static/js/*/models/*.js',
-                    'application/static/js/*/services/*.js',
-                    'application/static/js/*/controllers/*.js'
+                    'static/js/*/core.js',
+                    'static/js/*/models/*.js',
+                    'static/js/*/services/*.js',
+                    'static/js/*/controllers/*.js'
                 ],
                 dest: 'build/app.js'
             },
             vendorJs: {
                 src: [
-                    'application/static/vendor/angular/1.2.18/angular.min.js',
-                    'application/static/vendor/angular/1.2.18/angular-resource.min.js',
-                    'application/static/vendor/angular/1.2.18/angular-touch.min.js'
+                    'static/vendor/angular/1.2.18/angular.min.js',
+                    'static/vendor/angular/1.2.18/angular-resource.min.js',
+                    'static/vendor/angular/1.2.18/angular-touch.min.js'
                 ],
-                dest: 'application/static/vendor.min.js'
+                dest: 'static/vendor.min.js'
             }
         },
 
         cssmin: {
             screenCss: {
-                src: ['application/static/css/**/*.css'],
-                dest: 'application/static/screen.min.css'
+                src: ['static/css/**/*.css'],
+                dest: 'static/screen.min.css'
             }
         },
 
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
                     protractor: true
                 }
             },
-            before: ['Gruntfile.js', 'application/static/js/*/tests/*.js', 'build/app.js']
+            before: ['Gruntfile.js', 'static/js/*/tests/*.js', 'build/app.js']
         },
 
         karma: {
@@ -61,15 +61,15 @@ module.exports = function(grunt) {
                 browsers: ['PhantomJS'],
                 colors: true,
                 files: [
-                    'application/static/vendor/angular/1.2.18/angular.min.js',
-                    'application/static/vendor/angular/1.2.18/angular-resource.min.js',
-                    'application/static/vendor/angular/1.2.18/angular-touch.min.js',
-                    'application/static/vendor/angular/1.2.18/angular-mocks.js',
-                    'application/static/js/*/core.js',
-                    'application/static/js/*/models/*.js',
-                    'application/static/js/*/services/*.js',
-                    'application/static/js/*/controllers/*.js',
-                    'application/static/js/*/tests/unit.js'
+                    'static/vendor/angular/1.2.18/angular.min.js',
+                    'static/vendor/angular/1.2.18/angular-resource.min.js',
+                    'static/vendor/angular/1.2.18/angular-touch.min.js',
+                    'static/vendor/angular/1.2.18/angular-mocks.js',
+                    'static/js/*/core.js',
+                    'static/js/*/models/*.js',
+                    'static/js/*/services/*.js',
+                    'static/js/*/controllers/*.js',
+                    'static/js/*/tests/unit.js'
                 ],
                 frameworks: ['jasmine'],
                 logLevel: 'ERROR',
@@ -94,7 +94,7 @@ module.exports = function(grunt) {
                             browserName: 'phantomjs'
                         },
                         baseUrl: 'http://127.0.0.1:8001',
-                        specs: ['application/static/js/*/tests/e2e.js'],
+                        specs: ['static/js/*/tests/e2e.js'],
                         jasmineNodeOpts: {
                             showColors: true,
                             defaultTimeoutInterval: 30000
@@ -116,18 +116,18 @@ module.exports = function(grunt) {
             },
             appJs: {
                 files: {
-                    'application/static/app.min.js': ['<banner>', 'build/app.js']
+                    'static/app.min.js': ['<banner>', 'build/app.js']
                 }
             }
         },
 
         watch: {
             js: {
-                files: ['Gruntfile.js', 'application/static/js/**/*.js'],
+                files: ['Gruntfile.js', 'static/js/**/*.js'],
                 tasks: ['concat:appJs', 'jshint', 'uglify:appJs']
             },
             css: {
-                files: ['application/static/css/**/*.css'],
+                files: ['static/css/**/*.css'],
                 tasks: ['cssmin:screenCss']
             }
         }

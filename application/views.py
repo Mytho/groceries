@@ -31,7 +31,7 @@ class FaviconView(MethodView):
     decorators = [content_type('image/vnd.microsoft.icon')]
 
     def get(self):
-        path = os.path.join(current_app.root_path, 'static')
+        path = os.path.join(current_app.root_path, '../static')
         file = send_from_directory(path, 'img/icons/shopping-bag-32x32.png')
         return make_response(file)
 
