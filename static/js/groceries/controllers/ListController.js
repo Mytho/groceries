@@ -1,18 +1,17 @@
-Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', 'InputModel', function ($scope, $timeout, itemService, InputModel) {
+Groceries.controller('ListController', ['$log', '$scope', '$timeout', 'itemService', 'InputModel', function ($log, $scope, $timeout, itemService, InputModel) {
     $scope.deleteSchedule = {};
     $scope.groceries = [];
     $scope.suggestions = [];
 
-    $scope.inputModel = new InputModel();
+    $scope.inputModel = new InputModel(function (value) {
+        $scope.add(value);
+    });
 
-    $scope.add = function ($event, name) {
-        $event.preventDefault();
-        $event.stopPropagation();
+    $scope.add = function (name) {
+        $log.debug('ListController.$scope.add', name);
 
         itemService.addItem(name).then(function (item) {
             $scope.groceries.push(item);
-            //$scope.inputModel.blur();
-            //$scope.inputModel.value = '';
             $scope.setSuggestions();
         });
     };
@@ -51,18 +50,6 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', 'In
 
     $scope.isScheduledForDelete = function (item) {
         return $scope.deleteSchedule.hasOwnProperty(item.id);
-    };
-
-    // TODO: Move to inputModel
-    $scope.keyup = function ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        if ($event.keyCode !== 13 || ! $scope.inputModel.value) {
-            return;
-        }
-
-        $scope.add($event, $scope.inputModel.value);
     };
 
     $scope.scheduleDelete = function ($event, item, timeout) {

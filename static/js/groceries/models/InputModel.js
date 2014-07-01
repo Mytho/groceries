@@ -2,6 +2,7 @@ Groceries.factory('InputModel', ['$log', '$timeout', function ($log, $timeout) {
     var InputModel = {};
 
     InputModel.isFocused = false;
+
     InputModel.value = '';
 
     InputModel.blur = function (target) {
@@ -43,7 +44,27 @@ Groceries.factory('InputModel', ['$log', '$timeout', function ($log, $timeout) {
         this.focus($event.target);
     };
 
-    return function () {
+    InputModel.onKeyup = function ($event) {
+        var self = this;
+
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        if ($event.keyCode !== 13 || ! this.value) {
+            return;
+        }
+
+        this.onEnter(this.value);
+
+        this.value = '';
+
+        $timeout(function () {
+            self.blur($event.target);
+        }, 250);
+    };
+
+    return function (onEnter) {
         angular.extend(this, InputModel);
+        angular.extend(this, {onEnter: onEnter});
     };
 }]);
