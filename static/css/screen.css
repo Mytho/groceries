@@ -195,9 +195,9 @@ div#content li.warning label {
 	color: #fff;
 }
 div#content ul#suggestions li {
-	padding-top: 14px;
+	padding-top: 11px;
 	padding-right: 8px;
-	padding-bottom: 14px;
+	padding-bottom: 10px;
 	padding-left: 8px;
 	cursor: pointer;
 }
