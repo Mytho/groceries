@@ -57,7 +57,6 @@ Groceries.factory('InputModel', ['$timeout', function ($timeout) {
         }
 
         this.onEnter(this.value);
-
         this.value = '';
 
         $timeout(function () {
