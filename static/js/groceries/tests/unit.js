@@ -8,6 +8,26 @@ describe('Groceries', function () {
         expect(expression({name: 'World'})).toBe('Hello World!');
     }));
 
+    describe('swipeDelete', function () {
+        var $compile, $rootScope, html, scope, testLabel;
+
+        beforeEach(inject(function (_$rootScope_, _$compile_) {
+            $rootScope = _$rootScope_;
+            $compile = _$compile_;
+            testLabel = 'Apples';
+            scope = $rootScope.$new();
+            scope.label = testLabel;
+            html = $compile('<span swipe-delete="label"></span>')(scope);
+        }));
+
+        it('should initialize the elements', function () {
+            expect(html.attr('class')).toMatch(/swipe-delete/);
+            expect(html.find('span').attr('class')).toMatch(/swipe-delete-overlay/);
+            expect(html.find('span').find('span').attr('class')).toMatch(/swipe-delete-overlay-label/);
+            expect(html.find('span').find('span').text()).toBe(testLabel);
+        });
+    });
+
     describe('ItemModel', function () {
         var ItemModel;
 
