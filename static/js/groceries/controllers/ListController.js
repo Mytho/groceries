@@ -1,4 +1,4 @@
-Groceries.controller('ListController', ['$log', '$scope', '$timeout', 'itemService', 'InputModel', function ($log, $scope, $timeout, itemService, InputModel) {
+Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', 'InputModel', function ($scope, $timeout, itemService, InputModel) {
     $scope.deleteSchedule = {};
     $scope.groceries = [];
     $scope.suggestions = [];
@@ -8,8 +8,6 @@ Groceries.controller('ListController', ['$log', '$scope', '$timeout', 'itemServi
     });
 
     $scope.add = function (name) {
-        $log.debug('ListController.$scope.add', name);
-
         itemService.addItem(name).then(function (item) {
             $scope.groceries.push(item);
             $scope.setSuggestions();

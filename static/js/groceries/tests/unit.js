@@ -28,6 +28,53 @@ describe('Groceries', function () {
         });
     });
 
+    describe('InputModel', function () {
+        var $timeout, InputModel, inputModel, mockEvent, mockValue;
+
+        beforeEach(inject(function (_$timeout_, _InputModel_) {
+            $timeout = _$timeout_;
+            InputModel = _InputModel_;
+            mockEvent = {
+                keyCode: 13,
+                target: {
+                    blur: function () {},
+                    focus: function () {}
+                },
+                preventDefault: function () {},
+                stopPropagation: function () {}
+            };
+            mockValue = '';
+            inputModel = new InputModel(function (_value_) {
+                mockValue = _value_;
+            });
+        }));
+
+        it('should initialize with an empty value', function () {
+            expect(inputModel.value).toBe('');
+        });
+
+        it('should call onEnter method when enter is pressed and value is not empty', function () {
+            var testValue = 'Apples';
+            inputModel.onKeyup(mockEvent);
+            inputModel.value = testValue;
+            inputModel.onKeyup(mockEvent);
+            $timeout.flush();
+            expect(mockValue).toBe(testValue);
+            expect(inputModel.isFocused).toBe(false);
+        });
+
+        it('should toggle focus', function () {
+            expect(inputModel.isFocused).toBe(false);
+            inputModel.onFocus(mockEvent);
+            $timeout.flush();
+            expect(inputModel.isFocused).toBe(true);
+            inputModel.onClick(mockEvent);
+            expect(inputModel.isFocused).toBe(false);
+            inputModel.onClick(mockEvent);
+            expect(inputModel.isFocused).toBe(true);
+        });
+    });
+
     describe('ItemModel', function () {
         var ItemModel;
 
@@ -151,11 +198,12 @@ describe('Groceries', function () {
     });
 
     describe('ListController', function () {
-        var $httpBackend, $timeout, ItemModel, itemService, ListController,
-            boughtItem, mockEvent, unboughtItem, scope;
+        var $httpBackend, $timeout, InputModel, ItemModel, itemService, ListController, boughtItem, mockEvent,
+            unboughtItem, scope;
 
         beforeEach(function () {
-            inject(function ($controller, _$timeout_, _$httpBackend_, _itemService_, _ItemModel_) {
+            inject(function ($controller, _$timeout_, _$httpBackend_, _itemService_, _ItemModel_, _InputModel_) {
+                InputModel = _InputModel_;
                 ItemModel = _ItemModel_;
                 unboughtItem = new ItemModel({
                     id: 1,
@@ -222,8 +270,9 @@ describe('Groceries', function () {
             expect(scope.suggestions.length).toBeGreaterThan(0);
         });
 
-        it('should initialize with an empty input', function () {
-            expect(scope.inputValue).toBe('');
+        it('should initialize an inputModel', function () {
+            expect( !! scope.inputModel).toBe(true);
+            expect(scope.inputModel instanceof InputModel).toBe(true);
         });
 
         it('should add items', function () {
@@ -232,31 +281,11 @@ describe('Groceries', function () {
             scope.setSuggestions = function () {
                 calledSetSuggestions = true;
             };
-            scope.inputValue = 'SomeMockValue';
-            scope.inputFocused = true;
-            scope.add(mockEvent, unboughtItem.name);
+            scope.add(unboughtItem.name);
             $httpBackend.flush();
             item = scope.groceries.pop();
-            expect(scope.inputValue).toBe('');
-            expect(scope.inputFocused).toBe(false);
             expect(calledSetSuggestions).toBe(true);
             expect(item.name).toEqual(unboughtItem.name);
-        });
-
-        it('should add item with name equal to value of input when enter is pressed and value is not empty', function () {
-            var item, lengthAtStart;
-            lengthAtStart = scope.groceries.length;
-            scope.inputFocused = true;
-            scope.inputValue = '';
-            scope.keyup(mockEvent);
-            scope.inputValue = unboughtItem.name;
-            scope.keyup(mockEvent);
-            $httpBackend.flush();
-            $timeout.flush();
-            expect(scope.groceries.length).toBe(lengthAtStart + 1);
-            item = scope.groceries.pop();
-            expect(item.name).toBe(unboughtItem.name);
-            expect(scope.inputFocused).toBe(false);
         });
 
         it('should schedule items for deletion', function () {
@@ -308,25 +337,6 @@ describe('Groceries', function () {
             scope.add(mockEvent, 'Apples');
             $httpBackend.flush();
             expect(unboughtItem.bought_date).toBe(null);
-        });
-
-        it('should toggle input focus', function () {
-            expect(scope.inputFocused).toBe(false);
-            scope.toggleFocus(mockEvent);
-            $timeout.flush();
-            expect(scope.inputFocused).toBe(true);
-            scope.toggleFocus(mockEvent);
-            $timeout.flush();
-            expect(scope.inputFocused).toBe(false);
-        });
-
-        it('should remove input focus', function () {
-            expect(scope.inputFocused).toBe(false);
-            scope.toggleFocus(mockEvent);
-            expect(scope.inputFocused).toBe(true);
-            scope.removeFocus();
-            $timeout.flush();
-            expect(scope.inputFocused).toBe(false);
         });
     });
 });

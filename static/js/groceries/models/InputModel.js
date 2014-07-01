@@ -1,4 +1,4 @@
-Groceries.factory('InputModel', ['$log', '$timeout', function ($log, $timeout) {
+Groceries.factory('InputModel', ['$timeout', function ($timeout) {
     var InputModel = {};
 
     InputModel.isFocused = false;
