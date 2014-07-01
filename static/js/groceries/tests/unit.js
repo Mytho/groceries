@@ -261,13 +261,13 @@ describe('Groceries', function () {
         });
 
         it('should set the list of suggestions', function () {
-            expect(scope.suggestions instanceof Array).toBe(true);
-            expect(scope.suggestions.length).toBeGreaterThan(0);
-            scope.suggestions = [];
-            scope.setSuggestions();
+            expect(scope.suggestions.list instanceof Array).toBe(true);
+            expect(scope.suggestions.list.length).toBeGreaterThan(0);
+            scope.suggestions.list = [];
+            scope.suggestions.set();
             $httpBackend.flush();
-            expect(scope.suggestions instanceof Array).toBe(true);
-            expect(scope.suggestions.length).toBeGreaterThan(0);
+            expect(scope.suggestions.list instanceof Array).toBe(true);
+            expect(scope.suggestions.list.length).toBeGreaterThan(0);
         });
 
         it('should initialize an inputModel', function () {
@@ -278,7 +278,7 @@ describe('Groceries', function () {
         it('should add items', function () {
             var item, calledSetSuggestions;
             calledSetSuggestions = false;
-            scope.setSuggestions = function () {
+            scope.suggestions.set = function () {
                 calledSetSuggestions = true;
             };
             scope.add(unboughtItem.name);
@@ -309,7 +309,7 @@ describe('Groceries', function () {
         it('should delete items', function () {
             var item, calledSetSuggestions;
             calledSetSuggestions = false;
-            scope.setSuggestions = function () {
+            scope.suggestions.set = function () {
                 calledSetSuggestions = true;
             };
             scope.groceries.push(unboughtItem);
