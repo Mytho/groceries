@@ -191,6 +191,10 @@ div#content li.warning input[type='checkbox'] + label {
 div#content li.warning button {
 	display: inline-block;
 }
+div#content li.warning label {
+	text-decoration: none;
+	color: #fff;
+}
 div#content ul#suggestions li {
 	padding-top: 14px;
 	padding-right: 8px;
