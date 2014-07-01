@@ -125,6 +125,25 @@ form button {
 	float: right;
 	margin-top: 10px;
 }
+.swipe-delete-overlay {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 100%;
+	background-color: #ef5a4e;
+	color: #fff;
+	overflow: hidden;
+}
+.swipe-delete.swipe-delete-active .swipe-delete-overlay {
+	display: inline-block;
+}
+.swipe-delete.swipe-delete-active .swipe-delete-overlay-label {
+	display: inline-block;
+	padding-top: 11px;
+	padding-left: 32px;
+}
 div#content,
 div#footer {
 	width: 480px;
@@ -141,6 +160,7 @@ div#content input[type='text'] {
 	margin-bottom: 8px;
 }
 div#content li {
+	position: relative;
 	padding-bottom: 17px;
 	border-bottom: 2px solid #f4f4f4;
 	font-size: 25px;
@@ -161,7 +181,6 @@ div#content li.bought label {
 }
 div#content li.warning {
 	background-color: #ef5a4e;
-	border-bottom-color: #fff;
 	color: #fff;
 }
 div#content li.warning input[type='checkbox'] + label {
@@ -171,10 +190,14 @@ div#content li.warning input[type='checkbox'] + label {
 div#content li.warning button {
 	display: inline-block;
 }
+div#content li.warning label {
+	text-decoration: none;
+	color: #fff;
+}
 div#content ul#suggestions li {
-	padding-top: 14px;
+	padding-top: 11px;
 	padding-right: 8px;
-	padding-bottom: 14px;
+	padding-bottom: 10px;
 	padding-left: 8px;
 	cursor: pointer;
 }

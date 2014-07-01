@@ -1,12 +1,15 @@
-Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', function ($scope, $timeout, ItemService) {
+Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', function ($scope, $timeout, itemService) {
     $scope.deleteSchedule = {};
     $scope.groceries = [];
     $scope.inputFocused = false;
     $scope.inputValue = '';
     $scope.suggestions = [];
 
-    $scope.add = function (name) {
-        ItemService.addItem(name).then(function (item) {
+    $scope.add = function ($event, name) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        itemService.addItem(name).then(function (item) {
             $scope.groceries.push(item);
             $scope.inputFocused = false;
             $scope.inputValue = '';
@@ -22,7 +25,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
             return;
         }
 
-        ItemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
+        itemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
             item.update(data);
         });
     };
@@ -36,7 +39,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
     };
 
     $scope.delete = function (item, callback) {
-        ItemService.deleteItem(item.id).then(function () {
+        itemService.deleteItem(item.id).then(function () {
             $scope.groceries.splice($scope.groceries.indexOf(item), 1);
             $scope.setSuggestions();
 
@@ -58,7 +61,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
             return;
         }
 
-        $scope.add($scope.inputValue);
+        $scope.add($event, $scope.inputValue);
 
         $timeout(function () {
             $event.target.blur();
@@ -87,13 +90,13 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'ItemService', fun
     };
 
     $scope.setGroceries = function () {
-        ItemService.getGroceries().then(function (groceries) {
+        itemService.getGroceries().then(function (groceries) {
             $scope.groceries = groceries;
         });
     };
 
     $scope.setSuggestions = function () {
-        ItemService.getSuggestions().then(function (suggestions) {
+        itemService.getSuggestions().then(function (suggestions) {
             $scope.suggestions = suggestions;
         });
     };
