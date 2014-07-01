@@ -181,7 +181,6 @@ div#content li.bought label {
 }
 div#content li.warning {
 	background-color: #ef5a4e;
-	border-bottom-color: #fff;
 	color: #fff;
 }
 div#content li.warning input[type='checkbox'] + label {
