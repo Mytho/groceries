@@ -27,8 +27,8 @@ describe('Groceries', function () {
         expect(groceriesCount).toBe(10);
         expect(input.isPresent()).toBe(true);
         expect(groceries.first().isDisplayed()).toBe(true);
-        // TODO: Test if list is hidden when the input is focussed, there seems to be some issue with
-        //       focusing inputs which makes it hard to test this functionality.
+        // TODO: There seems to be some issue with focusing inputs which makes
+        //       it hard to test this functionality.
         //
         // input.click();
         // expect(groceries.first().isDisplayed()).toBe(false);
@@ -38,8 +38,8 @@ describe('Groceries', function () {
         expect(suggestionsCount).toBe(10);
         expect(input.isPresent()).toBe(true);
         expect(suggestions.first().isDisplayed()).toBe(false);
-        // TODO: Test if list is hidden when the input is focussed, there seems to be some issue with
-        //       focusing inputs which makes it hard to test this functionality.
+        // TODO: There seems to be some issue with focusing inputs which makes
+        //       it hard to test this functionality.
         //
         // input.click();
         // expect(suggestions.first().isDisplayed()).toBe(true);
@@ -76,8 +76,8 @@ describe('Groceries', function () {
     });
 
     it('should add an item with the same name, when a suggestions is clicked', function () {
-        // TODO: Test if list is hidden when the input is focussed, there seems to be some issue with
-        //       focusing inputs which makes it hard to test this functionality.
+        // TODO: There seems to be some issue with focusing inputs which makes
+        //       it hard to test this functionality.
         //
         // input.click();
         // suggestions.first().click();
