@@ -1,7 +1,7 @@
 <div ng-controller="ListController">
 	<input id="new-item" type="text" placeholder="What needs to be bought?" ng-blur="inputModel.onBlur($event)" ng-click="inputModel.onClick($event)" ng-focus="inputModel.onFocus($event)" ng-keyup="inputModel.onKeyup($event)" ng-model="inputModel.value">
 	<ul id="groceries" ng-show="! inputModel.isFocused">
-		<li ng-repeat="item in groceries" ng-class="{bought: item.isBought(), warning: isScheduledForDelete(item)}" ng-click="buy($event, item)" ng-swipe-right="scheduleDelete($event, item)" swipe-delete="item.name">
+		<li ng-repeat="item in groceries.list" ng-class="{bought: item.isBought(), warning: isScheduledForDelete(item)}" ng-click="buy($event, item)" ng-swipe-right="scheduleDelete($event, item)" swipe-delete="item.name">
 			<input class="buy" type="checkbox" ng-checked="item.isBought()">
 			<label>[[item.name]]</label>
 			<button class="warning" ng-click="cancelDelete($event, item)">CANCEL</button>
