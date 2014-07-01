@@ -1,16 +1,30 @@
-Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', 'InputModel', function ($scope, $timeout, itemService, InputModel) {
+Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'itemService', 'InputModel', function ($document, $scope, $timeout, itemService, InputModel) {
     $scope.deleteSchedule = {};
     $scope.groceries = [];
-    $scope.suggestions = [];
 
     $scope.inputModel = new InputModel(function (value) {
         $scope.add(value);
     });
 
+    $scope.suggestions = {
+        list: [],
+        add: function ($event, value) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.inputModel.blur($document[0].getElementById('new-item'));
+            $scope.add(value);
+        },
+        set: function () {
+            itemService.getSuggestions().then(function (suggestions) {
+                $scope.suggestions.list = suggestions;
+            });
+        }
+    };
+
     $scope.add = function (name) {
         itemService.addItem(name).then(function (item) {
             $scope.groceries.push(item);
-            $scope.setSuggestions();
+            $scope.suggestions.set();
         });
     };
 
@@ -38,7 +52,7 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', 'In
     $scope.delete = function (item, callback) {
         itemService.deleteItem(item.id).then(function () {
             $scope.groceries.splice($scope.groceries.indexOf(item), 1);
-            $scope.setSuggestions();
+            $scope.suggestions.set();
 
             if (typeof(callback) === 'function') {
                 callback();
@@ -69,12 +83,6 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', 'In
         });
     };
 
-    $scope.setSuggestions = function () {
-        itemService.getSuggestions().then(function (suggestions) {
-            $scope.suggestions = suggestions;
-        });
-    };
-
     $scope.setGroceries();
-    $scope.setSuggestions();
+    $scope.suggestions.set();
 }]);

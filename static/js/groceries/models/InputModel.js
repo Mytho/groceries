@@ -8,9 +8,11 @@ Groceries.factory('InputModel', ['$timeout', function ($timeout) {
     InputModel.blur = function (target) {
         this.isFocused = false;
 
-        if (target) {
-            target.blur();
-        }
+        $timeout(function () {
+            if (target) {
+                target.blur();
+            }
+        }, 250);
     };
 
     InputModel.focus = function (target) {

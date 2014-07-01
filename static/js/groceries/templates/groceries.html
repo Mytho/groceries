@@ -8,6 +8,6 @@
 		</li>
 	</ul>
 	<ul id="suggestions" ng-show="inputModel.isFocused">
-		<li ng-repeat="item in suggestions | filter:inputValue" ng-click="add($event, item.name)">[[item.name]]</li>
+		<li ng-repeat="item in suggestions.list | filter:inputModel.value" ng-click="suggestions.add($event, item.name)">[[item.name]]</li>
 	</ul>
 </div>
