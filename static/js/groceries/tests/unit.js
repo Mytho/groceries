@@ -251,13 +251,13 @@ describe('Groceries', function () {
         });
 
         it('should set the list of groceries', function () {
-            expect(scope.groceries instanceof Array).toBe(true);
-            expect(scope.groceries.length).toBeGreaterThan(0);
-            scope.groceries = [];
-            scope.setGroceries();
+            expect(scope.groceries.list instanceof Array).toBe(true);
+            expect(scope.groceries.list.length).toBeGreaterThan(0);
+            scope.groceries.list = [];
+            scope.groceries.set();
             $httpBackend.flush();
-            expect(scope.groceries instanceof Array).toBe(true);
-            expect(scope.groceries.length).toBeGreaterThan(0);
+            expect(scope.groceries.list instanceof Array).toBe(true);
+            expect(scope.groceries.list.length).toBeGreaterThan(0);
         });
 
         it('should set the list of suggestions', function () {
@@ -283,7 +283,7 @@ describe('Groceries', function () {
             };
             scope.add(unboughtItem.name);
             $httpBackend.flush();
-            item = scope.groceries.pop();
+            item = scope.groceries.list.pop();
             expect(calledSetSuggestions).toBe(true);
             expect(item.name).toEqual(unboughtItem.name);
         });
@@ -312,16 +312,16 @@ describe('Groceries', function () {
             scope.suggestions.set = function () {
                 calledSetSuggestions = true;
             };
-            scope.groceries.push(unboughtItem);
-            expect(scope.groceries.indexOf(unboughtItem)).toBe(scope.groceries.length - 1);
+            scope.groceries.append(unboughtItem);
+            expect(scope.groceries.list.indexOf(unboughtItem)).toBe(scope.groceries.list.length - 1);
             scope.delete(unboughtItem);
             $httpBackend.flush();
             expect(calledSetSuggestions).toBe(true);
-            expect(scope.groceries.indexOf(unboughtItem)).toBe(-1);
+            expect(scope.groceries.list.indexOf(unboughtItem)).toBe(-1);
         });
 
         it('should mark items as bought', function () {
-            scope.groceries.push(unboughtItem);
+            scope.groceries.append(unboughtItem);
             expect(unboughtItem.bought_date).toBe(null);
             scope.buy(mockEvent, unboughtItem);
             $httpBackend.flush();
@@ -329,7 +329,7 @@ describe('Groceries', function () {
         });
 
         it('should not mark items as bought when the item is scheduled for deletion', function () {
-            scope.groceries.push(unboughtItem);
+            scope.groceries.append(unboughtItem);
             expect(unboughtItem.bought_date).toBe(null);
             scope.scheduleDelete(mockEvent, unboughtItem, 3500);
             scope.buy(mockEvent, unboughtItem);
