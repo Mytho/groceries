@@ -1,9 +1,9 @@
-Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', function ($scope, $timeout, itemService) {
+Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', 'InputModel', function ($scope, $timeout, itemService, InputModel) {
     $scope.deleteSchedule = {};
     $scope.groceries = [];
-    $scope.inputFocused = false;
-    $scope.inputValue = '';
     $scope.suggestions = [];
+
+    $scope.inputModel = new InputModel();
 
     $scope.add = function ($event, name) {
         $event.preventDefault();
@@ -11,8 +11,8 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', fun
 
         itemService.addItem(name).then(function (item) {
             $scope.groceries.push(item);
-            $scope.inputFocused = false;
-            $scope.inputValue = '';
+            //$scope.inputModel.blur();
+            //$scope.inputModel.value = '';
             $scope.setSuggestions();
         });
     };
@@ -53,19 +53,16 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', fun
         return $scope.deleteSchedule.hasOwnProperty(item.id);
     };
 
+    // TODO: Move to inputModel
     $scope.keyup = function ($event) {
         $event.preventDefault();
         $event.stopPropagation();
 
-        if ($event.keyCode !== 13 || ! $scope.inputValue) {
+        if ($event.keyCode !== 13 || ! $scope.inputModel.value) {
             return;
         }
 
-        $scope.add($event, $scope.inputValue);
-
-        $timeout(function () {
-            $event.target.blur();
-        }, 250);
+        $scope.add($event, $scope.inputModel.value);
     };
 
     $scope.scheduleDelete = function ($event, item, timeout) {
@@ -81,14 +78,6 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', fun
         }, timeout);
     };
 
-    $scope.removeFocus = function () {
-        if ($scope.inputFocused) {
-            $timeout(function () {
-                $scope.inputFocused = false;
-            }, 250);
-        }
-    };
-
     $scope.setGroceries = function () {
         itemService.getGroceries().then(function (groceries) {
             $scope.groceries = groceries;
@@ -99,22 +88,6 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', fun
         itemService.getSuggestions().then(function (suggestions) {
             $scope.suggestions = suggestions;
         });
-    };
-
-    $scope.toggleFocus = function ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        if ( ! $scope.inputFocused) {
-            $scope.inputFocused = true;
-            $event.target.focus();
-            return;
-        }
-
-        $timeout(function () {
-            $scope.inputFocused = false;
-            $event.target.blur();
-        }, 250);
     };
 
     $scope.setGroceries();
