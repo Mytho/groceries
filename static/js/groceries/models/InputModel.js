@@ -1,31 +1,41 @@
 Groceries.factory('InputModel', ['$timeout', function ($timeout) {
     var InputModel = {};
 
+    InputModel.DELAY = 250;
+
     InputModel.isFocused = false;
 
     InputModel.value = '';
 
     InputModel.blur = function (target) {
-        this.isFocused = false;
-
-        $timeout(function () {
-            if (target) {
+        if (this.isFocused) {
+            $timeout(function () {
                 target.blur();
-            }
-        }, 250);
+            }, this.DELAY);
+        }
+
+        this.isFocused = false;
     };
 
     InputModel.focus = function (target) {
-        this.isFocused = true;
+        if ( ! this.isFocused) {
+            $timeout(function () {
+                 target.focus();
+            }, this.DELAY);
+        }
 
-        $timeout(function () {
-            target.focus();
-        }, 250);
+        this.isFocused = true;
     };
 
     InputModel.onBlur = function ($event) {
+        var self = this;
+
         $event.preventDefault();
         $event.stopPropagation();
+
+        $timeout(function () {
+            self.blur($event.target);
+        }, this.DELAY);
     };
 
     InputModel.onClick = function ($event) {
@@ -34,16 +44,21 @@ Groceries.factory('InputModel', ['$timeout', function ($timeout) {
 
         if (this.isFocused) {
             this.blur($event.target);
-        } else {
-            this.focus($event.target);
+            return;
         }
+
+        this.focus($event.target);
     };
 
     InputModel.onFocus = function ($event) {
+        var self = this;
+
         $event.preventDefault();
         $event.stopPropagation();
 
-        this.focus($event.target);
+        $timeout(function () {
+            self.focus($event.target);
+        }, self.DELAY);
     };
 
     InputModel.onKeyup = function ($event) {
@@ -61,7 +76,7 @@ Groceries.factory('InputModel', ['$timeout', function ($timeout) {
 
         $timeout(function () {
             self.blur($event.target);
-        }, 250);
+        }, this.DELAY);
     };
 
     return function (onEnter) {
