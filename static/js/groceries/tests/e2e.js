@@ -56,10 +56,9 @@ describe('Groceries', function () {
     });
 
     it('should add an item when the input is focused, the input has a value and the enter key is pressed', function () {
-        input.click();
         input.sendKeys('Apples');
         input.sendKeys(protractor.Key.ENTER);
-        input.click();
+        browser.driver.sleep(sleep);
         input.sendKeys(protractor.Key.ENTER);
         browser.driver.sleep(sleep);
         expect(groceryLabels.last().getInnerHtml()).toMatch('Apples');
