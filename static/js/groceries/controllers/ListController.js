@@ -1,4 +1,4 @@
-Groceries.controller('ListController', ['$log', '$document', '$scope', '$timeout', 'itemService', 'InputModel', function ($log, $document, $scope, $timeout, itemService, InputModel) {
+Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'itemService', 'InputModel', function ($document, $scope, $timeout, itemService, InputModel) {
     $scope.deleteSchedule = {};
 
     $scope.inputModel = new InputModel(function (value) {

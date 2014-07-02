@@ -2,7 +2,7 @@
 
 describe('Groceries', function () {
     var deleteButtons, groceries, groceryCheckboxes, groceryLabels, input, ptor,
-        sleep, groceriesCount, suggestions, suggestionsCount;
+        sleep, groceriesCount, suggestions, suggestionsList, suggestionsCount;
 
     beforeEach(function () {
         ptor = protractor.getInstance();
@@ -15,34 +15,24 @@ describe('Groceries', function () {
         input = element(by.css('#new-item'));
         sleep = 300;
         suggestions = element.all(by.css('#suggestions li'));
-        element.all(by.css('#groceries li')).count().then(function (count) {
+        suggestionsList = element(by.css('#suggestions'));
+        groceries.count().then(function (count) {
             groceriesCount = count;
         });
-        element.all(by.css('#suggestions li')).count().then(function (count) {
+        suggestions.count().then(function (count) {
             suggestionsCount = count;
         });
     });
 
-    it('should display a list of groceries that is hidden when the input is clicked', function () {
+    it('should display lists of groceries and suggestions that are toggled when the input is focused', function () {
         expect(groceriesCount).toBe(10);
         expect(input.isPresent()).toBe(true);
         expect(groceries.first().isDisplayed()).toBe(true);
-        // TODO: There seems to be some issue with focusing inputs which makes
-        //       it hard to test this functionality.
-        //
-        // input.click();
-        // expect(groceries.first().isDisplayed()).toBe(false);
-    });
-
-    it('should contain a list of suggestions that is shown when the input is clicked', function () {
-        expect(suggestionsCount).toBe(10);
-        expect(input.isPresent()).toBe(true);
-        expect(suggestions.first().isDisplayed()).toBe(false);
-        // TODO: There seems to be some issue with focusing inputs which makes
-        //       it hard to test this functionality.
-        //
-        // input.click();
-        // expect(suggestions.first().isDisplayed()).toBe(true);
+        expect(suggestionsList.isDisplayed()).toBe(false);
+        input.sendKeys('');
+        expect(input.getAttribute('id')).toEqual(browser.driver.switchTo().activeElement().getAttribute('id'));
+        expect(groceries.first().isDisplayed()).toBe(false);
+        expect(suggestionsList.isDisplayed()).toBe(true);
     });
 
     it('should delete a grocery item when it is swiped to the right', function () {
@@ -76,12 +66,9 @@ describe('Groceries', function () {
     });
 
     it('should add an item with the same name, when a suggestions is clicked', function () {
-        // TODO: There seems to be some issue with focusing inputs which makes
-        //       it hard to test this functionality.
-        //
-        // input.click();
-        // suggestions.first().click();
-        // browser.driver.sleep(sleep);
-        // expect(groceryLabels.last().getInnerHtml()).toBe(suggestions.first().getInnerHtml());
+        input.sendKeys('');
+        suggestions.first().click();
+        browser.driver.sleep(sleep);
+        expect(groceryLabels.last().getInnerHtml()).toBe(suggestions.first().getInnerHtml());
     });
 });
