@@ -20,7 +20,7 @@ body {
 	user-select: none;
 }
 ::-webkit-input-placeholder {
-	color: #b1b6bb;
+	color: #d2d7d9;
 	font-family: 'PT Sans', sans-serif;
 	font-style: italic;
 }
@@ -48,9 +48,8 @@ input[type='password'] {
 	padding-bottom: 4px;
 	padding-left: 8px;
 	margin: 0 auto;
-	background-color: #e7ecee;
 	color: #565f64;
-	border: 2px solid #b1b6bb;
+	border: 2px solid #cdd4d8;
 	border-radius: 0;
 	font-size: 22px;
 	outline: none;
