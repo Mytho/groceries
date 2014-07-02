@@ -80,7 +80,6 @@ Groceries.factory('InputModel', ['$timeout', function ($timeout) {
     };
 
     return function (onEnter) {
-        angular.extend(this, InputModel);
-        angular.extend(this, {onEnter: onEnter});
+        angular.extend(this, InputModel, {onEnter: onEnter});
     };
 }]);

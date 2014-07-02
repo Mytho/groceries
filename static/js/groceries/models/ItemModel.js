@@ -13,8 +13,6 @@ Groceries.factory('ItemModel', function () {
             update: function (data) {
                 angular.extend(this, data);
             }
-        });
-
-        angular.extend(this, data);
+        }, data);
     };
 });
