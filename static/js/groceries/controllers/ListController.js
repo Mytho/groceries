@@ -1,19 +1,44 @@
-Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', function ($scope, $timeout, itemService) {
+Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'itemService', 'InputModel', function ($document, $scope, $timeout, itemService, InputModel) {
     $scope.deleteSchedule = {};
-    $scope.groceries = [];
-    $scope.inputFocused = false;
-    $scope.inputValue = '';
-    $scope.suggestions = [];
 
-    $scope.add = function ($event, name) {
-        $event.preventDefault();
-        $event.stopPropagation();
+    $scope.inputModel = new InputModel(function (value) {
+        $scope.add(value);
+    });
 
+    $scope.groceries = {
+        list: [],
+        append: function (item) {
+            $scope.groceries.list.push(item);
+        },
+        remove: function (item) {
+            $scope.groceries.list.splice($scope.groceries.list.indexOf(item), 1);
+        },
+        set: function () {
+            itemService.getGroceries().then(function (groceries) {
+                $scope.groceries.list = groceries;
+            });
+        }
+    };
+
+    $scope.suggestions = {
+        list: [],
+        add: function ($event, value) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.inputModel.blur($document[0].getElementById('new-item'));
+            $scope.add(value);
+        },
+        set: function () {
+            itemService.getSuggestions().then(function (suggestions) {
+                $scope.suggestions.list = suggestions;
+            });
+        }
+    };
+
+    $scope.add = function (name) {
         itemService.addItem(name).then(function (item) {
-            $scope.groceries.push(item);
-            $scope.inputFocused = false;
-            $scope.inputValue = '';
-            $scope.setSuggestions();
+            $scope.groceries.append(item);
+            $scope.suggestions.set();
         });
     };
 
@@ -40,8 +65,8 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', fun
 
     $scope.delete = function (item, callback) {
         itemService.deleteItem(item.id).then(function () {
-            $scope.groceries.splice($scope.groceries.indexOf(item), 1);
-            $scope.setSuggestions();
+            $scope.groceries.remove(item);
+            $scope.suggestions.set();
 
             if (typeof(callback) === 'function') {
                 callback();
@@ -51,21 +76,6 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', fun
 
     $scope.isScheduledForDelete = function (item) {
         return $scope.deleteSchedule.hasOwnProperty(item.id);
-    };
-
-    $scope.keyup = function ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        if ($event.keyCode !== 13 || ! $scope.inputValue) {
-            return;
-        }
-
-        $scope.add($event, $scope.inputValue);
-
-        $timeout(function () {
-            $event.target.blur();
-        }, 250);
     };
 
     $scope.scheduleDelete = function ($event, item, timeout) {
@@ -81,42 +91,6 @@ Groceries.controller('ListController', ['$scope', '$timeout', 'itemService', fun
         }, timeout);
     };
 
-    $scope.removeFocus = function () {
-        if ($scope.inputFocused) {
-            $timeout(function () {
-                $scope.inputFocused = false;
-            }, 250);
-        }
-    };
-
-    $scope.setGroceries = function () {
-        itemService.getGroceries().then(function (groceries) {
-            $scope.groceries = groceries;
-        });
-    };
-
-    $scope.setSuggestions = function () {
-        itemService.getSuggestions().then(function (suggestions) {
-            $scope.suggestions = suggestions;
-        });
-    };
-
-    $scope.toggleFocus = function ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        if ( ! $scope.inputFocused) {
-            $scope.inputFocused = true;
-            $event.target.focus();
-            return;
-        }
-
-        $timeout(function () {
-            $scope.inputFocused = false;
-            $event.target.blur();
-        }, 250);
-    };
-
-    $scope.setGroceries();
-    $scope.setSuggestions();
+    $scope.groceries.set();
+    $scope.suggestions.set();
 }]);
