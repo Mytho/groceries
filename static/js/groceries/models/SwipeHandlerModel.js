@@ -2,35 +2,52 @@ Groceries.factory('SwipeHandlerModel', ['DeleteScheduleService', function (Delet
     return function (scope, element) {
         var handler = {};
 
-        handler.ACTIVE_CLASS_NAME = 'swipe-delete-active';
+        handler.CLASS_NAMES = {
+            active: 'swipe-delete-active',
+            sheduled: 'swipe-delete-scheduled'
+        };
 
         handler.FULL_WIDTH_TRESHOLD = 40;
 
         handler.isEnded = false;
 
-        handler.end = function () {
-            this.isEnded = true;
-            this.element.removeClass(this.ACTIVE_CLASS_NAME);
+        handler.cancel = function () {
+            this.element.removeClass(this.CLASS_NAMES.scheduled);
             this.element.find('span').css('width', '');
         };
 
+        handler.end = function (coords) {
+            this.isEnded = true;
+
+            if (DeleteScheduleService.isScheduled(this.scope.item)) {
+                this.element.removeClass(this.CLASS_NAMES.active);
+                this.element.addClass(this.CLASS_NAMES.scheduled);
+                return;
+            }
+
+            this.cancel();
+        };
+
         handler.move = function (coords, $event) {
-            var self = this,
-                x = coords.x - element[0].offsetLeft;
+            var self, x;
 
             if (this.isEnded) {
                 return;
             }
 
-            if (x > this.element[0].clientWidth - this.FULL_WIDTH_TRESHOLD) {
+            self = this;
+            x = coords.x - element[0].offsetLeft;
+
+            if (x >= this.element[0].clientWidth - this.FULL_WIDTH_TRESHOLD) {
+                x = this.element[0].clientWidth;
+
                 scope.$apply(function () {
-                    x = self.element[0].clientWidth;
                     DeleteScheduleService.add($event, self.scope.item);
                     self.end();
                 });
             }
 
-            this.element.addClass(this.ACTIVE_CLASS_NAME);
+            this.element.addClass(this.CLASS_NAMES.active);
             this.element.find('span').css('width', x + 'px');
         };
 
@@ -39,8 +56,8 @@ Groceries.factory('SwipeHandlerModel', ['DeleteScheduleService', function (Delet
         };
 
         angular.extend(this, handler, {
-            element: element,
-            scope: scope
+            scope: scope,
+            element: element
         });
     };
 }]);

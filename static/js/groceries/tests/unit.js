@@ -9,22 +9,28 @@ describe('Groceries', function () {
     }));
 
     describe('swipeDelete', function () {
-        var $compile, $rootScope, html, scope, testItem, ItemModel;
+        var $httpBackend, $compile, $rootScope, element, mockList, scope, testItem, ItemModel;
 
-        beforeEach(inject(function (_$rootScope_, _$compile_, _ItemModel_) {
+        beforeEach(inject(function (_$httpBackend_, _$rootScope_, _$compile_, _ItemModel_) {
             $rootScope = _$rootScope_;
             $compile = _$compile_;
             ItemModel = _ItemModel_;
             scope = $rootScope.$new();
             scope.item = new ItemModel({id: 1, name: 'Apples'});
-            html = $compile('<span swipe-delete="item"></span>')(scope);
+            mockList = [new ItemModel({id: 1, name: 'Apples'}), new ItemModel({id: 2, name: 'Bananas'})];
+            $httpBackend = _$httpBackend_;
+            $httpBackend.whenGET('/items').respond(mockList);
+            $httpBackend.whenGET('/suggestions').respond(mockList);
+            element = angular.element('<span swipe-delete="item"></span>');
+            $compile(element)(scope);
+            element.scope().$apply();
         }));
 
         it('should initialize the elements', function () {
-            expect(html.attr('class')).toMatch(/swipe-delete/);
-            expect(html.find('span').attr('class')).toMatch(/swipe-delete-overlay/);
-            expect(html.find('span').find('span').attr('class')).toMatch(/swipe-delete-overlay-label/);
-            expect(html.find('span').find('span').text()).toBe(scope.item.name);
+            expect(element.attr('class')).toMatch(/swipe-delete/);
+            expect(element.find('span').attr('class')).toMatch(/swipe-delete-overlay/);
+            expect(element.find('label').text()).toBe(scope.item.name);
+            expect(element.find('button').text()).toBe('CANCEL');
         });
     });
 
