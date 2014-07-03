@@ -9,22 +9,22 @@ describe('Groceries', function () {
     }));
 
     describe('swipeDelete', function () {
-        var $compile, $rootScope, html, scope, testLabel;
+        var $compile, $rootScope, html, scope, testItem, ItemModel;
 
-        beforeEach(inject(function (_$rootScope_, _$compile_) {
+        beforeEach(inject(function (_$rootScope_, _$compile_, _ItemModel_) {
             $rootScope = _$rootScope_;
             $compile = _$compile_;
-            testLabel = 'Apples';
+            ItemModel = _ItemModel_;
             scope = $rootScope.$new();
-            scope.label = testLabel;
-            html = $compile('<span swipe-delete="label"></span>')(scope);
+            scope.item = new ItemModel({id: 1, name: 'Apples'});
+            html = $compile('<span swipe-delete="item"></span>')(scope);
         }));
 
         it('should initialize the elements', function () {
             expect(html.attr('class')).toMatch(/swipe-delete/);
             expect(html.find('span').attr('class')).toMatch(/swipe-delete-overlay/);
             expect(html.find('span').find('span').attr('class')).toMatch(/swipe-delete-overlay-label/);
-            expect(html.find('span').find('span').text()).toBe(testLabel);
+            expect(html.find('span').find('span').text()).toBe(scope.item.name);
         });
     });
 
