@@ -1,5 +1,5 @@
-Groceries.service('DeleteService', ['$timeout', 'HttpService', 'GroceryListService', 'SuggestionListService',
-    function ($timeout, HttpService, GroceryListService, SuggestionListService) {
+Groceries.service('DeleteService', ['$timeout', 'HttpService', 'GroceryService', 'SuggestionListService',
+    function ($timeout, HttpService, GroceryService, SuggestionListService) {
 
     this.DELAY = 2500;
 
@@ -22,7 +22,7 @@ Groceries.service('DeleteService', ['$timeout', 'HttpService', 'GroceryListServi
         var self = this;
 
         HttpService.deleteItem(item.id).then(function () {
-            GroceryListService.remove(item);
+            GroceryService.remove(item);
             SuggestionListService.update();
 
             delete self.schedule[item.id];

@@ -139,15 +139,15 @@ describe('Groceries', function () {
     });
 
     describe('DeleteService', function () {
-        var $httpBackend, $timeout, DeleteService, GroceryListService, mockItem, mockList, SuggestionListService, ItemModel;
+        var $httpBackend, $timeout, DeleteService, GroceryService, mockItem, mockList, SuggestionListService, ItemModel;
 
-        beforeEach(inject(function (_$httpBackend_, _$timeout_, _DeleteService_, _GroceryListService_, _SuggestionListService_, _ItemModel_) {
+        beforeEach(inject(function (_$httpBackend_, _$timeout_, _DeleteService_, _GroceryService_, _SuggestionListService_, _ItemModel_) {
             $httpBackend = _$httpBackend_;
             $timeout = _$timeout_;
             ItemModel = _ItemModel_;
             mockList = [new ItemModel({id: 1, name: 'Apples'}), new ItemModel({id: 2, name: 'Bananas'})];
             DeleteService = _DeleteService_;
-            GroceryListService = _GroceryListService_;
+            GroceryService = _GroceryService_;
             SuggestionListService = _SuggestionListService_;
             mockItem = new ItemModel({id: 1, name: 'Apples'});
             $httpBackend.whenGET('/items').respond(mockList);
@@ -175,7 +175,7 @@ describe('Groceries', function () {
 
         it('should delete items', function () {
             var removedId, isUpdated;
-            GroceryListService.remove = function (item) {
+            GroceryService.remove = function (item) {
                 removedId = item.id;
             };
             SuggestionListService.update = function () {
@@ -197,12 +197,12 @@ describe('Groceries', function () {
         });
     });
 
-    describe('GroceryListService', function () {
-        var $httpBackend, GroceryListService, mockList, ItemModel;
+    describe('GroceryService', function () {
+        var $httpBackend, GroceryService, mockList, ItemModel;
 
-        beforeEach(inject(function (_$httpBackend_, _GroceryListService_, _ItemModel_) {
+        beforeEach(inject(function (_$httpBackend_, _GroceryService_, _ItemModel_) {
             ItemModel = _ItemModel_;
-            GroceryListService = _GroceryListService_;
+            GroceryService = _GroceryService_;
             mockList = [new ItemModel({id: 1, name: 'Apples'}), new ItemModel({id: 2, name: 'Bananas'})];
             $httpBackend = _$httpBackend_;
             $httpBackend.whenGET('/items').respond(mockList);
@@ -210,37 +210,37 @@ describe('Groceries', function () {
         }));
 
         it('should update the list on instantiation', function () {
-            expect(GroceryListService.list instanceof Array).toBe(true);
-            expect(GroceryListService.list.length).toEqual(2);
-            expect(GroceryListService.list).toEqual(mockList);
+            expect(GroceryService.list instanceof Array).toBe(true);
+            expect(GroceryService.list.length).toEqual(2);
+            expect(GroceryService.list).toEqual(mockList);
         });
 
         it('should append items to the list', function () {
             var newItem = new ItemModel({id: 3, name: 'Oranges'});
-            expect(GroceryListService.list.length).toEqual(2);
-            expect(GroceryListService.list).toEqual(mockList);
-            GroceryListService.append(newItem);
+            expect(GroceryService.list.length).toEqual(2);
+            expect(GroceryService.list).toEqual(mockList);
+            GroceryService.append(newItem);
             mockList.push(newItem);
-            expect(GroceryListService.list.length).toEqual(3);
-            expect(GroceryListService.list).toEqual(mockList);
+            expect(GroceryService.list.length).toEqual(3);
+            expect(GroceryService.list).toEqual(mockList);
         });
 
         it('should remove items from the list', function () {
             var removedItem;
-            expect(GroceryListService.list.length).toEqual(2);
-            expect(GroceryListService.list).toEqual(mockList);
+            expect(GroceryService.list.length).toEqual(2);
+            expect(GroceryService.list).toEqual(mockList);
             removedItem = mockList.pop();
-            GroceryListService.remove(removedItem);
-            expect(GroceryListService.list.length).toEqual(1);
-            expect(GroceryListService.list).toEqual(mockList);
+            GroceryService.remove(removedItem);
+            expect(GroceryService.list.length).toEqual(1);
+            expect(GroceryService.list).toEqual(mockList);
         });
 
         it('should update the list', function () {
-            GroceryListService.list = [];
-            expect(GroceryListService.list).toEqual([]);
-            GroceryListService.update();
+            GroceryService.list = [];
+            expect(GroceryService.list).toEqual([]);
+            GroceryService.update();
             $httpBackend.flush();
-            expect(GroceryListService.list).toEqual(mockList);
+            expect(GroceryService.list).toEqual(mockList);
         });
     });
 
@@ -337,12 +337,12 @@ describe('Groceries', function () {
     });
 
     describe('ListController', function () {
-        var $httpBackend, $timeout, GroceryListService, InputModel, ItemModel, HttpService, ListController, boughtItem, mockEvent,
+        var $httpBackend, $timeout, GroceryService, InputModel, ItemModel, HttpService, ListController, boughtItem, mockEvent,
             unboughtItem, scope;
 
         beforeEach(function () {
-            inject(function ($controller, _$timeout_, _$httpBackend_, _GroceryListService_, _HttpService_, _ItemModel_, _InputModel_) {
-                GroceryListService = _GroceryListService_;
+            inject(function ($controller, _$timeout_, _$httpBackend_, _GroceryService_, _HttpService_, _ItemModel_, _InputModel_) {
+                GroceryService = _GroceryService_;
                 InputModel = _InputModel_;
                 ItemModel = _ItemModel_;
                 unboughtItem = new ItemModel({
@@ -390,8 +390,8 @@ describe('Groceries', function () {
             expect( !! ListController).toBe(true);
         });
 
-        it('should contain a GroceryListService', function () {
-            expect( !! scope.GroceryListService).toBe(true);
+        it('should contain a GroceryService', function () {
+            expect( !! scope.GroceryService).toBe(true);
         });
 
         it('should contain a SuggestionListService', function () {
@@ -415,7 +415,7 @@ describe('Groceries', function () {
             };
             scope.add(unboughtItem.name);
             $httpBackend.flush();
-            item = scope.GroceryListService.list.pop();
+            item = scope.GroceryService.list.pop();
             expect(calledSetSuggestions).toBe(true);
             expect(item.name).toEqual(unboughtItem.name);
         });
@@ -428,13 +428,13 @@ describe('Groceries', function () {
             };
             scope.copy(mockEvent, unboughtItem);
             $httpBackend.flush();
-            item = scope.GroceryListService.list.pop();
+            item = scope.GroceryService.list.pop();
             expect(calledSetSuggestions).toBe(true);
             expect(item.name).toEqual(unboughtItem.name);
         });
 
         it('should mark items as bought', function () {
-            scope.GroceryListService.append(unboughtItem);
+            scope.GroceryService.append(unboughtItem);
             expect(unboughtItem.bought_date).toBe(null);
             scope.buy(mockEvent, unboughtItem);
             $httpBackend.flush();
@@ -442,7 +442,7 @@ describe('Groceries', function () {
         });
 
         it('should not mark items as bought when the item is scheduled for deletion', function () {
-            scope.GroceryListService.append(unboughtItem);
+            scope.GroceryService.append(unboughtItem);
             expect(unboughtItem.bought_date).toBe(null);
             scope.DeleteService.add(unboughtItem);
             scope.buy(mockEvent, unboughtItem);
