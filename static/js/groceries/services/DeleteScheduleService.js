@@ -5,21 +5,15 @@ Groceries.service('DeleteScheduleService', ['$timeout', 'ItemService', 'GroceryL
 
     this.schedule = {};
 
-    this.add = function ($event, item) {
+    this.add = function (item) {
         var self = this;
-
-        $event.preventDefault();
-        $event.stopPropagation();
 
         this.schedule[item.id] = $timeout(function () {
             self.delete(item);
         }, this.DELAY);
     };
 
-    this.cancel = function ($event, item) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
+    this.cancel = function (item) {
         $timeout.cancel(this.schedule[item.id]);
         delete this.schedule[item.id];
     };

@@ -42,7 +42,7 @@ Groceries.factory('SwipeHandlerModel', ['DeleteScheduleService', function (Delet
                 x = this.element[0].clientWidth;
 
                 scope.$apply(function () {
-                    DeleteScheduleService.add($event, self.scope.item);
+                    DeleteScheduleService.add(self.scope.item);
                     self.end();
                 });
             }

@@ -1,5 +1,5 @@
-Groceries.directive('swipeDelete', ['$log', '$compile', '$swipe', 'DeleteScheduleService', 'SwipeHandlerModel',
-    function ($log, $compile, $swipe, DeleteScheduleService, SwipeHandlerModel) {
+Groceries.directive('swipeDelete', ['$compile', '$swipe', 'DeleteScheduleService', 'SwipeHandlerModel',
+    function ($compile, $swipe, DeleteScheduleService, SwipeHandlerModel) {
 
     return {
         restrict: 'A',
@@ -10,7 +10,10 @@ Groceries.directive('swipeDelete', ['$log', '$compile', '$swipe', 'DeleteSchedul
             swipeHandlerModel = new SwipeHandlerModel(scope, element);
 
             scope.cancel = function ($event, item) {
-                DeleteScheduleService.cancel($event, item);
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                DeleteScheduleService.cancel(item);
                 swipeHandlerModel.cancel();
             };
 
