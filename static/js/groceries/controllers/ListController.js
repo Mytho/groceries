@@ -16,14 +16,6 @@ Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'dele
         });
     };
 
-    $scope.copy = function ($event, item) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        $scope.inputModel.blur($document[0].getElementById('new-item'));
-        $scope.add(item.name);
-    };
-
     $scope.buy = function ($event, item) {
         $event.preventDefault();
         $event.stopPropagation();
@@ -35,5 +27,13 @@ Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'dele
         itemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
             item.update(data);
         });
+    };
+
+    $scope.copy = function ($event, item) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.inputModel.blur($document[0].getElementById('new-item'));
+        $scope.add(item.name);
     };
 }]);
