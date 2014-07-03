@@ -239,7 +239,24 @@ describe('Groceries', function () {
     });
 
     describe('suggestionListService', function () {
-        // TODO
+        var $httpBackend, suggestionListService, mockList, ItemModel;
+
+        beforeEach(inject(function (_$httpBackend_, _suggestionListService_, _ItemModel_) {
+            ItemModel = _ItemModel_;
+            suggestionListService = _suggestionListService_;
+            mockList = [new ItemModel({id: 1, name: 'Apples'}), new ItemModel({id: 2, name: 'Bananas'})];
+            $httpBackend = _$httpBackend_;
+            $httpBackend.whenGET('/suggestions').respond(mockList);
+            $httpBackend.flush();
+        }));
+
+        it('should update the list', function () {
+            suggestionListService.list = [];
+            expect(suggestionListService.list).toEqual([]);
+            suggestionListService.update();
+            $httpBackend.flush();
+            expect(suggestionListService.list).toEqual(mockList);
+        });
     });
 
     describe('ListController', function () {
