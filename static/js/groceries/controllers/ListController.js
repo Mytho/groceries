@@ -1,5 +1,5 @@
-Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'DeleteScheduleService', 'itemService', 'GroceryListService', 'suggestionListService', 'InputModel',
-    function ($document, $scope, $timeout, DeleteScheduleService, itemService, GroceryListService, suggestionListService, InputModel) {
+Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'DeleteScheduleService', 'ItemService', 'GroceryListService', 'suggestionListService', 'InputModel',
+    function ($document, $scope, $timeout, DeleteScheduleService, ItemService, GroceryListService, suggestionListService, InputModel) {
 
     $scope.GroceryListService = GroceryListService;
     $scope.suggestionListService = suggestionListService;
@@ -10,7 +10,7 @@ Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'Dele
     });
 
     $scope.add = function (name) {
-        itemService.addItem(name).then(function (item) {
+        ItemService.addItem(name).then(function (item) {
             GroceryListService.append(item);
             suggestionListService.update();
         });
@@ -24,7 +24,7 @@ Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'Dele
             return;
         }
 
-        itemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
+        ItemService.toggleItem(item.id, ! item.isBought()).then(function (data) {
             item.update(data);
         });
     };
