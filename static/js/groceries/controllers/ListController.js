@@ -1,45 +1,29 @@
-Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'itemService', 'InputModel', function ($document, $scope, $timeout, itemService, InputModel) {
+Groceries.controller('ListController',
+    ['$document', '$log', '$scope', '$timeout', 'itemService', 'groceryListService', 'suggestionListService', 'InputModel',
+    function ($document, $log, $scope, $timeout, itemService, groceryListService, suggestionListService, InputModel) {
+
     $scope.deleteSchedule = {};
+
+    $scope.groceryListService = groceryListService;
+    $scope.suggestionListService = suggestionListService;
 
     $scope.inputModel = new InputModel(function (value) {
         $scope.add(value);
     });
 
-    $scope.groceries = {
-        list: [],
-        append: function (item) {
-            $scope.groceries.list.push(item);
-        },
-        remove: function (item) {
-            $scope.groceries.list.splice($scope.groceries.list.indexOf(item), 1);
-        },
-        set: function () {
-            itemService.getGroceries().then(function (groceries) {
-                $scope.groceries.list = groceries;
-            });
-        }
-    };
-
-    $scope.suggestions = {
-        list: [],
-        add: function ($event, value) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            $scope.inputModel.blur($document[0].getElementById('new-item'));
-            $scope.add(value);
-        },
-        set: function () {
-            itemService.getSuggestions().then(function (suggestions) {
-                $scope.suggestions.list = suggestions;
-            });
-        }
-    };
-
     $scope.add = function (name) {
         itemService.addItem(name).then(function (item) {
-            $scope.groceries.append(item);
-            $scope.suggestions.set();
+            groceryListService.append(item);
+            suggestionListService.update();
         });
+    };
+
+    $scope.copy = function ($event, item) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.inputModel.blur($document[0].getElementById('new-item'));
+        $scope.add(item.name);
     };
 
     $scope.buy = function ($event, item) {
@@ -65,8 +49,8 @@ Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'item
 
     $scope.delete = function (item, callback) {
         itemService.deleteItem(item.id).then(function () {
-            $scope.groceries.remove(item);
-            $scope.suggestions.set();
+            groceryListService.remove(item);
+            suggestionListService.update();
 
             if (typeof(callback) === 'function') {
                 callback();
@@ -90,7 +74,4 @@ Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'item
             });
         }, timeout);
     };
-
-    $scope.groceries.set();
-    $scope.suggestions.set();
 }]);
