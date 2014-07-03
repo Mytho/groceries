@@ -144,12 +144,17 @@ describe('Groceries', function () {
             $httpBackend.flush();
         }));
 
+        it('should update the list on instantiation', function () {
+            expect(groceryListService.list.length).toEqual(2);
+            expect(groceryListService.list).toEqual(mockList);
+        });
+
         it('should append items to the list', function () {
             var newItem = new ItemModel({id: 3, name: 'Oranges'});
             expect(groceryListService.list.length).toEqual(2);
             expect(groceryListService.list).toEqual(mockList);
             groceryListService.append(newItem);
-            mockList.push(newItem)
+            mockList.push(newItem);
             expect(groceryListService.list.length).toEqual(3);
             expect(groceryListService.list).toEqual(mockList);
         });
@@ -249,6 +254,11 @@ describe('Groceries', function () {
             $httpBackend.whenGET('/suggestions').respond(mockList);
             $httpBackend.flush();
         }));
+
+        it('should update the list on instantiation', function () {
+            expect(suggestionListService.list.length).toEqual(2);
+            expect(suggestionListService.list).toEqual(mockList);
+        });
 
         it('should update the list', function () {
             suggestionListService.list = [];
