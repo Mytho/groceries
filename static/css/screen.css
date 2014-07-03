@@ -93,7 +93,7 @@ button {
 	padding-right: 12px;
 	padding-bottom: 5px;
 	padding-left: 12px;
-	background-color: #6a797a;
+	background-color: #008f73;
 	margin: 0;
 	color: #fff;
 	border: 0;
@@ -111,9 +111,6 @@ button.large {
 	padding-left: 16px;
 	font-size: 18px;
 }
-button.primary {
-	background-color: #008f73;
-}
 button.warning {
 	background-color: #ef5a4e;
 }
@@ -126,6 +123,7 @@ form button {
 }
 .swipe-delete-overlay {
 	display: none;
+	display: inline-block;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -135,13 +133,23 @@ form button {
 	color: #fff;
 	overflow: hidden;
 }
-.swipe-delete.swipe-delete-active .swipe-delete-overlay {
+.swipe-delete-overlay input[type="checkbox"] + label {
+	background-image: none;
+	cursor: default;
+}
+.swipe-delete-overlay button {
+	display: block;
+	position: absolute;
+	top: 13px;
+	right: 13px;
+	background-color: #ef5a4e;
+}
+.swipe-delete-active .swipe-delete-overlay,
+.swipe-delete-scheduled .swipe-delete-overlay {
 	display: inline-block;
 }
-.swipe-delete.swipe-delete-active .swipe-delete-overlay-label {
-	display: inline-block;
-	padding-top: 11px;
-	padding-left: 32px;
+.swipe-delete-active button {
+	display: none;
 }
 div#content,
 div#footer {
@@ -168,30 +176,9 @@ div#content li label {
 	display: inline-block;
 	margin-top: 17px;
 }
-div#content li button {
-	display: none;
-	float: right;
-	margin-top: 13px;
-	margin-right: 13px;
-}
 div#content li.bought label {
   text-decoration: line-through;
 	color: #d2d7d9;
-}
-div#content li.warning {
-	background-color: #ef5a4e;
-	color: #fff;
-}
-div#content li.warning input[type='checkbox'] + label {
-	background-image: none;
-	cursor: default;
-}
-div#content li.warning button {
-	display: inline-block;
-}
-div#content li.warning label {
-	text-decoration: none;
-	color: #fff;
 }
 div#content ul#suggestions li {
 	padding-top: 11px;

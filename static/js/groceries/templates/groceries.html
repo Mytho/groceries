@@ -1,13 +1,12 @@
 <div ng-controller="ListController">
 	<input id="new-item" type="text" placeholder="What needs to be bought?" ng-blur="inputModel.onBlur($event)" ng-click="inputModel.onClick($event)" ng-focus="inputModel.onFocus($event)" ng-keyup="inputModel.onKeyup($event)" ng-model="inputModel.value">
 	<ul id="groceries" ng-show="! inputModel.isFocused">
-		<li ng-repeat="item in groceries.list" ng-class="{bought: item.isBought(), warning: isScheduledForDelete(item)}" ng-click="buy($event, item)" ng-swipe-right="scheduleDelete($event, item)" swipe-delete="item.name">
+		<li ng-repeat="item in GroceryListService.list" ng-class="{bought: item.isBought()}" ng-click="buy($event, item)" swipe-delete="item">
 			<input class="buy" type="checkbox" ng-checked="item.isBought()">
 			<label>[[item.name]]</label>
-			<button class="warning" ng-click="cancelDelete($event, item)">CANCEL</button>
 		</li>
 	</ul>
 	<ul id="suggestions" ng-show="inputModel.isFocused">
-		<li ng-repeat="item in suggestions.list | filter:inputModel.value" ng-click="suggestions.add($event, item.name)">[[item.name]]</li>
+		<li ng-repeat="item in SuggestionListService.list | filter:inputModel.value" ng-click="copy($event, item)">[[item.name]]</li>
 	</ul>
 </div>

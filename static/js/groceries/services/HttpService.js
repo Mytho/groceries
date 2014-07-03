@@ -1,4 +1,4 @@
-Groceries.service('itemService', ['$http', '$log', 'ItemModel', function ($http, $log, ItemModel) {
+Groceries.service('HttpService', ['$http', '$log', 'ItemModel', function ($http, $log, ItemModel) {
     var convertItems = function (data) {
         var i, items;
         items = [];

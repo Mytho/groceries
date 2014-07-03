@@ -1,44 +1,33 @@
-Groceries.directive('swipeDelete', ['$swipe', function ($swipe) {
-    function SwipeHandler (element) {
-        var handler = {};
-
-        handler.ACTIVE_CLASS_NAME = 'swipe-delete-active';
-        handler.FULL_WIDTH_TRESHOLD = 35;
-
-        handler.end = function () {
-            this.element.removeClass(this.ACTIVE_CLASS_NAME);
-            this.element.find('span').css('width', '');
-        };
-
-        handler.move = function (coords) {
-            var x = coords.x - element[0].offsetLeft;
-
-            if (x > this.element[0].clientWidth - this.FULL_WIDTH_TRESHOLD) {
-                x = this.element[0].clientWidth;
-                // TODO: End the swipe event if possible?
-                this.end();
-                return;
-            }
-
-            this.element.addClass(this.ACTIVE_CLASS_NAME);
-            this.element.find('span').css('width', x + 'px');
-        };
-
-        angular.extend(this, handler, {element: element});
-    }
+Groceries.directive('swipeDelete', ['$compile', '$swipe', 'DeleteScheduleService', 'SwipeHandlerModel',
+    function ($compile, $swipe, DeleteScheduleService, SwipeHandlerModel) {
 
     return {
         restrict: 'A',
-        scope: {
-            label: '=swipeDelete'
-        },
+        scope: {item: '=swipeDelete'},
         link: function (scope, element, attrs) {
-            var swipeHandler = new SwipeHandler(element);
+            var html, swipeHandlerModel;
 
-            element.addClass('swipe-delete');
-            element.append('<span class="swipe-delete-overlay"><span class="swipe-delete-overlay-label">'+ scope.label +'</span></span>');
+            swipeHandlerModel = new SwipeHandlerModel(scope, element);
 
-            $swipe.bind(element, swipeHandler);
+            scope.cancel = function ($event, item) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                DeleteScheduleService.cancel(item);
+                swipeHandlerModel.cancel();
+            };
+
+            html = $compile(
+                '<span class="swipe-delete-overlay">'+
+                    '<input type="checkbox">'+
+                    '<label>[[item.name]]</label>'+
+                    '<button ng-click="cancel($event, item)">CANCEL</button>'+
+                '</span>'
+            )(scope);
+
+            element.addClass('swipe-delete').append(html);
+
+            $swipe.bind(element, swipeHandlerModel);
         }
     };
 }]);

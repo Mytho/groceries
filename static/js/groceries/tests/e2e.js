@@ -1,17 +1,14 @@
 'use strict';
 
 describe('Groceries', function () {
-    var deleteButtons, groceries, groceryCheckboxes, groceryLabels, input, ptor,
-        sleep, groceriesCount, suggestions, suggestionsList, suggestionsCount;
+    var groceries, groceriesCount, groceryLabels, input, ptor, sleep, suggestions, suggestionsCount, suggestionsList;
 
     beforeEach(function () {
         ptor = protractor.getInstance();
         ptor.ignoreSynchronization = true;
         browser.get('/');
-        deleteButtons = element.all(by.css('#groceries li button.warning'));
         groceries = element.all(by.css('#groceries li'));
         groceryLabels = element.all(by.css('#groceries li label'));
-        groceryCheckboxes = element.all(by.css('#groceries li input[type="checkbox"]'));
         input = element(by.css('#new-item'));
         sleep = 300;
         suggestions = element.all(by.css('#suggestions li'));
@@ -26,10 +23,12 @@ describe('Groceries', function () {
 
     it('should display lists of groceries and suggestions that are toggled when the input is focused', function () {
         expect(groceriesCount).toBe(10);
+        expect(suggestionsCount).toBe(10);
         expect(input.isPresent()).toBe(true);
         expect(groceries.first().isDisplayed()).toBe(true);
         expect(suggestionsList.isDisplayed()).toBe(false);
         input.sendKeys('');
+        browser.driver.sleep(sleep);
         expect(input.getAttribute('id')).toEqual(browser.driver.switchTo().activeElement().getAttribute('id'));
         expect(groceries.first().isDisplayed()).toBe(false);
         expect(suggestionsList.isDisplayed()).toBe(true);
@@ -66,6 +65,7 @@ describe('Groceries', function () {
 
     it('should add an item with the same name, when a suggestions is clicked', function () {
         input.sendKeys('');
+        browser.driver.sleep(sleep);
         suggestions.first().click();
         browser.driver.sleep(sleep);
         expect(groceryLabels.last().getInnerHtml()).toBe(suggestions.first().getInnerHtml());
