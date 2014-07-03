@@ -1,10 +1,10 @@
-Groceries.service('SuggestionListService', ['ItemService', function (ItemService) {
+Groceries.service('SuggestionListService', ['HttpService', function (HttpService) {
     this.list = [];
 
     this.update = function () {
         var self = this;
 
-        ItemService.getSuggestions().then(function (suggestions) {
+        HttpService.getSuggestions().then(function (suggestions) {
             self.list = suggestions;
         });
     };

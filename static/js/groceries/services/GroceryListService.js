@@ -1,4 +1,4 @@
-Groceries.service('GroceryListService', ['ItemService', function (ItemService) {
+Groceries.service('GroceryListService', ['HttpService', function (HttpService) {
     this.list = [];
 
     this.append = function (item) {
@@ -12,7 +12,7 @@ Groceries.service('GroceryListService', ['ItemService', function (ItemService) {
     this.update = function () {
         var self = this;
 
-        ItemService.getGroceries().then(function (groceries) {
+        HttpService.getGroceries().then(function (groceries) {
             self.list = groceries;
         });
     };

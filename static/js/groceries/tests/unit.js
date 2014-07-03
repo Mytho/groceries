@@ -244,19 +244,19 @@ describe('Groceries', function () {
         });
     });
 
-    describe('ItemService', function () {
-        var $httpBackend, ItemModel, ItemService;
+    describe('HttpService', function () {
+        var $httpBackend, ItemModel, HttpService;
 
-        beforeEach(inject(function (_$httpBackend_, _ItemModel_, _ItemService_) {
+        beforeEach(inject(function (_$httpBackend_, _ItemModel_, _HttpService_) {
             $httpBackend = _$httpBackend_;
             ItemModel = _ItemModel_;
-            ItemService = _ItemService_;
+            HttpService = _HttpService_;
         }));
 
         it('should return a list of ItemModels as groceries', function () {
             var groceries = [];
             $httpBackend.whenGET('/items').respond([{id: 1, name: 'Apples'}, {id: 2, name: 'Bananas'}]);
-            ItemService.getGroceries().then(function (items) {
+            HttpService.getGroceries().then(function (items) {
                 groceries = items;
             });
             $httpBackend.flush();
@@ -267,7 +267,7 @@ describe('Groceries', function () {
         it('should return a list of ItemModels as suggestions', function () {
             var suggestions = [];
             $httpBackend.whenGET('/suggestions').respond([{id: 1, name: 'Apples'}, {id: 2, name: 'Bananas'}]);
-            ItemService.getSuggestions().then(function (items) {
+            HttpService.getSuggestions().then(function (items) {
                 suggestions = items;
             });
             $httpBackend.flush();
@@ -279,7 +279,7 @@ describe('Groceries', function () {
             var item, testName;
             testName = 'Oranges';
             $httpBackend.whenPOST('/items').respond({id: 123, name: testName});
-            ItemService.addItem(testName).then(function (_item_) {
+            HttpService.addItem(testName).then(function (_item_) {
                 item = _item_;
             });
             $httpBackend.flush();
@@ -290,7 +290,7 @@ describe('Groceries', function () {
             var itemId, isSuccessful;
             itemId = 1;
             $httpBackend.whenDELETE('/items/'+itemId).respond(200, '');
-            ItemService.deleteItem(itemId).then(function (_isSuccessful_) {
+            HttpService.deleteItem(itemId).then(function (_isSuccessful_) {
                 isSuccessful = _isSuccessful_;
             });
             $httpBackend.flush();
@@ -301,7 +301,7 @@ describe('Groceries', function () {
             var item, testName;
             item = new ItemModel({name: testName});
             $httpBackend.whenPUT('/items/'+item.id).respond({name: testName, bought_date: 1300000000, bought_by: 3});
-            ItemService.toggleItem(item.id, {bought: true}).then(function (_item_) {
+            HttpService.toggleItem(item.id, {bought: true}).then(function (_item_) {
                 item = _item_;
             });
             $httpBackend.flush();
@@ -337,11 +337,11 @@ describe('Groceries', function () {
     });
 
     describe('ListController', function () {
-        var $httpBackend, $timeout, GroceryListService, InputModel, ItemModel, ItemService, ListController, boughtItem, mockEvent,
+        var $httpBackend, $timeout, GroceryListService, InputModel, ItemModel, HttpService, ListController, boughtItem, mockEvent,
             unboughtItem, scope;
 
         beforeEach(function () {
-            inject(function ($controller, _$timeout_, _$httpBackend_, _GroceryListService_, _ItemService_, _ItemModel_, _InputModel_) {
+            inject(function ($controller, _$timeout_, _$httpBackend_, _GroceryListService_, _HttpService_, _ItemModel_, _InputModel_) {
                 GroceryListService = _GroceryListService_;
                 InputModel = _InputModel_;
                 ItemModel = _ItemModel_;
@@ -376,11 +376,11 @@ describe('Groceries', function () {
                     stopPropagation: function () {}
                 };
                 scope = {};
-                ItemService = _ItemService_;
+                HttpService = _HttpService_;
                 ListController = $controller('ListController', {
                     $scope: scope,
                     $timeout: $timeout,
-                    ItemService: ItemService
+                    HttpService: HttpService
                 });
                 $httpBackend.flush();
             });
