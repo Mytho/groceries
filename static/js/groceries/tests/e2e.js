@@ -30,6 +30,7 @@ describe('Groceries', function () {
         expect(groceries.first().isDisplayed()).toBe(true);
         expect(suggestionsList.isDisplayed()).toBe(false);
         input.sendKeys('');
+        browser.driver.sleep(sleep);
         expect(input.getAttribute('id')).toEqual(browser.driver.switchTo().activeElement().getAttribute('id'));
         expect(groceries.first().isDisplayed()).toBe(false);
         expect(suggestionsList.isDisplayed()).toBe(true);
@@ -66,6 +67,7 @@ describe('Groceries', function () {
 
     it('should add an item with the same name, when a suggestions is clicked', function () {
         input.sendKeys('');
+        browser.driver.sleep(sleep);
         suggestions.first().click();
         browser.driver.sleep(sleep);
         expect(groceryLabels.last().getInnerHtml()).toBe(suggestions.first().getInnerHtml());
