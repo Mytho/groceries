@@ -2,13 +2,13 @@ Groceries.directive('swipeDelete', ['$swipe', 'SwipeHandlerModel', function ($sw
     return {
         restrict: 'A',
         scope: {
-            label: '=swipeDelete'
+            item: '=swipeDelete'
         },
         link: function (scope, element, attrs) {
-            var swipeHandlerModel = new SwipeHandlerModel(element);
+            var swipeHandlerModel = new SwipeHandlerModel(scope, element);
 
             element.addClass('swipe-delete');
-            element.append('<span class="swipe-delete-overlay"><span class="swipe-delete-overlay-label">'+ scope.label +'</span></span>');
+            element.append('<span class="swipe-delete-overlay"><span class="swipe-delete-overlay-label">'+ scope.item.name +'</span></span>');
 
             $swipe.bind(element, swipeHandlerModel);
         }

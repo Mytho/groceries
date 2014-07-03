@@ -1,19 +1,19 @@
 Groceries.service('deleteScheduleService', ['$timeout', 'itemService', 'groceryListService', 'suggestionListService',
     function ($timeout, itemService, groceryListService, suggestionListService) {
 
+    this.DELAY = 2500;
+
     this.schedule = {};
 
-    this.add = function ($event, item, timeout) {
+    this.add = function ($event, item) {
         var self = this;
 
         $event.preventDefault();
         $event.stopPropagation();
 
-        timeout = timeout || 2500;
-
         this.schedule[item.id] = $timeout(function () {
             self.delete(item);
-        }, timeout);
+        }, this.DELAY);
     };
 
     this.cancel = function ($event, item) {
