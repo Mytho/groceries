@@ -139,16 +139,16 @@ describe('Groceries', function () {
     });
 
     describe('DeleteService', function () {
-        var $httpBackend, $timeout, DeleteService, GroceryService, mockItem, mockList, SuggestionListService, ItemModel;
+        var $httpBackend, $timeout, DeleteService, GroceryService, mockItem, mockList, SuggestionService, ItemModel;
 
-        beforeEach(inject(function (_$httpBackend_, _$timeout_, _DeleteService_, _GroceryService_, _SuggestionListService_, _ItemModel_) {
+        beforeEach(inject(function (_$httpBackend_, _$timeout_, _DeleteService_, _GroceryService_, _SuggestionService_, _ItemModel_) {
             $httpBackend = _$httpBackend_;
             $timeout = _$timeout_;
             ItemModel = _ItemModel_;
             mockList = [new ItemModel({id: 1, name: 'Apples'}), new ItemModel({id: 2, name: 'Bananas'})];
             DeleteService = _DeleteService_;
             GroceryService = _GroceryService_;
-            SuggestionListService = _SuggestionListService_;
+            SuggestionService = _SuggestionService_;
             mockItem = new ItemModel({id: 1, name: 'Apples'});
             $httpBackend.whenGET('/items').respond(mockList);
             $httpBackend.whenGET('/suggestions').respond(mockList);
@@ -178,7 +178,7 @@ describe('Groceries', function () {
             GroceryService.remove = function (item) {
                 removedId = item.id;
             };
-            SuggestionListService.update = function () {
+            SuggestionService.update = function () {
                 isUpdated = true;
             };
             $httpBackend.whenDELETE('/items/'+mockItem.id).respond(200, '');
@@ -309,12 +309,12 @@ describe('Groceries', function () {
         });
     });
 
-    describe('SuggestionListService', function () {
-        var $httpBackend, SuggestionListService, mockList, ItemModel;
+    describe('SuggestionService', function () {
+        var $httpBackend, SuggestionService, mockList, ItemModel;
 
-        beforeEach(inject(function (_$httpBackend_, _SuggestionListService_, _ItemModel_) {
+        beforeEach(inject(function (_$httpBackend_, _SuggestionService_, _ItemModel_) {
             ItemModel = _ItemModel_;
-            SuggestionListService = _SuggestionListService_;
+            SuggestionService = _SuggestionService_;
             mockList = [new ItemModel({id: 1, name: 'Apples'}), new ItemModel({id: 2, name: 'Bananas'})];
             $httpBackend = _$httpBackend_;
             $httpBackend.whenGET('/suggestions').respond(mockList);
@@ -322,17 +322,17 @@ describe('Groceries', function () {
         }));
 
         it('should update the list on instantiation', function () {
-            expect(SuggestionListService.list instanceof Array).toBe(true);
-            expect(SuggestionListService.list.length).toEqual(2);
-            expect(SuggestionListService.list).toEqual(mockList);
+            expect(SuggestionService.list instanceof Array).toBe(true);
+            expect(SuggestionService.list.length).toEqual(2);
+            expect(SuggestionService.list).toEqual(mockList);
         });
 
         it('should update the list', function () {
-            SuggestionListService.list = [];
-            expect(SuggestionListService.list).toEqual([]);
-            SuggestionListService.update();
+            SuggestionService.list = [];
+            expect(SuggestionService.list).toEqual([]);
+            SuggestionService.update();
             $httpBackend.flush();
-            expect(SuggestionListService.list).toEqual(mockList);
+            expect(SuggestionService.list).toEqual(mockList);
         });
     });
 
@@ -394,8 +394,8 @@ describe('Groceries', function () {
             expect( !! scope.GroceryService).toBe(true);
         });
 
-        it('should contain a SuggestionListService', function () {
-            expect( !! scope.SuggestionListService).toBe(true);
+        it('should contain a SuggestionService', function () {
+            expect( !! scope.SuggestionService).toBe(true);
         });
 
         it('should contain a DeleteService', function () {
@@ -410,7 +410,7 @@ describe('Groceries', function () {
         it('should add items', function () {
             var item, calledSetSuggestions;
             calledSetSuggestions = false;
-            scope.SuggestionListService.update = function () {
+            scope.SuggestionService.update = function () {
                 calledSetSuggestions = true;
             };
             scope.add(unboughtItem.name);
@@ -423,7 +423,7 @@ describe('Groceries', function () {
         it('should copy items', function () {
             var item, calledSetSuggestions;
             calledSetSuggestions = false;
-            scope.SuggestionListService.update = function () {
+            scope.SuggestionService.update = function () {
                 calledSetSuggestions = true;
             };
             scope.copy(mockEvent, unboughtItem);

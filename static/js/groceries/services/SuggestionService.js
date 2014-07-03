@@ -1,4 +1,4 @@
-Groceries.service('SuggestionListService', ['HttpService', function (HttpService) {
+Groceries.service('SuggestionService', ['HttpService', function (HttpService) {
     this.list = [];
 
     this.update = function () {
