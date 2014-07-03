@@ -5,9 +5,7 @@ Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'Dele
     $scope.SuggestionListService = SuggestionListService;
     $scope.DeleteScheduleService = DeleteScheduleService;
 
-    $scope.inputModel = new InputModel(function (value) {
-        $scope.add(value);
-    });
+    $scope.inputModel = new InputModel($scope.add);
 
     $scope.add = function (name) {
         HttpService.addItem(name).then(function (item) {
