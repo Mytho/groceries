@@ -1,7 +1,7 @@
-Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'DeleteScheduleService', 'itemService', 'groceryListService', 'suggestionListService', 'InputModel',
-    function ($document, $scope, $timeout, DeleteScheduleService, itemService, groceryListService, suggestionListService, InputModel) {
+Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'DeleteScheduleService', 'itemService', 'GroceryListService', 'suggestionListService', 'InputModel',
+    function ($document, $scope, $timeout, DeleteScheduleService, itemService, GroceryListService, suggestionListService, InputModel) {
 
-    $scope.groceryListService = groceryListService;
+    $scope.GroceryListService = GroceryListService;
     $scope.suggestionListService = suggestionListService;
     $scope.DeleteScheduleService = DeleteScheduleService;
 
@@ -11,7 +11,7 @@ Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'Dele
 
     $scope.add = function (name) {
         itemService.addItem(name).then(function (item) {
-            groceryListService.append(item);
+            GroceryListService.append(item);
             suggestionListService.update();
         });
     };
