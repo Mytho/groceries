@@ -1,20 +1,20 @@
-Groceries.directive('swipeDelete', ['$compile', '$swipe', 'DeleteScheduleService', 'SwipeHandlerModel',
-    function ($compile, $swipe, DeleteScheduleService, SwipeHandlerModel) {
+Groceries.directive('swipeDelete', ['$compile', '$swipe', 'DeleteScheduleService', 'SwipeModel',
+    function ($compile, $swipe, DeleteScheduleService, SwipeModel) {
 
     return {
         restrict: 'A',
         scope: {item: '=swipeDelete'},
         link: function (scope, element, attrs) {
-            var html, swipeHandlerModel;
+            var html, swipeModel;
 
-            swipeHandlerModel = new SwipeHandlerModel(scope, element);
+            swipeModel = new SwipeModel(scope, element);
 
             scope.cancel = function ($event, item) {
                 $event.preventDefault();
                 $event.stopPropagation();
 
                 DeleteScheduleService.cancel(item);
-                swipeHandlerModel.cancel();
+                swipeModel.cancel();
             };
 
             html = $compile(
@@ -27,7 +27,7 @@ Groceries.directive('swipeDelete', ['$compile', '$swipe', 'DeleteScheduleService
 
             element.addClass('swipe-delete').append(html);
 
-            $swipe.bind(element, swipeHandlerModel);
+            $swipe.bind(element, swipeModel);
         }
     };
 }]);

@@ -1,4 +1,4 @@
-Groceries.factory('SwipeHandlerModel', ['DeleteScheduleService', function (DeleteScheduleService) {
+Groceries.factory('SwipeModel', ['DeleteScheduleService', function (DeleteScheduleService) {
     return function (scope, element) {
         var handler = {};
 
