@@ -11,7 +11,7 @@
 			<input name="csrf" value="{{ csrf_token() }}" type="hidden">
 			<input{% if messages and not username %} class="warning"{% endif %} name="username" value="{{ username }}" placeholder="Username" type="text" autocomplete="off">
 			<input{% if messages %} class="warning"{% endif %} name="password" placeholder="Password" type="password">
-			<button class="large primary" type="submit">LOGIN</button>
+			<button class="large" type="submit">LOGIN</button>
 		</form>
 		<div class="clearfix"></div>
 {% endblock %}
