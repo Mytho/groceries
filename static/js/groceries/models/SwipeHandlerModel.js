@@ -1,4 +1,4 @@
-Groceries.factory('SwipeHandlerModel', ['deleteScheduleService', function (deleteScheduleService) {
+Groceries.factory('SwipeHandlerModel', ['DeleteScheduleService', function (DeleteScheduleService) {
     return function (scope, element) {
         var handler = {};
 
@@ -25,7 +25,7 @@ Groceries.factory('SwipeHandlerModel', ['deleteScheduleService', function (delet
             if (x > this.element[0].clientWidth - this.FULL_WIDTH_TRESHOLD) {
                 scope.$apply(function () {
                     x = self.element[0].clientWidth;
-                    deleteScheduleService.add($event, self.scope.item);
+                    DeleteScheduleService.add($event, self.scope.item);
                     self.end();
                 });
             }

@@ -132,10 +132,10 @@ describe('Groceries', function () {
         });
     });
 
-    describe('deleteScheduleService', function () {
-        var $httpBackend, $timeout, deleteScheduleService, groceryListService, mockEvent, mockItem, mockList, suggestionListService, ItemModel;
+    describe('DeleteScheduleService', function () {
+        var $httpBackend, $timeout, DeleteScheduleService, groceryListService, mockEvent, mockItem, mockList, suggestionListService, ItemModel;
 
-        beforeEach(inject(function (_$httpBackend_, _$timeout_, _deleteScheduleService_, _groceryListService_, _suggestionListService_, _ItemModel_) {
+        beforeEach(inject(function (_$httpBackend_, _$timeout_, _DeleteScheduleService_, _groceryListService_, _suggestionListService_, _ItemModel_) {
             $httpBackend = _$httpBackend_;
             $timeout = _$timeout_;
             ItemModel = _ItemModel_;
@@ -144,7 +144,7 @@ describe('Groceries', function () {
                 stopPropagation: function () {}
             };
             mockList = [new ItemModel({id: 1, name: 'Apples'}), new ItemModel({id: 2, name: 'Bananas'})];
-            deleteScheduleService = _deleteScheduleService_;
+            DeleteScheduleService = _DeleteScheduleService_;
             groceryListService = _groceryListService_;
             suggestionListService = _suggestionListService_;
             mockItem = new ItemModel({id: 1, name: 'Apples'});
@@ -154,21 +154,21 @@ describe('Groceries', function () {
         }));
 
         it('should keep a schedule on what items are to be deleted', function () {
-            expect(deleteScheduleService.schedule).toEqual({});
+            expect(DeleteScheduleService.schedule).toEqual({});
         });
 
         it('should add items to the schedule', function () {
             var mockItem = new ItemModel({id: 1, name: 'Apples'});
-            expect(deleteScheduleService.schedule).toEqual({});
-            deleteScheduleService.add(mockEvent, mockItem);
-            expect(deleteScheduleService.schedule.hasOwnProperty(mockItem.id)).toBe(true);
+            expect(DeleteScheduleService.schedule).toEqual({});
+            DeleteScheduleService.add(mockEvent, mockItem);
+            expect(DeleteScheduleService.schedule.hasOwnProperty(mockItem.id)).toBe(true);
         });
 
         it('should cancel scheduled items', function () {
-            deleteScheduleService.add(mockEvent, mockItem);
-            expect(deleteScheduleService.schedule.hasOwnProperty(mockItem.id)).toBe(true);
-            deleteScheduleService.cancel(mockEvent, mockItem);
-            expect(deleteScheduleService.schedule.hasOwnProperty(mockItem.id)).toBe(false);
+            DeleteScheduleService.add(mockEvent, mockItem);
+            expect(DeleteScheduleService.schedule.hasOwnProperty(mockItem.id)).toBe(true);
+            DeleteScheduleService.cancel(mockEvent, mockItem);
+            expect(DeleteScheduleService.schedule.hasOwnProperty(mockItem.id)).toBe(false);
         });
 
         it('should delete items', function () {
@@ -180,18 +180,18 @@ describe('Groceries', function () {
                 isUpdated = true;
             };
             $httpBackend.whenDELETE('/items/'+mockItem.id).respond(200, '');
-            deleteScheduleService.add(mockEvent, mockItem);
+            DeleteScheduleService.add(mockEvent, mockItem);
             $timeout.flush();
             $httpBackend.flush();
             expect(removedId).toBe(mockItem.id);
             expect(isUpdated).toBe(true);
-            expect(deleteScheduleService.schedule).toEqual({});
+            expect(DeleteScheduleService.schedule).toEqual({});
         });
 
         it('should check if items are scheduled', function () {
-            expect(deleteScheduleService.isScheduled(mockItem)).toBe(false);
-            deleteScheduleService.add(mockEvent, mockItem);
-            expect(deleteScheduleService.isScheduled(mockItem)).toBe(true);
+            expect(DeleteScheduleService.isScheduled(mockItem)).toBe(false);
+            DeleteScheduleService.add(mockEvent, mockItem);
+            expect(DeleteScheduleService.isScheduled(mockItem)).toBe(true);
         });
     });
 
@@ -396,8 +396,8 @@ describe('Groceries', function () {
             expect( !! scope.suggestionListService).toBe(true);
         });
 
-        it('should contain a deleteScheduleService', function () {
-            expect( !! scope.deleteScheduleService).toBe(true);
+        it('should contain a DeleteScheduleService', function () {
+            expect( !! scope.DeleteScheduleService).toBe(true);
         });
 
         it('should initialize an inputModel', function () {
@@ -442,7 +442,7 @@ describe('Groceries', function () {
         it('should not mark items as bought when the item is scheduled for deletion', function () {
             scope.groceryListService.append(unboughtItem);
             expect(unboughtItem.bought_date).toBe(null);
-            scope.deleteScheduleService.add(mockEvent, unboughtItem, 3500);
+            scope.DeleteScheduleService.add(mockEvent, unboughtItem, 3500);
             scope.buy(mockEvent, unboughtItem);
             // Due to `no pending requests to flush` this extra request is added
             scope.add(mockEvent, 'Apples');
