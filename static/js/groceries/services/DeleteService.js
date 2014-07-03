@@ -1,4 +1,4 @@
-Groceries.service('DeleteScheduleService', ['$timeout', 'HttpService', 'GroceryListService', 'SuggestionListService',
+Groceries.service('DeleteService', ['$timeout', 'HttpService', 'GroceryListService', 'SuggestionListService',
     function ($timeout, HttpService, GroceryListService, SuggestionListService) {
 
     this.DELAY = 2500;

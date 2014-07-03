@@ -1,9 +1,9 @@
-Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'DeleteScheduleService', 'HttpService', 'GroceryListService', 'SuggestionListService', 'InputModel',
-    function ($document, $scope, $timeout, DeleteScheduleService, HttpService, GroceryListService, SuggestionListService, InputModel) {
+Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'DeleteService', 'HttpService', 'GroceryListService', 'SuggestionListService', 'InputModel',
+    function ($document, $scope, $timeout, DeleteService, HttpService, GroceryListService, SuggestionListService, InputModel) {
 
     $scope.GroceryListService = GroceryListService;
     $scope.SuggestionListService = SuggestionListService;
-    $scope.DeleteScheduleService = DeleteScheduleService;
+    $scope.DeleteService = DeleteService;
 
     $scope.inputModel = new InputModel($scope.add);
 
@@ -18,7 +18,7 @@ Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'Dele
         $event.preventDefault();
         $event.stopPropagation();
 
-        if (DeleteScheduleService.isScheduled(item)) {
+        if (DeleteService.isScheduled(item)) {
             return;
         }
 

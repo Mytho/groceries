@@ -1,4 +1,4 @@
-Groceries.factory('SwipeModel', ['DeleteScheduleService', function (DeleteScheduleService) {
+Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
     return function (scope, element) {
         var handler = {};
 
@@ -19,7 +19,7 @@ Groceries.factory('SwipeModel', ['DeleteScheduleService', function (DeleteSchedu
         handler.end = function (coords) {
             this.isEnded = true;
 
-            if (DeleteScheduleService.isScheduled(this.scope.item)) {
+            if (DeleteService.isScheduled(this.scope.item)) {
                 this.element.removeClass(this.CLASS_NAMES.active);
                 this.element.addClass(this.CLASS_NAMES.scheduled);
                 return;
@@ -42,7 +42,7 @@ Groceries.factory('SwipeModel', ['DeleteScheduleService', function (DeleteSchedu
                 x = this.element[0].clientWidth;
 
                 scope.$apply(function () {
-                    DeleteScheduleService.add(self.scope.item);
+                    DeleteService.add(self.scope.item);
                     self.end();
                 });
             }
