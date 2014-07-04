@@ -9,7 +9,11 @@ Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
 
         handler.FULL_WIDTH_TRESHOLD = 65;
 
+        handler.SWIPE_LEFT_TRESHOLD = 10;
+
         handler.isEnded = false;
+
+        handler.startX = null;
 
         handler.cancel = function () {
             this.element.removeClass(this.CLASS_NAMES.active);
@@ -34,12 +38,17 @@ Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
         handler.move = function (coords, $event) {
             var self, x;
 
+            self = this;
+            x = coords.x - element[0].offsetLeft;
+
             if (this.isEnded) {
                 return;
             }
 
-            self = this;
-            x = coords.x - element[0].offsetLeft;
+            if (x < this.startX - this.SWIPE_LEFT_TRESHOLD) {
+                this.end();
+                return;
+            }
 
             if (x >= this.element[0].clientWidth - this.FULL_WIDTH_TRESHOLD) {
                 x = this.element[0].clientWidth;
@@ -55,8 +64,9 @@ Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
             this.element.find('span').find('label').css('margin-left', x + 'px');
         };
 
-        handler.start = function () {
+        handler.start = function (coords) {
             this.isEnded = false;
+            this.startX = coords.x;
         };
 
         angular.extend(this, handler, {
