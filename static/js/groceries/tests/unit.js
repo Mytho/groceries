@@ -402,9 +402,9 @@ describe('Groceries', function () {
             expect( !! scope.DeleteService).toBe(true);
         });
 
-        it('should initialize an inputModel', function () {
-            expect( !! scope.inputModel).toBe(true);
-            expect(scope.inputModel instanceof InputModel).toBe(true);
+        it('should initialize an InputModel', function () {
+            expect( !! scope.input).toBe(true);
+            expect(scope.input instanceof InputModel).toBe(true);
         });
 
         it('should add items', function () {

@@ -1,11 +1,11 @@
-Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'DeleteService', 'HttpService', 'GroceryService', 'SuggestionService', 'InputModel',
-    function ($document, $scope, $timeout, DeleteService, HttpService, GroceryService, SuggestionService, InputModel) {
+Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'DeleteService', 'GroceryService', 'HttpService', 'InputModel', 'SuggestionService',
+    function ($document, $scope, $timeout, DeleteService, GroceryService, HttpService, InputModel, SuggestionService) {
 
     $scope.GroceryService = GroceryService;
     $scope.SuggestionService = SuggestionService;
     $scope.DeleteService = DeleteService;
 
-    $scope.inputModel = new InputModel(function (value) {
+    $scope.input = new InputModel(function (value) {
         $scope.add(value);
     });
 
@@ -33,7 +33,7 @@ Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'Dele
         $event.preventDefault();
         $event.stopPropagation();
 
-        $scope.inputModel.blur($document[0].getElementById('new-item'));
+        $scope.input.blur($document[0].getElementById('new-item'));
         $scope.add(item.name);
     };
 }]);
