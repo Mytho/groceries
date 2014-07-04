@@ -4,7 +4,7 @@ Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
 
         handler.CLASS_NAMES = {
             active: 'swipe-delete-active',
-            sheduled: 'swipe-delete-scheduled'
+            scheduled: 'swipe-delete-scheduled'
         };
 
         handler.FULL_WIDTH_TRESHOLD = 50;
