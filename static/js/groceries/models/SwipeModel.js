@@ -7,7 +7,7 @@ Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
             scheduled: 'swipe-delete-scheduled'
         };
 
-        handler.FULL_WIDTH_TRESHOLD = 50;
+        handler.FULL_WIDTH_TRESHOLD = 65;
 
         handler.isEnded = false;
 
