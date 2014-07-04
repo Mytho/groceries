@@ -28,6 +28,7 @@ ul {
 	margin: 0;
 	padding: 0;
 	list-style: none;
+	overflow: hidden;
 }
 a {
 	color: #a0a2a4;
@@ -75,12 +76,12 @@ input[type='checkbox'] {
 	border: 0;
 }
 input[type='checkbox'] + label {
-	padding-left: 32px;
 	display: inline-block;
-	line-height: 20px;
+	padding-left: 32px;
 	background-image: url('img/checkbox.png');
 	background-repeat: no-repeat;
 	background-position: 0 0;
+	line-height: 20px;
 	vertical-align: middle;
 	cursor: pointer;
 }
@@ -122,18 +123,18 @@ form button {
 	margin-top: 10px;
 }
 .swipe-delete-overlay {
-	display: none;
 	display: inline-block;
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 0;
 	height: 100%;
-	background-color: #ef5a4e;
-	color: #fff;
-	overflow: hidden;
+	background-color: #f4f4f4;
 }
-.swipe-delete-overlay input[type="checkbox"] + label {
+.swipe-delete-overlay input[type='checkbox'] + label {
+	display: none;
+	padding-bottom: 15px;
+	background-color: #fff;
 	background-image: none;
 	cursor: default;
 }
@@ -142,14 +143,28 @@ form button {
 	position: absolute;
 	top: 13px;
 	right: 13px;
-	background-color: #ef5a4e;
+	background-color: #f4f4f4;
+	color: #c4c4c4;
 }
-.swipe-delete-active .swipe-delete-overlay,
-.swipe-delete-scheduled .swipe-delete-overlay {
+.swipe-delete-active input[type='checkbox'] + label {
 	display: inline-block;
 }
 .swipe-delete-active button {
 	display: none;
+}
+.swipe-delete-scheduled .swipe-delete-overlay {
+	background-color: #f4f4f4;
+	color: #c4c4c4;
+}
+.swipe-delete-scheduled input[type='checkbox'] + label {
+	display: inline-block;
+	background-color: #f4f4f4;
+	color: #c4c4c4;
+	visibility: hidden;
+}
+.swipe-delete-scheduled label:before {
+	content: 'Deleted';
+	visibility: visible;
 }
 div#content,
 div#footer {
@@ -173,7 +188,6 @@ div#content li {
 	font-size: 25px;
 }
 div#content li label {
-	display: inline-block;
 	margin-top: 17px;
 }
 div#content li.bought label {

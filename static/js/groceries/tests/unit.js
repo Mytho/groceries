@@ -30,7 +30,7 @@ describe('Groceries', function () {
             expect(element.attr('class')).toMatch(/swipe-delete/);
             expect(element.find('span').attr('class')).toMatch(/swipe-delete-overlay/);
             expect(element.find('label').text()).toBe(scope.item.name);
-            expect(element.find('button').text()).toBe('CANCEL');
+            expect(element.find('button').text()).toBe('UNDO');
         });
     });
 
