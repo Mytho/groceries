@@ -130,6 +130,8 @@ form button {
 	width: 0;
 	height: 100%;
 	background-color: #f4f4f4;
+	-webkit-box-shadow:inset -3px 0 4px 1px #cdd4d8;
+	box-shadow: inset -3px 0 4px 1px #cdd4d8;
 }
 .swipe-delete-overlay input[type='checkbox'] + label {
 	display: none;
@@ -218,6 +220,20 @@ div#footer {
 }
 div#footer a {
 	font-size: 11px;
+}
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+	ul {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	input[type='text'],
+	input[type='password'] {
+		width: 710px;
+	}
+	div#content,
+	div#footer {
+		width: 748px;
+	}
 }
 @media screen and (max-device-width: 767px) {
 	ul {
