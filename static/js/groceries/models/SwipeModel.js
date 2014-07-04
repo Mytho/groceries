@@ -12,8 +12,10 @@ Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
         handler.isEnded = false;
 
         handler.cancel = function () {
+            this.element.removeClass(this.CLASS_NAMES.active);
             this.element.removeClass(this.CLASS_NAMES.scheduled);
             this.element.find('span').css('width', '');
+            this.element.find('span').find('label').css('margin-left', '');
         };
 
         handler.end = function (coords) {
@@ -22,6 +24,7 @@ Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
             if (DeleteService.isScheduled(this.scope.item)) {
                 this.element.removeClass(this.CLASS_NAMES.active);
                 this.element.addClass(this.CLASS_NAMES.scheduled);
+                this.element.find('span').find('label').css('margin-left', '');
                 return;
             }
 
@@ -49,6 +52,7 @@ Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
 
             this.element.addClass(this.CLASS_NAMES.active);
             this.element.find('span').css('width', x + 'px');
+            this.element.find('span').find('label').css('margin-left', x + 'px');
         };
 
         handler.start = function () {

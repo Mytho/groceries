@@ -21,11 +21,11 @@ Groceries.directive('swipeDelete', ['$compile', '$swipe', 'DeleteService', 'Swip
                 '<span class="swipe-delete-overlay">'+
                     '<input type="checkbox">'+
                     '<label>[[item.name]]</label>'+
-                    '<button ng-click="cancel($event, item)">CANCEL</button>'+
+                    '<button ng-click="cancel($event, item)">UNDO</button>'+
                 '</span>'
             )(scope);
 
-            element.addClass('swipe-delete').append(html);
+            element.addClass('swipe-delete').prepend(html);
 
             $swipe.bind(element, swipeModel);
         }
