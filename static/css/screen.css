@@ -160,9 +160,11 @@ form button {
 	display: inline-block;
 	background-color: #f4f4f4;
 	color: #c4c4c4;
+	visibility: hidden;
 }
-.swipe-delete-scheduled label:after {
-	content: ' deleted ';
+.swipe-delete-scheduled label:before {
+	content: 'Deleted';
+	visibility: visible;
 }
 div#content,
 div#footer {
