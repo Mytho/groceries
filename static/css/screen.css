@@ -154,6 +154,7 @@ form button {
 }
 .swipe-delete-scheduled input[type='checkbox'] + label {
 	display: inline-block;
+	padding-left: 0;
 	background-color: #f4f4f4;
 	color: #b5b9bc;
 	visibility: hidden;
