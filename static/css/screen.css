@@ -146,7 +146,7 @@ form button {
 	display: block;
 	position: absolute;
 	top: 13px;
-	right: 13px;
+	right: 6px;
 	background-color: #f4f4f4;
 }
 .swipe-delete-scheduled .swipe-delete-overlay {
