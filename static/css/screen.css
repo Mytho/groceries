@@ -147,39 +147,40 @@ form button {
 	top: 13px;
 	right: 13px;
 	background-color: #f4f4f4;
-	color: #f4f4f4;
+}
+.swipe-delete-scheduled .swipe-delete-overlay {
+	background-color: #f4f4f4;
+}
+.swipe-delete-scheduled input[type='checkbox'] + label {
+	display: inline-block;
+	background-color: #f4f4f4;
+	color: #b5b9bc;
+	visibility: hidden;
+	-webkit-transition: color 500ms ease-in-out;
+	-moz-transition: color 500ms ease-in-out;
+	-ms-transition: color 500ms ease-in-out;
+	-o-transition: color 500ms ease-in-out;
+	transition: color 500ms ease-in-out;
+}
+.swipe-delete-scheduled button {
+	background-color: #f4f4f4;
+	color: #b5b9bc;
+	-webkit-transition: color 500ms ease-in-out;
+	-moz-transition: color 500ms ease-in-out;
+	-ms-transition: color 500ms ease-in-out;
+	-o-transition: color 500ms ease-in-out;
+	transition: color 500ms ease-in-out;
+}
+.swipe-delete-scheduled label:before {
+	content: 'Deleted';
+	visibility: visible;
 }
 .swipe-delete-active input[type='checkbox'] + label {
 	display: inline-block;
 	color: #f4f4f4;
 }
-.swipe-delete-scheduled .swipe-delete-overlay {
-	background-color: #f4f4f4;
-	color: #c4c4c4;
-}
-.swipe-delete-scheduled button {
-	background-color: #f4f4f4;
-	color: #c4c4c4;
-	-webkit-transition: color 0.8s ease-in-out;
-	-moz-transition: color 0.8s ease-in-out;
-	-ms-transition: color 0.8s ease-in-out;
-	-o-transition: color 0.8s ease-in-out;
-	transition: color 0.8s ease-in-out;
-}
-.swipe-delete-scheduled input[type='checkbox'] + label {
-	display: inline-block;
-	background-color: #f4f4f4;
-	color: #b4b4b4;
-	visibility: hidden;
-	-webkit-transition: color 0.8s ease-in-out;
-	-moz-transition: color 0.8s ease-in-out;
-	-ms-transition: color 0.8s ease-in-out;
-	-o-transition: color 0.8s ease-in-out;
-	transition: color 0.8s ease-in-out;
-}
-.swipe-delete-scheduled label:before {
-	content: 'Deleted';
-	visibility: visible;
+.swipe-delete-active button {
+	color: #f4f4f4;
 }
 div#content,
 div#footer {
