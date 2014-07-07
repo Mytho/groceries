@@ -43,7 +43,7 @@ input[type='text'],
 input[type='password'] {
 	display: block;
 	height: 32px;
-	width: 452px;
+	width: 460px;
 	padding-top: 4px;
 	padding-right: 8px;
 	padding-bottom: 4px;
@@ -239,7 +239,7 @@ div#footer a {
 @media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
 	input[type='text'],
 	input[type='password'] {
-		width: 712px;
+		width: 720px;
 	}
 	div#content,
 	div#footer {
@@ -249,7 +249,7 @@ div#footer a {
 @media screen and (max-device-width: 767px) {
 	input[type='text'],
 	input[type='password'] {
-		width: 274px;
+		width: 272px;
 	}
 	div#content,
 	div#footer {
