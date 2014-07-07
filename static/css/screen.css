@@ -140,6 +140,7 @@ form button {
 	background-color: #fff;
 	background-image: none;
 	cursor: default;
+	text-decoration: none;
 }
 .swipe-delete-overlay button {
 	display: block;
@@ -206,7 +207,7 @@ div#content li {
 div#content li label {
 	margin-top: 17px;
 }
-div#content li.bought label {
+div#content li.bought > label {
   text-decoration: line-through;
 	color: #d2d7d9;
 }

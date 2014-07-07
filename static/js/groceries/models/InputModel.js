@@ -38,18 +38,6 @@ Groceries.factory('InputModel', ['$timeout', function ($timeout) {
         }, this.DELAY);
     };
 
-    InputModel.onClick = function ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        if (this.isFocused) {
-            this.blur($event.target);
-            return;
-        }
-
-        this.focus($event.target);
-    };
-
     InputModel.onFocus = function ($event) {
         var self = this;
 
