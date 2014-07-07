@@ -1,7 +1,7 @@
 Groceries.service('DeleteService', ['$timeout', 'GroceryService', 'HttpService', 'SuggestionService',
     function ($timeout, GroceryService, HttpService, SuggestionService) {
 
-    this.DELAY = 2500;
+    this.DELAY = 3000;
 
     this.schedule = {};
 

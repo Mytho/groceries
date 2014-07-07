@@ -74,10 +74,9 @@ describe('Groceries', function () {
             inputModel.onFocus(mockEvent);
             $timeout.flush();
             expect(inputModel.isFocused).toBe(true);
-            inputModel.onClick(mockEvent);
+            inputModel.onBlur(mockEvent);
+            $timeout.flush();
             expect(inputModel.isFocused).toBe(false);
-            inputModel.onClick(mockEvent);
-            expect(inputModel.isFocused).toBe(true);
         });
     });
 
