@@ -1,28 +1,28 @@
 Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
     return function (scope, element) {
-        var handler = {};
+        var SwipeModel = {};
 
-        handler.CLASS_NAMES = {
+        SwipeModel.CLASS_NAMES = {
             active: 'swipe-delete-active',
             scheduled: 'swipe-delete-scheduled'
         };
 
-        handler.FULL_WIDTH_TRESHOLD = 65;
+        SwipeModel.FULL_WIDTH_TRESHOLD = 65;
 
-        handler.SWIPE_LEFT_TRESHOLD = 10;
+        SwipeModel.SWIPE_LEFT_TRESHOLD = 10;
 
-        handler.isEnded = false;
+        SwipeModel.isEnded = false;
 
-        handler.startX = null;
+        SwipeModel.startX = 0;
 
-        handler.cancel = function () {
+        SwipeModel.cancel = function () {
             this.element.removeClass(this.CLASS_NAMES.active);
             this.element.removeClass(this.CLASS_NAMES.scheduled);
             this.element.find('span').css('width', '');
             this.element.find('span').find('label').css('margin-left', '');
         };
 
-        handler.end = function (coords) {
+        SwipeModel.end = function (coords) {
             this.isEnded = true;
 
             if (DeleteService.isScheduled(this.scope.item)) {
@@ -35,15 +35,20 @@ Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
             this.cancel();
         };
 
-        handler.getX = function (coords) {
+        SwipeModel.getClientWidth = function () {
+            return this.element[0].clientWidth;
+        };
+
+        SwipeModel.getX = function (coords) {
             return coords.x - this.element[0].offsetLeft;
         };
 
-        handler.move = function (coords) {
-            var self, x;
+        SwipeModel.move = function (coords) {
+            var clientWidth, self, x;
 
             self = this;
             x = this.getX(coords);
+            clientWidth = this.getClientWidth();
 
             if (this.isEnded) {
                 return;
@@ -54,8 +59,8 @@ Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
                 return;
             }
 
-            if (x >= this.element[0].clientWidth - this.FULL_WIDTH_TRESHOLD) {
-                x = this.element[0].clientWidth;
+            if (x >= clientWidth - this.FULL_WIDTH_TRESHOLD) {
+                x = clientWidth;
 
                 scope.$apply(function () {
                     DeleteService.add(self.scope.item);
@@ -68,12 +73,12 @@ Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
             this.element.find('span').find('label').css('margin-left', x + 'px');
         };
 
-        handler.start = function (coords) {
+        SwipeModel.start = function (coords) {
             this.isEnded = false;
             this.startX = this.getX(coords);
         };
 
-        angular.extend(this, handler, {
+        angular.extend(this, SwipeModel, {
             scope: scope,
             element: element
         });

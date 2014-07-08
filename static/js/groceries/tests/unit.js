@@ -137,6 +137,147 @@ describe('Groceries', function () {
         });
     });
 
+    describe('SwipeModel', function () {
+        var DeleteService, ItemModel, SwipeModel, element, mockItem, scope, swipeModel;
+
+        beforeEach(inject(function (_DeleteService_, _ItemModel_, _SwipeModel_) {
+            DeleteService = _DeleteService_;
+            ItemModel = _ItemModel_;
+            SwipeModel = _SwipeModel_;
+            mockItem = new ItemModel({id: 1, name: 'Apples'});
+            scope = { item: mockItem };
+            element = angular.element('<div>');
+            element.append('<span>');
+            element.find('span').append('<label>');
+            swipeModel = new SwipeModel(scope, element);
+        }));
+
+        it('should contain a CLASS_NAMES global property', function () {
+            expect(typeof swipeModel.CLASS_NAMES).toBe('object');
+        });
+
+        it('should contain a SWIPE_LEFT_TRESHOLD global property', function () {
+            expect(typeof swipeModel.SWIPE_LEFT_TRESHOLD).toBe('number');
+        });
+
+        it('should contain a isEnded property', function () {
+            expect(typeof swipeModel.isEnded).toBe('boolean');
+        });
+
+        it('should contain a startX property', function () {
+            expect(typeof swipeModel.startX).toBe('number');
+        });
+
+        it('should handle swipe cancel', function () {
+            swipeModel.element.addClass(swipeModel.CLASS_NAMES.active);
+            swipeModel.element.addClass(swipeModel.CLASS_NAMES.scheduled);
+            swipeModel.element.find('span').css('width', '200px');
+            swipeModel.element.find('span').find('label').css('margin-left', '100px');
+            expect(swipeModel.element.hasClass(swipeModel.CLASS_NAMES.active)).toBe(true);
+            expect(swipeModel.element.hasClass(swipeModel.CLASS_NAMES.scheduled)).toBe(true);
+            expect(swipeModel.element.find('span').css('width')).toBe('200px');
+            expect(swipeModel.element.find('span').find('label').css('margin-left')).toBe('100px');
+            swipeModel.cancel();
+            expect(swipeModel.element.hasClass(swipeModel.CLASS_NAMES.active)).toBe(false);
+            expect(swipeModel.element.hasClass(swipeModel.CLASS_NAMES.scheduled)).toBe(false);
+            expect(swipeModel.element.find('span').css('width')).toBe('');
+            expect(swipeModel.element.find('span').find('label').css('margin-left')).toBe('');
+        });
+
+        it('should handle unsuccessful swipe end', function () {
+            var isCanceled = false;
+            swipeModel.cancel = function () {
+                isCanceled = true;
+            };
+            swipeModel.end({x: 100});
+            expect(swipeModel.isEnded).toBe(true);
+            expect(isCanceled).toBe(true);
+        });
+
+        it('should handle successful swipe end', function () {
+            var isCanceled = false;
+            swipeModel.cancel = function () {
+                isCanceled = true;
+            };
+            DeleteService.add(mockItem);
+            swipeModel.element.addClass(swipeModel.CLASS_NAMES.active);
+            swipeModel.element.find('span').find('label').css('width', '100px');
+            swipeModel.end({x: 100});
+            expect(swipeModel.isEnded).toBe(true);
+            expect(swipeModel.element.hasClass(swipeModel.CLASS_NAMES.active)).toBe(false);
+            expect(swipeModel.element.hasClass(swipeModel.CLASS_NAMES.scheduled)).toBe(true);
+            expect(swipeModel.element.find('span').find('label').css('margin-left')).toBe('');
+            expect(isCanceled).toBe(false);
+        });
+
+        it('should get client width', function () {
+            expect(swipeModel.getClientWidth()).toBe(0);
+        });
+
+        it('should get x coordinate', function () {
+            expect(swipeModel.getX({x: 100})).toBe(100);
+        });
+
+        describe('move', function () {
+            var coords;
+
+            beforeEach(function () {
+                scope.$apply = function () {
+                    swipeModel.end();
+                };
+                coords = {x: 100};
+                swipeModel.element.removeClass(swipeModel.CLASS_NAMES.active);
+                swipeModel.element.find('span').css('width', '');
+                swipeModel.element.find('span').find('label').css('margin-left', '');
+            });
+
+            it('should do nothing when swipe is ended', function () {
+                swipeModel.isEnded = true;
+                swipeModel.move(coords);
+                expect(swipeModel.element.hasClass(swipeModel.CLASS_NAMES.active)).toBe(false);
+                expect(swipeModel.element.find('span').css('width')).toBe('');
+                expect(swipeModel.element.find('span').find('label').css('margin-left')).toBe('');
+            });
+
+            it('should end when swiping to the left', function () {
+                swipeModel.isEnded = false;
+                swipeModel.startX = coords.x + 1 + swipeModel.FULL_WIDTH_TRESHOLD;
+                swipeModel.move(coords);
+                expect(swipeModel.isEnded).toBe(true);
+            });
+
+            it('should snap when almost fully swiped', function () {
+                var clientWidth = coords.x + swipeModel.FULL_WIDTH_TRESHOLD;
+                swipeModel.getClientWidth = function () {
+                    return clientWidth;
+                };
+                swipeModel.move(coords);
+                expect(swipeModel.isEnded).toBe(true);
+                expect(swipeModel.element.hasClass(swipeModel.CLASS_NAMES.active)).toBe(true);
+                expect(swipeModel.element.find('span').css('width')).toBe(clientWidth + 'px');
+                expect(swipeModel.element.find('span').find('label').css('margin-left')).toBe(clientWidth + 'px');
+            });
+
+            it('should animate swipe movement', function () {
+                swipeModel.getClientWidth = function () {
+                    return 200;
+                };
+                swipeModel.move(coords);
+                expect(swipeModel.element.hasClass(swipeModel.CLASS_NAMES.active)).toBe(true);
+                expect(swipeModel.element.find('span').css('width')).toBe(coords.x + 'px');
+                expect(swipeModel.element.find('span').find('label').css('margin-left')).toBe(coords.x + 'px');
+            });
+        });
+
+        it('should handle swipe start', function () {
+            var testValue = 150;
+            swipeModel.isEnded = true;
+            swipeModel.start({x: testValue});
+            expect(swipeModel.isEnded).toBe(false);
+            expect(swipeModel.startX).toBe(testValue);
+        });
+    });
+
     describe('DeleteService', function () {
         var $httpBackend, $timeout, DeleteService, GroceryService, mockItem, mockList, SuggestionService, ItemModel;
 
