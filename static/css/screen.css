@@ -186,9 +186,9 @@ form button {
 	-webkit-transition-property: all;
 	-moz-transition-property: all;
 	transition-property: all;
-	-webkit-transition-duration: .25s;
-	-moz-transition-duration: .25s;
-	transition-duration: .25s;
+	-webkit-transition-duration: .4s;
+	-moz-transition-duration: .4s;
+	transition-duration: .4s;
 	-webkit-transition-timing-function: cubic-bezier(.3, .65, .65, .3);
 	-moz-transition-timing-function: cubic-bezier(.3, .65, .65, .3);
 	transition-timing-function: cubic-bezier(.3, .65, .65, .3);
