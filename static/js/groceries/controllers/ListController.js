@@ -34,6 +34,8 @@ Groceries.controller('ListController', ['$document', '$scope', '$timeout', 'Dele
         $event.stopPropagation();
 
         $scope.input.blur($document[0].getElementById('new-item'));
+        $scope.input.value = '';
+
         $scope.add(item.name);
     };
 }]);
