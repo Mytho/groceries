@@ -35,11 +35,15 @@ Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
             this.cancel();
         };
 
-        handler.move = function (coords, $event) {
+        handler.getX = function (coords) {
+            return coords.x - this.element[0].offsetLeft;
+        };
+
+        handler.move = function (coords) {
             var self, x;
 
             self = this;
-            x = coords.x - element[0].offsetLeft;
+            x = this.getX(coords);
 
             if (this.isEnded) {
                 return;
@@ -66,7 +70,7 @@ Groceries.factory('SwipeModel', ['DeleteService', function (DeleteService) {
 
         handler.start = function (coords) {
             this.isEnded = false;
-            this.startX = coords.x;
+            this.startX = this.getX(coords);
         };
 
         angular.extend(this, handler, {
