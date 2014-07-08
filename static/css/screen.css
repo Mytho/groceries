@@ -180,19 +180,25 @@ form button {
 	content: 'Deleted';
 	visibility: visible;
 }
+.swipe-delete-scheduled.ng-leave {
+	max-height: 0;
+	overflow: hidden;
+	-webkit-transition-property: all;
+	-moz-transition-property: all;
+	transition-property: all;
+	-webkit-transition-duration: .25s;
+	-moz-transition-duration: .25s;
+	transition-duration: .25s;
+	-webkit-transition-timing-function: cubic-bezier(.3, .65, .65, .3);
+	-moz-transition-timing-function: cubic-bezier(.3, .65, .65, .3);
+	transition-timing-function: cubic-bezier(.3, .65, .65, .3);
+}
 .swipe-delete-active input[type='checkbox'] + label {
 	display: inline-block;
 	color: #f4f4f4;
 }
 .swipe-delete-active button {
 	color: #f4f4f4;
-}
-.swipe-delete-done {
-	max-height: 0;
-	overflow: hidden;
-	-webkit-transition: all .25s ease-out;
-	-moz-transition: all .25s ease-out;
-	transition: all .25s ease-out;
 }
 div#content,
 div#footer {
