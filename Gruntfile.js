@@ -23,7 +23,8 @@ module.exports = function(grunt) {
                 src: [
                     'static/vendor/angular/1.2.18/angular.min.js',
                     'static/vendor/angular/1.2.18/angular-resource.min.js',
-                    'static/vendor/angular/1.2.18/angular-touch.min.js'
+                    'static/vendor/angular/1.2.18/angular-touch.min.js',
+                    'static/vendor/angular/1.2.18/angular-animate.min.js'
                 ],
                 dest: 'static/vendor.min.js'
             }
@@ -65,6 +66,7 @@ module.exports = function(grunt) {
                     'static/vendor/angular/1.2.18/angular.min.js',
                     'static/vendor/angular/1.2.18/angular-resource.min.js',
                     'static/vendor/angular/1.2.18/angular-touch.min.js',
+                    'static/vendor/angular/1.2.18/angular-animate.min.js',
                     'static/vendor/angular/1.2.18/angular-mocks.js',
                     'static/js/*/core.js',
                     'static/js/*/directives/*.js',

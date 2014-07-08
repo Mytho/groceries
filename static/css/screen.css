@@ -149,6 +149,9 @@ form button {
 	right: 6px;
 	background-color: #f4f4f4;
 }
+.swipe-delete-scheduled {
+	max-height: 100px;
+}
 .swipe-delete-scheduled .swipe-delete-overlay {
 	background-color: #f4f4f4;
 }
@@ -176,6 +179,19 @@ form button {
 .swipe-delete-scheduled label:before {
 	content: 'Deleted';
 	visibility: visible;
+}
+.swipe-delete-scheduled.ng-leave {
+	max-height: 0;
+	overflow: hidden;
+	-webkit-transition-property: all;
+	-moz-transition-property: all;
+	transition-property: all;
+	-webkit-transition-duration: .4s;
+	-moz-transition-duration: .4s;
+	transition-duration: .4s;
+	-webkit-transition-timing-function: cubic-bezier(.3, .65, .65, .3);
+	-moz-transition-timing-function: cubic-bezier(.3, .65, .65, .3);
+	transition-timing-function: cubic-bezier(.3, .65, .65, .3);
 }
 .swipe-delete-active input[type='checkbox'] + label {
 	display: inline-block;
@@ -207,6 +223,10 @@ div#content li {
 }
 div#content li label {
 	margin-top: 17px;
+}
+div#content li.swipe-delete-done {
+	padding-bottom: 0;
+	border-bottom: 0;
 }
 div#content li.bought > label {
   text-decoration: line-through;
