@@ -17,7 +17,7 @@ If you want to develop the application, it is advised to create a [virtualenv](h
 
 ## Automated tests
 
-The application is fully tested, server side as well as client site. A few remark when you want to run the tests:
+The application is fully tested, server side as well as client site. A few remarks when you want to run the tests:
 
 1. PhantomJS must be installed to run the JavaScript tests.
 2. To run the End-to-End tests, a webserver (`make httpd`) and a webdriver (`make webdriver`) must be running.
