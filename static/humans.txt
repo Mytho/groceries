@@ -1,0 +1,9 @@
+/* TEAM */
+	Developed by: Teun Zengerink
+	Contact:      teun [at] zengerink [dot] com
+	From:         Amsterdam, Netherlands
+
+/* SITE */
+	Languages:  HTML, CSS, JavaScript & Python
+	Frameworks: Angular & Flask
+	Software:   Git, Vim & Nginx

@@ -1,2 +1,4 @@
+application/config.py
+db/groceries.db
 build
 node_modules

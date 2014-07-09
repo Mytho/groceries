@@ -12,17 +12,19 @@ from flask import Flask
 from .auth import init_auth
 from .errors import init_errors
 from .models import init_models
-from .views import FaviconView, HomeView, ItemView, SuggestionView
+from .security import init_security
+from .views import FaviconView, GroceriesView, ItemView, SuggestionView
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../static')
 app.config.from_object('application.config')
 init_auth(app)
 init_errors(app)
 init_models(app)
+init_security(app)
 
 
-app.add_url_rule('/', view_func=HomeView.as_view('home'))
+app.add_url_rule('/', view_func=GroceriesView.as_view('home'))
 app.add_url_rule('/favicon.ico', view_func=FaviconView.as_view('favicon'))
 app.add_url_rule('/items', view_func=ItemView.as_view('items'))
 app.add_url_rule('/items/<item_id>', view_func=ItemView.as_view('spec_items'))

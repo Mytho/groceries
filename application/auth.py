@@ -8,13 +8,14 @@
     Licensed under MIT License.
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
-from flask import (current_app, flash, make_response, redirect,
-                   render_template, request, url_for)
-from flask.views import MethodView, View
+from flask import (current_app, get_flashed_messages, flash, make_response,
+                   redirect, render_template, request, session, url_for)
+from flask.views import MethodView
 from flask.ext.login import current_user, LoginManager, login_user, logout_user
 from functools import wraps
 from werkzeug.security import check_password_hash
 from .models import User
+from .security import check_csrf_token
 
 
 login_manager = LoginManager()
@@ -57,11 +58,14 @@ def init_auth(app):
 
 class LoginView(MethodView):
 
+    decorators = [check_csrf_token]
+
     def get(self):
-        return make_response(render_template('login.html'))
+        context = {'messages': get_flashed_messages(),
+                   'username': session.pop('username', '')}
+        return make_response(render_template('login.html', **context))
 
     def post(self):
-        print(request.form)
         username = request.form['username']
         password = request.form['password']
         if username and password:
@@ -69,12 +73,13 @@ class LoginView(MethodView):
             if user and check_password_hash(user.password, password):
                 login_user(user, remember=True)
                 return redirect(url_for('home'))
-        flash('Incorrect login supplied')
+        session['username'] = username
+        flash('The username or password you entered is incorrect')
         return redirect(url_for('login'))
 
 
-class LogoutView(View):
+class LogoutView(MethodView):
 
-    def dispatch_request(self):
+    def get(self):
         logout_user()
         return redirect(url_for('login'))

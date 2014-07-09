@@ -1,9 +1,0 @@
-/* TEAM */
-	Developed by: Teun Zengerink
-	Contact:      teun [at] zengerink [dot] com
-	From:         Amsterdam, Netherlands
-
-/* SITE */
-	Languages:  Python, CoffeeScript & Less
-	Frameworks: jQuery, Backbone and Flask
-	Software:   Git, Vim & Nginx

@@ -1,0 +1,12 @@
+<div ng-controller="ListController">
+	<input id="new-item" type="text" placeholder="What needs to be bought?" ng-blur="input.onBlur($event)" ng-focus="input.onFocus($event)" ng-keyup="input.onKeyup($event)" ng-model="input.value">
+	<ul id="groceries" ng-show="! input.isFocused">
+		<li ng-repeat="item in GroceryService.list" ng-class="{bought: item.isBought()}" ng-click="buy($event, item)" swipe-delete="item">
+			<input class="buy" type="checkbox" ng-checked="item.isBought()">
+			<label>[[item.name]]</label>
+		</li>
+	</ul>
+	<ul id="suggestions" ng-show="input.isFocused">
+		<li ng-repeat="item in SuggestionService.list | filter:input.value" ng-click="copy($event, item)">[[item.name]]</li>
+	</ul>
+</div>

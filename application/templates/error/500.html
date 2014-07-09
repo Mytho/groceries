@@ -1,13 +1,11 @@
 {% extends "error/base.html" %}
 {% block title %}Internal error{% endblock %}
 {% block content %}
-<h1>{{ self.title() }}</h1>
-<div>
-  <p>Sorry, but we are not able to handle your request due to an internal error.</p>
-  <p>Please contact the system administrator and inform him of:</p>
-  <ul>
-    <li>the time the error occured</li>
-    <li>anything that you might have done to cause the error</li>
-  </ul>
-</div>
+	<h1>{{ self.title() }}</h1>
+	<p>Sorry, but we are not able to handle your request due to an internal error.</p>
+	<p>Please contact the system administrator and inform him of:</p>
+	<ul>
+		<li>the time the error occured</li>
+		<li>anything that you might have done to cause the error</li>
+	</ul>
 {% endblock %}

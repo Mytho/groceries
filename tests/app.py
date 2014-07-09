@@ -18,14 +18,8 @@ class AppTestCase(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
 
-    def test_404(self):
-        response = self.client.get('/non-existing-page')
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.headers['Content-Type'],
-                         'text/html; charset=utf-8')
-
     def test_delete_items(self):
-        post_data = '{"name":"oranges"}'
+        post_data = '{"name":"Oranges"}'
         post_response = self.client.post('/items', data=post_data)
         id = json.loads(post_response.data).get('id')
         self.assertTrue(id)
@@ -52,9 +46,10 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.headers['Content-Type'],
                          'text/html; charset=utf-8')
+        self.assertTrue('ng-app="Groceries"' in response.data)
 
     def test_post_items(self):
-        item_name = 'Toilet paper'
+        item_name = 'Bananas'
         data = '{"name":"%s"}' % item_name
         response = self.client.post('/items', data=data)
         self.assertEqual(response.status_code, 200)

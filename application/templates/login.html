@@ -1,24 +1,31 @@
 {% extends "layout.html" %}
-{% block head_style %}
-	<link charset="utf-8" href="{{ url_for('static', filename='css/screen.min.css') }}" rel="stylesheet" type="text/css" />
-{% endblock %}
 {% block content %}
-		{% with messages = get_flashed_messages() %}
-			{% if messages %}
-				<ul class="messages">
-					{% for message in messages %}
-						<li>{{ message }}</li>
-					{% endfor %}
-				</ul>
-			{% endif %}
-		{% endwith %}
+		{% if messages %}
+			<ul class="messages">
+				{% for message in messages %}
+					<li>{{ message }}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
 		<form action="{{ url_for('login') }}" method="post">
-			<input id="username" name="username" placeholder="Username" type="text" autocomplete="off" />
-			<input id="password" name="password" placeholder="Password" type="password" />
-			<button class="primary" type="submit">Login</button>
+			<input name="csrf" value="{{ csrf_token() }}" type="hidden">
+			<input{% if messages and not username %} class="warning"{% endif %} name="username" value="{{ username }}" placeholder="Username" type="text" autocomplete="off">
+			<input{% if messages %} class="warning"{% endif %} name="password" placeholder="Password" type="password">
+			<button class="large" type="submit">LOGIN</button>
 		</form>
 		<div class="clearfix"></div>
 {% endblock %}
-{% block footer %}
-	<a href="https://raw.github.com/Mytho/groceries/master/LISENCE.md">Copyright &copy; Teun Zengerink</a></a>
+{% block script %}
+	<script type="text/javascript">
+		(function (doc) {
+			var f, i;
+			f = doc.forms[0];
+			for (i = 0; i < f.length; i++) {
+				if (f[i].type != 'hidden' && f[i].value == '') {
+					f[i].focus();
+					return;
+				}
+			}
+		})(document);
+	</script>
 {% endblock %}

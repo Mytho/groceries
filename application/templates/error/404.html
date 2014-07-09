@@ -1,14 +1,12 @@
 {% extends "error/base.html" %}
 {% block title %}Page not found{% endblock %}
 {% block content %}
-<h1>{{ self.title() }}</h1>
-<div>
-  <p>Sorry, but the page you were trying to view does not exist.</p>
-  <p>It looks like this was the result of either:</p>
-  <ul>
-    <li>a mistyped address</li>
-    <li>an out-of-date link</li>
-  </ul>
-  <p>If you would like to report this error, please send an email to the system administrator.</p>
-</div>
+	<h1>{{ self.title() }}</h1>
+	<p>Sorry, but the page you were trying to view does not exist.</p>
+	<p>It looks like this was the result of either:</p>
+	<ul>
+		<li>a mistyped address</li>
+		<li>an out-of-date link</li>
+	</ul>
+	<p>If you would like to report this error, please send an email to the system administrator.</p>
 {% endblock %}

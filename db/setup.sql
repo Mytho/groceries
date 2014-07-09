@@ -17,20 +17,15 @@ CREATE TABLE IF NOT EXISTS items (
 	bought_by   INT(11)      DEFAULT NULL
 );
 
-INSERT INTO users (username, password)
-VALUES
-	('teun',  'sha1$lgkA6dTN$756ee8285201102a53d72875f6a628db1f9dfde6'),
-	('britt', 'sha1$D3djKAfD$0bafbfc63ceb98602bf0b993235ddac81171db0f');
-
 INSERT INTO items (name, create_date, created_by)
 VALUES
-   ('Yoghurt',   1300000000, 1),
-   ('Bread',     1300000000, 1),
-   ('Eggs',      1300000000, 1),
-   ('Milk',      1300000000, 1),
-   ('Steak',     1300000000, 1),
-   ('Chocolate', 1300000000, 1),
-   ('Soda',      1300000000, 1),
-   ('Beer',      1300000000, 1),
-   ('Wine',      1300000000, 1),
-   ('Pizza',     1300000000, 1);
+   ('Yoghurt',   1300000000, NULL),
+   ('Bread',     1300000000, NULL),
+   ('Eggs',      1300000000, NULL),
+   ('Milk',      1300000000, NULL),
+   ('Steak',     1300000000, NULL),
+   ('Chocolate', 1300000000, NULL),
+   ('Soda',      1300000000, NULL),
+   ('Beer',      1300000000, NULL),
+   ('Wine',      1300000000, NULL),
+   ('Pizza',     1300000000, NULL);
