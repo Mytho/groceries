@@ -61,6 +61,9 @@ class LoginView(MethodView):
     decorators = [check_csrf_token]
 
     def get(self):
+        if (current_app.config.get('TESTING', True) or
+           current_user.is_authenticated()):
+            return redirect(url_for('home'))
         context = {'messages': get_flashed_messages(),
                    'username': session.pop('username', '')}
         return make_response(render_template('login.html', **context))
