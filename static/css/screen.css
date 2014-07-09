@@ -262,6 +262,9 @@ div#footer a {
 	input[type='password'] {
 		width: 720px;
 	}
+	form button {
+		margin-right: 14px;
+	}
 	div#content,
 	div#footer {
 		width: 768px;
@@ -271,6 +274,9 @@ div#footer a {
 	input[type='text'],
 	input[type='password'] {
 		width: 272px;
+	}
+	form button {
+		margin-right: 14px;
 	}
 	div#content,
 	div#footer {
