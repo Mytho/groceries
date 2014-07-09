@@ -19,15 +19,8 @@ class AuthTestCase(unittest.TestCase):
 
     def test_login(self):
         response = self.client.get('/login')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.headers['Content-Type'],
-                         'text/html; charset=utf-8')
-        self.assertTrue('Username' in response.data)
-        self.assertTrue('Password' in response.data)
-        data = {'username': 'FakeUser', 'password': 'WrongPass'}
-        response = self.client.post('/login', data=data)
         self.assertEqual(response.status_code, 302)
-        self.assertTrue('/login' in response.headers['Location'])
+        self.assertTrue('/' in response.headers['Location'])
 
     def test_logout(self):
         response = self.client.get('/logout')
