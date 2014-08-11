@@ -15,17 +15,14 @@ from application.models import Item, User
 class ItemTestCase(unittest.TestCase):
 
     def setUp(self):
-        user = User('mock-name', 'mock-pass')
-        user.id = 123
-        self.item = Item('mock-item', user)
+        self.user = User('mock-name', 'mock-pass')
+        self.user.id = 123
+        self.item = Item('mock-item', self.user)
 
     def test_buy(self):
-        user = User('mock-name', 'mock-pass')
-        user.id = 123
-        item = Item('mock-item', user)
-        item.buy(user, True)
-        self.assertEqual(item.bought_by, user.id)
-        self.assertTrue(item.bought_date, not None)
+        self.item.buy(self.user, True)
+        self.assertEqual(self.item.bought_by, self.user.id)
+        self.assertTrue(self.item.bought_date, not None)
 
     def test_serialize(self):
         data = {'id': self.item.id,
