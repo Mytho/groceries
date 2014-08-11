@@ -26,10 +26,9 @@ def main():
 
 
 def password():
-    password = getpass.getpass('Password: ')
-    password_check = getpass.getpass('Confirm password: ')
-    while not password == password_check:
-        print('Password do not match.')
+    while not 'password' in locals() or not password == password_check:
+        if 'password' in locals():
+            print('Passwords do not match, please try again.')
         password = getpass.getpass('Password: ')
         password_check = getpass.getpass('Confirm password: ')
     return generate_password_hash(password)
