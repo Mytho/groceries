@@ -53,7 +53,7 @@ def check_referer_header(f):
 
 def generate_csrf_token():
     """Generate a CSRF-token and store it in a session variable for later
-    retreival.
+    retrieval.
     """
     if 'csrf' not in session:
         session['csrf'] = str(uuid4())
