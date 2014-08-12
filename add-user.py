@@ -26,8 +26,10 @@ def main():
 
 
 def password():
-    while not 'password' in locals() or not password == password_check:
-        if 'password' in locals():
+    password = False
+    password_check = False
+    while not password or not password_check or not password == password_check:
+        if password and password_check:
             print('Passwords do not match, please try again.')
         password = getpass.getpass('Password: ')
         password_check = getpass.getpass('Confirm password: ')
