@@ -38,7 +38,7 @@ def cache_control(seconds=86400):
         @wraps(f)
         def decorated_function(*args, **kwargs):
             format = '%a, %d %b %Y %H:%M:%S GMT'
-            cache_control = 'public, max-age=%s' % str(seconds)
+            cache_control = 'private, max-age=%s' % str(seconds)
             expires = datetime.utcnow() + timedelta(seconds=seconds)
             last_modified = datetime.utcnow() - timedelta(seconds=seconds)
             response = f(*args, **kwargs)
