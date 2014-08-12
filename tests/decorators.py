@@ -31,6 +31,6 @@ class DecoratorsTestCase(unittest.TestCase):
         with app.app_context():
             response = self.get_response()
             self.assertEqual(response.headers['Cache-Control'],
-                             'public, max-age=%s' % 3600)
+                             'private, max-age=%s' % 3600)
             self.assertTrue('Expires' in response.headers)
             self.assertTrue('Last-Modified' in response.headers)

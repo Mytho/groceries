@@ -22,8 +22,8 @@ from .security import check_referer_header
 
 class ApiView(MethodView):
 
-    decorators = [check_referer_header, content_type('application/json'),
-                  login_required]
+    decorators = [cache_control(0), check_referer_header,
+                  content_type('application/json'), login_required]
 
 
 class FaviconView(MethodView):
