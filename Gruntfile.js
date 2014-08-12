@@ -26,7 +26,7 @@ module.exports = function(grunt) {
                     'static/vendor/angular/1.2.18/angular-touch.min.js',
                     'static/vendor/angular/1.2.18/angular-animate.min.js'
                 ],
-                dest: 'static/vendor.min.js'
+                dest: 'build/vendor.js'
             }
         },
 
@@ -109,18 +109,23 @@ module.exports = function(grunt) {
         },
 
         uglify: {
-            options: {
-                banner: '/*!\n' +
-                    ' * <%= pkg.name %> v<%= pkg.version %>\n' +
-                    ' * - - -\n' +
-                    ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
-                    ' * Released under <%= pkg.lisence.type %> lisenced\n' +
-                    ' * <%= pkg.lisence.url %>\n' +
-                    ' */\n'
-            },
             appJs: {
+                options: {
+                    banner: '/*!\n' +
+                        ' * <%= pkg.name %> v<%= pkg.version %>\n' +
+                        ' * - - -\n' +
+                        ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
+                        ' * Released under <%= pkg.lisence.type %> lisenced\n' +
+                        ' * <%= pkg.lisence.url %>\n' +
+                        ' */\n'
+                },
                 files: {
                     'static/app.min.js': ['<banner>', 'build/app.js']
+                }
+            },
+            vendorJs: {
+                files: {
+                    'static/vendor.min.js': ['build/vendor.js']
                 }
             }
         },
