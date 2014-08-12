@@ -1,8 +1,8 @@
 # NOTE: For the (e2e-)tests to run properly a httpd and webdriver must be
 #       running
-all: clean check build-js test
+all: clean check build-static test
 
-build-js:
+build-static:
 	grunt concat
 	grunt uglify
 	grunt cssmin
