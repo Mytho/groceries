@@ -7,6 +7,6 @@
 		</li>
 	</ul>
 	<ul id="suggestions" ng-show="input.isFocused">
-		<li ng-repeat="item in SuggestionService.list | filter:input.value" ng-click="copy($event, item)">[[item.name]]</li>
+		<li ng-repeat="item in SuggestionService.list | filter:input.value | limitTo:10" ng-click="copy($event, item)">[[item.name]]</li>
 	</ul>
 </div>
