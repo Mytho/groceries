@@ -60,13 +60,12 @@ class Item(db.Model):
         return '<Item %r>' % self.name
 
     @staticmethod
-    def suggestions(limit=20):
+    def suggestions():
         """Returns a list of suggestions"""
         return db.session \
             .query(Item.name, func.count(Item.name).label('count')) \
             .group_by(Item.name) \
             .order_by(desc('count')) \
-            .limit(limit) \
             .all()
 
     def buy(self, user, is_bought=True):
