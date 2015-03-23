@@ -9,6 +9,11 @@
     Licensed under MIT License.
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
+import os
+import sys
+
+sys.path.append(os.path.abspath('.'))
+
 from application import app
 
 
