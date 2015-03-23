@@ -9,7 +9,12 @@
     Licensed under MIT License.
     See: https://raw.github.com/Mytho/groceries/master/LISENCE.md
 """
+import os
+import sys
 import unittest
+
+sys.path.append(os.abspath('.'))
+
 from tests.app import AppTestCase  # NOQA
 from tests.auth import AuthTestCase  # NOQA
 from tests.decorators import DecoratorsTestCase  # NOQA

@@ -7,32 +7,28 @@ build-static:
 	grunt uglify
 	grunt cssmin
 
+db:
+	cat db/setup.sql | sqlite3 db/groceries.db
+
 check: check-py check-js
 
 check-js:
 	grunt jshint
 
 check-py:
-	flake8 add-user.py
-	flake8 run-httpd.py
-	flake8 run-tests.py
+	flake8 bin
 	flake8 application
 	flake8 tests
 
 clean:
-	find . -type f -name \*.pyc -delete
+	find . -name '__pycache__' -delete -o -name '*.pyc' -delete
 
 httpd:
-	python run-httpd.py
+	python ./bin/run-httpd.py
 
-setup: setup-req setup-db
-
-setup-db:
-	cat db/setup.sql | sqlite3 db/groceries.db
-
-setup-req:
+install:
 	pip install -r requirements.txt
-	npm install
+	pip install -r requirements-dev.txt
 
 test: test-py test-js test-e2e
 
@@ -45,10 +41,14 @@ test-js:
 
 test-py:
 	cat db/setup.sql | sqlite3 db/groceries.db
-	python run-tests.py
+	python ./bin/run-tests.py
 
 user:
-	python add-user.py
+	python ./bin/add-user.py
+
+uninstall:
+	- pip uninstall --yes -r requirements.txt
+	- pip uninstall --yes -r requirements-dev.txt
 
 webdriver:
 	phantomjs --webdriver=8003
