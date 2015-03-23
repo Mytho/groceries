@@ -13,7 +13,7 @@ import os
 import sys
 import unittest
 
-sys.path.append(os.abspath('.'))
+sys.path.append(os.path.abspath('.'))
 
 from tests.app import AppTestCase  # NOQA
 from tests.auth import AuthTestCase  # NOQA

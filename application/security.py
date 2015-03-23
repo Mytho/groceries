@@ -30,8 +30,8 @@ def check_csrf_token(f):
     def decorated_function(*args, **kwargs):
         if request.method == 'POST':
             token = session.pop('csrf', None)
-            if (not current_app.config.get('TESTING', False) and (not token
-               or token != request.form.get('csrf'))):
+            if (not current_app.config.get('TESTING', False) and
+               (not token or token != request.form.get('csrf'))):
                 abort(401)
         return f(*args, **kwargs)
     return decorated_function
