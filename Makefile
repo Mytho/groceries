@@ -34,7 +34,7 @@ install:
 	pip install -r requirements.txt
 	pip install -r requirements-dev.txt
 
-test: clean check test-py test-js test-e2e
+test: clean check test-py test-js
 
 test-e2e:
 	cat db/setup.sql | sqlite3 db/groceries.db
